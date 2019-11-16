@@ -25,13 +25,13 @@ class MaxFunctionProblem(Problem):
     def create_individual(self):
         return MaxFunctionIndividual(self.bit_length)
 
-    def adapt_x(self, individual):
-        n = int(''.join(individual.get_value()), 2)
-        int_range = (self.x_max - self.x_min) * self.biggest_int_value
+    def adapt(self, individual):
+        n = int(str(individual), 2)
+        int_range = (self.x_max - self.x_min) / self.biggest_int_value
         return self.x_min + n * int_range
 
     def evaluate_fitness(self, individual):
-        return f(self.adapt_x(individual))
+        return f(self.adapt(individual))
 
 
 class MaxFunctionIndividual(Individual):
