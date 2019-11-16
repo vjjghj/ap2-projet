@@ -87,4 +87,4 @@ class MaxFunctionIndividual(Individual):
         :rtype: int
         :UC: gene in {0, 1}
         """
-        return gene if probability <= random() else 1 - gene
+        return gene if probability > random() else 1 - gene

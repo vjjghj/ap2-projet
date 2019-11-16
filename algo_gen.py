@@ -61,12 +61,14 @@ class AlgoGen(object):
         next_gen2 = self.next_gen_creator(lambda x, y: self.problem.tournament(*x.cross_with(y)))
         return next_gen1 + next_gen2
 
-    def mutate(self):
+    def mutate(self, population):
         """
-        Make all Individual from self.population mutate
+        Make all individuals from population mutate
+        :type population: list(Individual)
         :return: none
         """
-        self.population = [individual.mutate(self.mutation_probability) for individual in self.population]
+        for individual in population:
+            individual.mutate(self.mutation_probability)
 
     def iter_gen(self):
         """
@@ -75,6 +77,7 @@ class AlgoGen(object):
         """
         best_five = self.problem.sort_population(self.population)[:5]
         next_gen = self.next_gen()
+        self.mutate(next_gen)
         next_gen_best = self.problem.sort_population(next_gen)[:-5]
         self.population = best_five + next_gen_best
 
@@ -97,7 +100,7 @@ class AlgoGen(object):
         Runs the genetic algorithm to solve the given problem
         :param iterations: number of iterations to run to optimize the solution
         :type iterations: int
-        :rtype: Individual
+        :rtype: Individual, depending on the problem, int or float
         :UC: iterations > 0
         """
         current_best = ()

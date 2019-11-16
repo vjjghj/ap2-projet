@@ -65,7 +65,7 @@ class SecretMessageIndividual(Individual):
         :type probability: int or float
         :rtype: str
         """
-        if probability <= random():
+        if probability > random():
             new_gene = gene
             while gene == new_gene:
                 new_gene = SecretMessageIndividual.get_random_gene()

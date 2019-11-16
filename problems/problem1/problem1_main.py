@@ -6,7 +6,7 @@ parentdir = os.path.dirname(currentdir)
 parentdir = os.path.dirname(parentdir)
 sys.path.insert(0, parentdir)
 from input_checker import *
-from problems.problem1.problem1_classes import MaxFunctionProblem, f
+from problems.problem1.problem1_classes import MaxFunctionProblem
 from algo_gen import AlgoGen
 
 
@@ -24,4 +24,4 @@ if __name__ == '__main__':
     problem = MaxFunctionProblem(x_min, x_max, bit_length)
     solver = AlgoGen(problem, population_size, mutation_probability, crossover_rate)
     best = solver.solve(iterations)
-    print('Maximum found: f({}) = {} (literal value: {})'.format(*reversed(best)))
+    print('Maximum found: f({}) = {} (literal value: {})'.format(*best[1:], best[0]))

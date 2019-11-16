@@ -19,7 +19,7 @@ class Individual(object):
         Returns a copy of self
         :rtype: Individual
         """
-        other = Individual(self.size)
+        other = type(self)(self.size)
         other.set_score(self.score)
         other.set_value(self.genome)
         return other

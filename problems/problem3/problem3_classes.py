@@ -73,7 +73,7 @@ class LabyrinthIndividual(Individual):
         :type probability: int or float
         :rtype: str
         """
-        if probability <= random():
+        if probability > random():
             new_gene = gene
             while gene == new_gene:
                 new_gene = LabyrinthIndividual.get_random_gene()
