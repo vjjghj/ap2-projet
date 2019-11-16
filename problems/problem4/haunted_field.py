@@ -5,6 +5,7 @@ EMPTY = ' '
 MONSTER = 'M'
 OBSTACLE = '*'
 USED = '.'
+CELLS = [EMPTY, MONSTER, OBSTACLE]
 
 
 class HauntedField(object):
@@ -42,10 +43,10 @@ class HauntedField(object):
         randomly set between 2 and nb_monsters_per_lines monsters in each line, first and last line excepted.
         Must be called to add monster to the field
         """
-        for line in range(1, self.__height - 1):
+        for line in range(2, self.__height):
             monster_columns = random.sample(range(1, self.__width + 1), random.randint(2, nb_monsters_per_lines))
             for column in monster_columns:
-                self.set_cell(line + 1, column, MONSTER)
+                self.set_cell(line, column, MONSTER)
 
     def get_height(self):
         return self.__height
@@ -87,6 +88,14 @@ class HauntedField(object):
         """
         self.__field = self.__backup_field
 
+    def cross(self, individual):
+        """
+        Tries to cross the Field
+        :type individual: Individual
+        :rtype: to be decided
+        """
+        pass
+
     def __str__(self):
         """
         a string representation of self
@@ -99,7 +108,7 @@ class HauntedField(object):
 
     def __repr__(self):
         """
-        a convenient string representation for pyhton console
+        a convenient string representation for python console
         """
         return self.__str__()
 
