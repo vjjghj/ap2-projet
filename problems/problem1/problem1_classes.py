@@ -23,7 +23,7 @@ class MaxFunctionProblem(Problem):
     def __init__(self, x_min, x_max, bit_length, fx=f):
         """
         Creates a problem where the goal is to find the maximum of a function in a given interval
-        Uses individual with a bit genes, with bit_length genes
+        Uses individual with bit genes, with bit_length genes
         :type x_min: int or float
         :type x_max: int or float
         :type bit_length: int
@@ -35,7 +35,7 @@ class MaxFunctionProblem(Problem):
         self.x_max = x_max
         self.bit_length = bit_length
         self.biggest_int_value = 2 ** bit_length - 1
-        super(MaxFunctionProblem, self).__init__(True)
+        super(MaxFunctionProblem, self).__init__(maximize=True)
         # By changing True by False we can aim for the minimum of the function
 
     def create_individual(self):
@@ -87,4 +87,4 @@ class MaxFunctionIndividual(Individual):
         :rtype: int
         :UC: gene in {0, 1}
         """
-        return gene if probability < random() else 1 - gene
+        return gene if probability <= random() else 1 - gene

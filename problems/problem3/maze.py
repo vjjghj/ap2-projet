@@ -129,6 +129,13 @@ class Maze(object):
         col_second, line_second = second % self.__width, second // self.__width
         return abs(col_first - col_second) + abs(line_first - line_second)
 
+    def get_width(self):
+        """
+        Returns the width of the maze
+        This function was added because the maze width is needed in the naive fitness evaluation
+        :rtype: int
+        """
+        return self.__width
 
 if __name__ == "__main__":
     m = Maze('maze2.txt')

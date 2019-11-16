@@ -18,7 +18,7 @@ class SecretMessageProblem(Problem):
         """
         self.message_to_find = list(map(lambda x: LETTERS.index(x), list(message_to_find)))
         self.message_length = len(message_to_find)
-        super(SecretMessageProblem, self).__init__(False)
+        super(SecretMessageProblem, self).__init__(maximize=False)
 
     def create_individual(self):
         """
@@ -65,7 +65,7 @@ class SecretMessageIndividual(Individual):
         :type probability: int or float
         :rtype: str
         """
-        if probability < random():
+        if probability <= random():
             new_gene = gene
             while gene == new_gene:
                 new_gene = SecretMessageIndividual.get_random_gene()
