@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3d97bcc2-241c-4d93-9140-30a47e808e58" name="Default Changelist" comment="" />
+    <list default="true" id="3d97bcc2-241c-4d93-9140-30a47e808e58" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/algo_gen.py" beforeDir="false" afterPath="$PROJECT_DIR$/algo_gen.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/individual_interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/individual_interface.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/input_checker.py" beforeDir="false" afterPath="$PROJECT_DIR$/input_checker.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/problem_interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/problem_interface.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/problems/problem1/problem1_classes.py" beforeDir="false" afterPath="$PROJECT_DIR$/problems/problem1/problem1_classes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/problems/problem1/problem1_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/problems/problem1/problem1_main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/problems/problem2/problem2_classes.py" beforeDir="false" afterPath="$PROJECT_DIR$/problems/problem2/problem2_classes.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -9,7 +18,29 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/algo_gen.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="8" column="103" selection-start-line="8" selection-start-column="103" selection-end-line="8" selection-end-column="103" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/individual_interface.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2159">
+              <caret line="127" lean-forward="true" selection-start-line="127" selection-end-line="127" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -18,18 +49,25 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/algo_gen.py" />
-        <option value="$PROJECT_DIR$/problem_interface.py" />
-        <option value="$PROJECT_DIR$/individual_interface.py" />
         <option value="$PROJECT_DIR$/population.py" />
         <option value="$PROJECT_DIR$/problems/input_checker.py" />
-        <option value="$PROJECT_DIR$/input_checker.py" />
-        <option value="$PROJECT_DIR$/problems/problem1_max_function.py" />
         <option value="$PROJECT_DIR$/problems/prolbem1_main.py" />
         <option value="$PROJECT_DIR$/problems/problem1_main.py" />
+        <option value="$PROJECT_DIR$/problems/problem1_max_function.py" />
+        <option value="$PROJECT_DIR$/problems/problem2/problem2_main.py" />
+        <option value="$PROJECT_DIR$/problem_interface.py" />
+        <option value="$PROJECT_DIR$/problems/problem1/problem1_main.py" />
+        <option value="$PROJECT_DIR$/input_checker.py" />
+        <option value="$PROJECT_DIR$/problems/problem1/problem1_classes.py" />
+        <option value="$PROJECT_DIR$/problems/problem2/problem2_classes.py" />
+        <option value="$PROJECT_DIR$/individual_interface.py" />
+        <option value="$PROJECT_DIR$/algo_gen.py" />
       </list>
     </option>
   </component>
@@ -44,16 +82,45 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="projet" type="b2602c69:ProjectViewProjectNode" />
+              <item name="projet" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="projet" type="b2602c69:ProjectViewProjectNode" />
+              <item name="projet" type="462c0819:PsiDirectoryNode" />
+              <item name="problems" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="projet" type="b2602c69:ProjectViewProjectNode" />
+              <item name="projet" type="462c0819:PsiDirectoryNode" />
+              <item name="problems" type="462c0819:PsiDirectoryNode" />
+              <item name="problem1" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="projet" type="b2602c69:ProjectViewProjectNode" />
+              <item name="projet" type="462c0819:PsiDirectoryNode" />
+              <item name="problems" type="462c0819:PsiDirectoryNode" />
+              <item name="problem2" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="Scope" />
-      <pane id="ProjectPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\python\AP2\projet\problems\problem1" />
       <recent name="D:\python\AP2\projet" />
     </key>
   </component>
@@ -69,7 +136,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.population">
+  <component name="RunManager" selected="Python.problem1_max_function">
     <configuration name="AP2_project" type="PythonConfigurationType" factoryName="Python">
       <module name="projet" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -112,12 +179,55 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="problem1_main" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="projet" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/problems" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="D:\python\AP2\projet\problems\problem1\problem1_main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="problem1_max_function" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="projet" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/problems" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="D:\python\AP2\projet\problems\problem1\problem1_classes.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Python.AP2_project" />
       <item itemvalue="Python.population" />
+      <item itemvalue="Python.problem1_main" />
+      <item itemvalue="Python.problem1_max_function" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.problem1_max_function" />
+        <item itemvalue="Python.problem1_main" />
         <item itemvalue="Python.population" />
       </list>
     </recent_temporary>
@@ -137,6 +247,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -149,159 +260,89 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.3289689" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.3289689" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Python Console" order="10" />
+      <window_info anchor="bottom" id="Python Console" order="10" weight="0.3289689" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
-    <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3289689" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Python Console" order="10" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-    </layout-to-restore>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/input_checker.py">
+    <entry file="file://$USER_HOME$/.PyCharmCE2019.1/system/python_stubs/1026742368/builtins.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="40" selection-start-line="40" selection-end-line="40" />
+        <state relative-caret-position="128">
+          <caret line="815" column="8" selection-start-line="815" selection-start-column="8" selection-end-line="815" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/problems/problem1/problem1_main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="80" selection-start-line="20" selection-start-column="80" selection-end-line="20" selection-end-column="80" />
           <folding>
-            <element signature="e#75#554#0" />
-            <element signature="e#75#373#1" />
-            <element signature="e#577#744#0" />
-            <element signature="e#577#648#1" />
-            <element signature="e#785#1054#0" />
-            <element signature="e#785#908#1" />
-            <element signature="e#1080#1252#0" />
-            <element signature="e#1080#1125#2" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/problems/problem1_max_function.py">
+    <entry file="file://$PROJECT_DIR$/input_checker.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="13" column="34" lean-forward="true" selection-start-line="13" selection-start-column="34" selection-end-line="13" selection-end-column="34" />
+        <state relative-caret-position="17">
+          <caret line="1" column="4" lean-forward="true" selection-start-line="1" selection-start-column="4" selection-end-line="1" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/problems/problem2/problem2_classes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1241">
+          <caret line="73" lean-forward="true" selection-start-line="73" selection-end-line="73" />
           <folding>
-            <element signature="e#159#312#0" />
-            <element signature="e#159#277#1" />
-            <element signature="e#354#944#0" />
-            <element signature="e#412#567#0" />
-            <element signature="e#610#655#0" />
-            <element signature="e#700#856#0" />
-            <element signature="e#910#944#0" />
-            <element signature="e#992#1335#0" />
-            <element signature="e#1027#1123#0" />
-            <element signature="e#1027#1094#1" />
-            <element signature="e#1191#1242#0" />
-            <element signature="e#1285#1335#0" />
+            <element signature="e#0#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/problems/problem2/problem2_main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="67" selection-start-line="24" selection-start-column="67" selection-end-line="24" selection-end-column="67" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/problems/problem1/problem1_classes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="82" column="50" selection-start-line="82" selection-start-column="50" selection-end-line="82" selection-end-column="50" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/individual_interface.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="73" column="8" selection-start-line="73" selection-start-column="8" selection-end-line="73" selection-end-column="8" />
-          <folding>
-            <element signature="e#93#187#0" />
-            <element signature="e#217#423#0" />
-            <element signature="e#217#291#1" />
-            <element signature="e#470#808#0" />
-            <element signature="e#470#656#1" />
-            <element signature="e#851#1011#0" />
-            <element signature="e#851#998#1" />
-            <element signature="e#1046#1162#0" />
-            <element signature="e#1046#1136#1" />
-            <element signature="e#1196#1301#0" />
-            <element signature="e#1196#1276#1" />
-            <element signature="e#1336#1437#0" />
-            <element signature="e#1336#1410#1" />
-            <element signature="e#1478#1613#0" />
-            <element signature="e#1478#1600#1" />
-            <element signature="e#1649#1803#0" />
-            <element signature="e#1649#1730#1" />
-            <element signature="e#1871#2103#0" />
-            <element signature="e#1871#2090#1" />
-            <element signature="e#2148#2454#0" />
-            <element signature="e#2148#2370#1" />
-            <element signature="e#2500#2651#0" />
-            <element signature="e#2500#2620#1" />
-            <element signature="e#2697#2840#0" />
-            <element signature="e#2697#2808#1" />
-          </folding>
+        <state relative-caret-position="2159">
+          <caret line="127" lean-forward="true" selection-start-line="127" selection-end-line="127" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/problem_interface.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#74#404#0" />
-            <element signature="e#74#333#1" />
-            <element signature="e#447#570#0" />
-            <element signature="e#447#557#1" />
-            <element signature="e#624#776#0" />
-            <element signature="e#624#763#1" />
-            <element signature="e#829#1106#0" />
-            <element signature="e#829#1032#1" />
-            <element signature="e#1157#1476#0" />
-            <element signature="e#1157#1356#1" />
-          </folding>
+        <state relative-caret-position="-136">
+          <caret line="13" column="11" lean-forward="true" selection-start-line="13" selection-start-column="11" selection-end-line="13" selection-end-column="11" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/algo_gen.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="37" lean-forward="true" selection-start-line="1" selection-start-column="37" selection-end-line="1" selection-end-column="37" />
+        <state relative-caret-position="136">
+          <caret line="8" column="103" selection-start-line="8" selection-start-column="103" selection-end-line="8" selection-end-column="103" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
-            <element signature="e#333#1225#0" />
-            <element signature="e#317#808#1" />
-            <element signature="e#1197#1308#0" />
-            <element signature="e#1197#1275#1" />
-            <element signature="e#1351#1624#0" />
-            <element signature="e#1351#1537#1" />
-            <element signature="e#1684#2030#0" />
-            <element signature="e#1684#1949#1" />
-            <element signature="e#2064#2399#0" />
-            <element signature="e#2064#2179#1" />
-            <element signature="e#2431#2631#0" />
-            <element signature="e#2431#2524#1" />
-            <element signature="e#2665#2985#0" />
-            <element signature="e#2665#2760#1" />
-            <element signature="e#3027#3327#0" />
-            <element signature="e#3027#3162#1" />
-            <element signature="e#3370#3700#0" />
-            <element signature="e#3370#3508#1" />
-            <element signature="e#3436#3612#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/problems/problem1_main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="26" lean-forward="true" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>

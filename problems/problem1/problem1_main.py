@@ -18,7 +18,7 @@ if __name__ == '__main__':
     mutation_probability = test_arg_validity(sys.argv[2], float, lambda x: is_in_range(x, 0, 1))
     iterations = test_arg_validity(sys.argv[3], int, is_positive)
     x_min = test_arg_validity(sys.argv[4], float)
-    x_max = test_arg_validity(sys.argv[5], float)
+    x_max = test_arg_validity(sys.argv[5], float, lambda x: is_greater(x, x_min))
     bit_length = test_arg_validity(sys.argv[6], int, is_positive)
     crossover_rate = 0  # To change
     problem = MaxFunctionProblem(x_min, x_max, bit_length)

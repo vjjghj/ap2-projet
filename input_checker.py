@@ -50,6 +50,17 @@ def is_positive(x):
     return x
 
 
+def is_greater(x, y):
+    """
+    Tests if x is greater than y
+    :type x: int
+    :type y: int
+    :rtype: boolean
+    """
+    if x <= y:
+        raise ValueError('{} should be greater than {}'.format(x, y))
+
+
 def is_letters(x):
     """
     Tests if all characters in x are letters or space

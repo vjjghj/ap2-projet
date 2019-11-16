@@ -4,6 +4,10 @@ from individual_interface import Individual
 
 
 class AlgoGen(object):
+    """
+    This class is used to solve a given problem by using a genetic algorithm
+    Handles the population, its evolution, and returns the best fitted individual for the given problem
+    """
     def __init__(self, problem, population_size, mutation_probability, crossover_rate):
         """
         Creates a AlgoGen object

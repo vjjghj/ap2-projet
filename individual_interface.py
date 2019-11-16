@@ -3,10 +3,9 @@ from random import randint
 
 class Individual(object):
     """
-    Creates a parent class for the different individual we will use to solve problems
+    Parent class for the different individual we will use to solve problems
     Function to create/override:
-        evaluate(self, problem)
-        get_random_gene(self)
+        get_random_gene() <- static method
         mutate_once(gene, probability) <- static method
     """
     def __init__(self, size):
@@ -18,7 +17,7 @@ class Individual(object):
     def copy(self):
         """
         Returns a copy of self
-        :return: Individual
+        :rtype: Individual
         """
         other = Individual(self.size)
         other.set_score(self.score)
@@ -40,29 +39,29 @@ class Individual(object):
     def evaluate(self, problem):
         """
         Set the fitness score with the fitness computed by problem for self
-        :param problem: (Problem)
+        :type problem: Problem
         :return: none
         """
-        pass
+        self.score = problem.evaluate_fitness(self)
 
     def get_score(self):
         """
         Returns the fitness score for self
-        :return: (int or float)
+        :rtype: int or float
         """
         return self.score
 
     def get_size(self):
         """
         Returns the size of self's genome
-        :return: (int)
+        :rtype: int
         """
         return self.size
 
     def get_value(self):
         """
         Returns the genome of self
-        :return: (list)
+        :rtype: list
         """
         return self.genome
 
@@ -76,7 +75,7 @@ class Individual(object):
 
     def init_value(self):
         """
-        Randomly intitializes self's genome
+        Randomly initializes self's genome
         :return: none
         """
         self.genome = [self.get_random_gene() for _ in range(self.size)]
@@ -94,16 +93,16 @@ class Individual(object):
     def mutate(self, probability):
         """
         Apply mutation operation to self: each element of the genome sequence is randomly changed with given probability
-        :param probability: (float)
+        :type probability: float
         :return: none
-        :UC: 0 <= float < 1
+        :UC: 0 <= probability < 1
         """
         self.genome = [self.mutate_once(gene, probability) for gene in self.genome]
 
     def set_score(self, new_score):
         """
         Changes the fitness score of self
-        :param new_score: (int or float)
+        :type new_score: int or float
         :return: none
         """
         self.score = new_score
@@ -121,4 +120,8 @@ class Individual(object):
             self.evaluate(problem)
 
     def __str__(self):
+        """
+        Returns a str representing self's genome
+        :rtype: str
+        """
         return ''.join(map(str, self.genome))
