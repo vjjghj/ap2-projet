@@ -22,7 +22,7 @@ def is_even(x):
     :rtype: boolean
     """
     if not x % 2 == 0:
-        raise ValueError('{} should be evene'.format(x))
+        raise ValueError('{} should be even'.format(x))
     return True
 
 

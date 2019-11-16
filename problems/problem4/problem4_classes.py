@@ -1,5 +1,6 @@
 from problem_interface import Problem
 from individual_interface import Individual
+from random import choice, random
 
 
 class HauntedTerrainProblem(Problem):
@@ -7,7 +8,11 @@ class HauntedTerrainProblem(Problem):
         super(HauntedTerrainProblem, self).__init__(False)
 
     def create_individual(self):
-        pass
+        """
+        Creates individual with genome length 243
+        :rtype: Individual
+        """
+        return HauntedTerrainIndividual(243)
 
     def evaluate_fitness(self, individual):
         pass
@@ -17,10 +22,29 @@ class HauntedTerrainProblem(Problem):
 
 
 class HauntedTerrainIndividual(Individual):
+    """
+    Individuals with list of directions as genome
+    """
     @staticmethod
     def get_random_gene():
-        pass
+        """
+        Returns a random valid direction
+        :rtype: str
+        """
+        return choice(['U', 'D', 'L', 'R'])
 
     @staticmethod
     def mutate_once(gene, probability):
-        pass
+        """
+        Applies mutation with given probability to a gene
+        If it mutates, the gene takes the value of a random different valid direction
+        :type gene: str
+        :type probability: int or float
+        :rtype: str
+        """
+        if probability <= random():
+            new_gene = gene
+            while gene == new_gene:
+                new_gene = HauntedTerrainIndividual.get_random_gene()
+            return new_gene
+        return gene
