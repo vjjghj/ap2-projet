@@ -21,6 +21,8 @@ class MaxFunctionProblem(Problem):
         self.x_max = x_max
         self.bit_length = bit_length
         self.biggest_int_value = 2 ** bit_length - 1
+        super(MaxFunctionProblem, self).__init__(True)
+        # By changing True by False we can aim for the minimum of the function
 
     def create_individual(self):
         return MaxFunctionIndividual(self.bit_length)
@@ -30,21 +32,18 @@ class MaxFunctionProblem(Problem):
         int_range = (self.x_max - self.x_min) / self.biggest_int_value
         return self.x_min + n * int_range
 
-    def evaluate_fitness(self, individual):
-        return f(self.adapt(individual))
+    def evaluate_fitness(self, genome):
+        return f(self.adapt(genome))
 
 
 class MaxFunctionIndividual(Individual):
-    def get_random_gene(self):
-        """
-        Randomly returns 0 or 1
-        :rtype: int
-        """
+    @staticmethod
+    def get_random_gene():
         return randint(0, 1)
 
     @staticmethod
     def mutate_once(gene, probability):
-        return gene if probability > random() else 1 - gene
+        return gene if probability < random() else 1 - gene
 
     def evaluate(self, problem):
-        self.score = problem.evaluate_fitness(self.genome)
+        self.score = problem.evaluate_fitness(self)

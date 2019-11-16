@@ -1,5 +1,6 @@
 from random import shuffle
 from problem_interface import Problem
+from individual_interface import Individual
 
 
 class AlgoGen(object):
@@ -53,7 +54,7 @@ class AlgoGen(object):
         :rtype: list(Individual)
         """
         next_gen1 = self.next_gen_creator(lambda x, y: self.problem.tournament(x, y))
-        next_gen2 = self.next_gen_creator(lambda x, y: self.problem.tournament(*x.crosswith(y)))
+        next_gen2 = self.next_gen_creator(lambda x, y: self.problem.tournament(*x.cross_with(y)))
         return next_gen1 + next_gen2
 
     def mutate(self):
@@ -78,8 +79,14 @@ class AlgoGen(object):
         Returns the current best fitted Individual in self.population and its fitness
         :rtype: Individual, float
         """
-        current_best = max(self.population, key=lambda x: self.problem.evaluate_fitness(x))
-        return current_best, self.problem.evaluate_fitness(current_best)
+        if self.problem.maximize:
+            current_best = max(self.population, key=lambda x: x.score)
+        else:
+            current_best = min(self.population, key=lambda x: x.score)
+        return current_best, self.problem.adapt(current_best), current_best.score
+
+    def average_fitness(self):
+        return sum([individual.get_score() for individual in self.population]) / self.size
 
     def solve(self, iterations):
         """
@@ -93,5 +100,6 @@ class AlgoGen(object):
         for i in range(iterations):
             self.iter_gen()
             current_best = self.get_current_best()
-            print('Iteration {} best fitted: {}, fitness: {}'.format(i, *current_best))
-        return current_best[0]
+            average = self.average_fitness()
+            print('Iteration {}: value:{}, fitness: {}, average: {}'.format(i, *current_best[1:], average))
+        return current_best

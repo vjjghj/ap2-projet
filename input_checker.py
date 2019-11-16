@@ -8,7 +8,7 @@ def test_arg_validity(x, desired_type, condition_test=lambda x: True):
     :rtype: desired_type
     """
     try:
-        desired_type(x)
+        x = desired_type(x)
     except ValueError:
         raise TypeError('Given argument {} should be of type {}'.format(x, desired_type))
     condition_test(x)
@@ -48,3 +48,15 @@ def is_positive(x):
     if x <= 0:
         raise ValueError('{} should be positive'.format(x))
     return x
+
+
+def is_letters(x):
+    """
+    Tests if all characters in x are letters or space
+    :type x: str
+    :rtype: boolean
+    """
+    letters = [chr(i) for i in range(ord('a'), ord('z') + 1)] + [' ']
+    if not all([c in letters for c in x]):
+        raise ValueError('Message contains invalid characters')
+    return True

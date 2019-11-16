@@ -1,4 +1,15 @@
 class Problem(object):
+    """
+    Creates a parent class for the different problems we will have to solve
+    Function to create/override:
+        __init__(self, *args)
+        create_individual(self)
+        evaluate_fitness(self, individual)
+        adapt(self, individual)
+    """
+    def __init__(self, maximize):
+        self.maximize = maximize
+
     def best_individual(self, population):
         """
         Returns the best fitted individual from population.
@@ -15,22 +26,32 @@ class Problem(object):
         """
         pass
 
-    def evaluate_fitness(self, individual):
+    def evaluate_fitness(self, genome):
         """
         Compute the fitness of individual for this problem
-        :param individual: (Individual)
-        :return: (float)
+        :type genome: list
+        :rtype: float
         """
         pass
+
+    def evaluate_fitness_for_all(self, population):
+        """
+        Updates the score value for each individual in population
+        :type population: list(Individual)
+        :return: none
+        """
+        for individual in population:
+            individual.evaluate(self)
 
     def sort_population(self, population):
         """
         Sort population from best fitted to worst fitted.
         Depending on the problem, it can corresponds to ascending or descending order
-        :param population:
-        :return:
+        :type population: list(Individual)
+        :rtype: list(Individual)
         """
-        return sorted(population, key=lambda x: self.evaluate_fitness(x))
+        self.evaluate_fitness_for_all(population)
+        return sorted(population, key=lambda x: x.score, reverse=self.maximize)
 
     def tournament(self, first, second):
         """
@@ -39,6 +60,16 @@ class Problem(object):
         :param second: (Individual)
         :return: (Individual)
         """
-        if self.evaluate_fitness(first) > self.evaluate_fitness(second):
+        self.evaluate_fitness_for_all([first, second])
+        first_is_bigger = first.get_score() > second.get_score()
+        if first_is_bigger and self.maximize or not self.maximize and not first_is_bigger:
             return first
         return second
+
+    def adapt(self, genome):
+        """
+        Returns the value of the individual, based on the problem
+        :type genome: list
+        :rtype: depends on the problem
+        """
+        pass

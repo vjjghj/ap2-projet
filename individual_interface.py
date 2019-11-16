@@ -2,6 +2,13 @@ from random import randint
 
 
 class Individual(object):
+    """
+    Creates a parent class for the different individual we will use to solve problems
+    Function to create/override:
+        evaluate(self, problem)
+        get_random_gene(self)
+        mutate_once(gene, probability) <- static method
+    """
     def __init__(self, size):
         self.size = size
         self.genome = list()
@@ -20,12 +27,15 @@ class Individual(object):
     
     def cross_with(self, other):
         """
-        Performs a 1 point crossover between self and other, return two new build individuals
-        :param other: (Individual)
-        :return: (Individual, Individual)
+        Performs a 1 point crossover between self and other, return two new individuals
+        :type other: Individual
+        :rtype: Individual, Individual
         """
         n = randint(0, len(self.genome) - 1)
-        self.genome, other.genome = self.genome[:n] + other.genome[n:], other.genome[:n] + self.genome[n:]
+        x1, x2 = self.copy(), other.copy()
+        x1.set_value(self.genome[:n] + other.genome[n:])
+        x2.set_value(other.genome[:n] + self.genome[n:])
+        return x1, x2
 
     def evaluate(self, problem):
         """
@@ -56,7 +66,8 @@ class Individual(object):
         """
         return self.genome
 
-    def get_random_gene(self):
+    @staticmethod
+    def get_random_gene():
         """
         Returns a random value for a gene, depending on the problem
         :rtype: depends on the problem
@@ -97,10 +108,17 @@ class Individual(object):
         """
         self.score = new_score
 
-    def set_value(self, new_value):
+    def set_value(self, new_value, problem=None):
         """
         Changes the genome value of self
-        :param new_value: (list)
+        If a problem is given, will actualize self.score accordingly
+        :type new_value: list
+        :type problem: Problem
         :return: none
         """
         self.genome = new_value
+        if problem:
+            self.evaluate(problem)
+
+    def __str__(self):
+        return ''.join(map(str, self.genome))

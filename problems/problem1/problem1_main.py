@@ -3,9 +3,10 @@ import os
 import inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
+parentdir = os.path.dirname(parentdir)
 sys.path.insert(0, parentdir)
 from input_checker import *
-from problems.problem1_max_function import MaxFunctionProblem, f
+from problems.problem1.problem1_classes import MaxFunctionProblem, f
 from algo_gen import AlgoGen
 
 
@@ -23,5 +24,4 @@ if __name__ == '__main__':
     problem = MaxFunctionProblem(x_min, x_max, bit_length)
     solver = AlgoGen(problem, population_size, mutation_probability, crossover_rate)
     best = solver.solve(iterations)
-    max_value = problem.adapt(best)
-    print('Maximum found: f({}) = {}'.format(max_value, f(max_value)))
+    print('Maximum found: f({}) = {} (literal value: {})'.format(*reversed(best)))
