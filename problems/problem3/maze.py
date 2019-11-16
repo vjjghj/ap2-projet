@@ -94,7 +94,7 @@ class Maze(object):
                 path[nb_steps] in self.__cells[current_cell]:
             visited.append(current_cell)
             current_cell = current_cell + self.offset(path[nb_steps])
-            nb_steps = nb_steps + 1
+            nb_steps += 1
         return nb_steps, self.manhattan_distance(current_cell, self.__exit)
 
     def offset(self, direction):
@@ -136,6 +136,15 @@ class Maze(object):
         :rtype: int
         """
         return self.__width
+
+    def draw_path(self, individual):
+        """
+        Draws the maze and the path of individual within it
+        :type individual: Individual
+        :return: none
+        """
+        pass
+
 
 if __name__ == "__main__":
     m = Maze('maze2.txt')

@@ -81,7 +81,7 @@ class AlgoGen(object):
     def get_current_best(self):
         """
         Returns the current best fitted Individual in self.population and its fitness
-        :rtype: Individual, float
+        :rtype: Individual, depending on the problem, int or float
         """
         if self.problem.maximize:
             current_best = max(self.population, key=lambda x: x.score)

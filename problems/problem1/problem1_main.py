@@ -11,7 +11,7 @@ from algo_gen import AlgoGen
 
 
 if __name__ == '__main__':
-    # Population size, mutation probability, iterations, x_min, x_max, bit_length(, crossover_rate)
+    # Population size, mutation probability, iterations, x_min, x_max, bit_length
     if len(sys.argv) != 7:
         raise ValueError('Invalid argument number')
     population_size = test_arg_validity(sys.argv[1], int, is_even)
