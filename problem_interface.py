@@ -30,10 +30,10 @@ class Problem(object):
         """
         pass
 
-    def evaluate_fitness(self, genome):
+    def evaluate_fitness(self, individual):
         """
         Compute the fitness of individual for this problem
-        :type genome: list
+        :type individual: Individual
         :rtype: float
         """
         pass
@@ -70,10 +70,10 @@ class Problem(object):
             return first
         return second
 
-    def adapt(self, genome):
+    def adapt(self, individual):
         """
         Returns the value of the individual, based on the problem
-        :type genome: list
+        :type individual: Individual
         :rtype: depends on the problem
         """
         pass
