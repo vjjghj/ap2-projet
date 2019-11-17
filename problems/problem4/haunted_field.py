@@ -1,5 +1,8 @@
 import random
 import copy
+from problems.problem4.problem4_classes import PlayerState
+from math import ceil
+
 
 EMPTY = ' '
 MONSTER = 'M'
@@ -26,6 +29,7 @@ class HauntedField(object):
         self.__height = height
         self.__field = [[EMPTY for _ in range(self.__width + 2)] for _ in range(self.__height + 2)]
         self.__init_borders()
+        self.__player_pos = (1, ceil(self.__width / 2))
 
     def __init_borders(self):
         """
@@ -80,6 +84,7 @@ class HauntedField(object):
         It can be used to store field before trying to "cross it" in order to restore it after crossing attempt.
         """
         self.__backup_field = copy.deepcopy(self.__field)
+        self.__backup_pos = self.__player_pos
 
     def restore_field(self):
         """
@@ -87,6 +92,29 @@ class HauntedField(object):
         it is None if no backup had been made
         """
         self.__field = self.__backup_field
+        self.__player_pos = self.__backup_pos
+
+    def get_front_view(self):
+        """
+        Returns a five letters word representing the view in front of the player
+        The word describes the view from the right of the player to his left
+        :rtype: list(str)
+        """
+        x, y = self.__player_pos
+        right = [self.__field[x][y - 1]]
+        left = [self.__field[x][y + 1]]
+        front = self.__field[x + 1][y - 1:y + 2]
+        return ''.join(right + front + left)
+
+    @staticmethod
+    def get_view_code(view):
+        """
+        Converts the view in a position in the command list
+        :type view: list(str)
+        :rtype: int
+        :UC: view must be a valid view
+        """
+        return int(''.join([str(CELLS.index(cell)) for cell in view]), 3)
 
     def cross(self, individual):
         """
@@ -94,7 +122,15 @@ class HauntedField(object):
         :type individual: Individual
         :rtype: to be decided
         """
-        pass
+        self.backup_field()
+        commands = individual.get_value()
+        used = 0
+        while individual.get_state() == PlayerState.active:
+            view = self.get_front_view()
+            code = self.get_view_code(view)
+            move = commands[code]
+        self.restore_field()
+        return self.__player_pos[0], used, individual.get_state()
 
     def __str__(self):
         """
