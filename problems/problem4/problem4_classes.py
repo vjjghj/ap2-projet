@@ -1,26 +1,7 @@
 from problem_interface import Problem
 from individual_interface import Individual
 from random import choice, random
-from problems.problem4.haunted_field import HauntedField, CELLS
-from enum import Enum
-
-
-class PlayerState(Enum):
-    """
-    This is used to define the possibles states of an individual through the haunted field
-    An individual has five types of value:
-
-    * ``active``
-    * ``success``
-    * ``monster``
-    * ``blocked``
-    * ``alive``
-    """
-    active = 1
-    success = 2
-    monster = 3
-    blocked = 4
-    alive = 5
+from problems.problem4.haunted_field import PlayerState, HauntedField, CELLS
 
 
 class HauntedFieldProblem(Problem):
@@ -30,16 +11,31 @@ class HauntedFieldProblem(Problem):
 
     def create_individual(self):
         """
-        Creates individual with genome length 243
+        Creates individual with genome length 243 = 3^5
         :rtype: Individual
         """
         return HauntedFieldIndividual(243)
 
     def evaluate_fitness(self, individual):
-        pass
+        line, used = self.haunted_field.cross(individual)
+        score = used + line * self.haunted_field.get_height()
+        state = individual.get_state()
+        if state == PlayerState.succes:
+            score += (self.haunted_field.get_width() * self.haunted_field.get_height() - used) * 10
+        elif state == PlayerState.blocked:
+            score += (self.haunted_field.get_height() - line) * 2
+        elif state == PlayerState.monster:
+            score += (self.haunted_field.get_height() - line) * 20
+        return score
 
     def adapt(self, individual):
-        pass
+        """
+        Considering we cant print the field and the path of individual based on the commands on each iteration,
+            adapt will only return the genome of individual as a str
+        :type individual: Individual
+        :rtype: str
+        """
+        return str(individual)
 
 
 class HauntedFieldIndividual(Individual):
