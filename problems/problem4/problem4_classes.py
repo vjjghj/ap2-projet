@@ -1,12 +1,12 @@
 from problem_interface import Problem
 from individual_interface import Individual
 from random import choice, random
-from problems.problem4.haunted_field import PlayerState, HauntedField, CELLS
+from problems.problem4.haunted_field import PlayerState, HauntedField
 
 
 class HauntedFieldProblem(Problem):
-    def __init__(self, height, width):
-        self.haunted_field = HauntedField(height, width)
+    def __init__(self, height, width, nb_monsters):
+        self.haunted_field = HauntedField(height, width, nb_monsters)
         super(HauntedFieldProblem, self).__init__(True)
 
     def create_individual(self):
@@ -55,7 +55,7 @@ class HauntedFieldIndividual(Individual):
         Returns a random valid direction
         :rtype: str
         """
-        return choice(CELLS)
+        return choice(list('udrl'))
 
     @staticmethod
     def mutate_once(gene, probability):
@@ -75,6 +75,9 @@ class HauntedFieldIndividual(Individual):
 
     def get_state(self):
         return self.state
+
+    def is_active(self):
+        self.state = PlayerState.active
 
     def is_success(self):
         self.state = PlayerState.success

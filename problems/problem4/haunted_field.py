@@ -32,7 +32,7 @@ class PlayerState(Enum):
 class HauntedField(object):
     MOVES = {'u': (-1, 0), 'd': (1, 0), 'r': (0, -1), 'l': (0, 1)}
 
-    def __init__(self, height, width):
+    def __init__(self, height, width, nb_monsters):
         """
         haunted field is a 2D array of height * width char,
         initially all cells are EMPTY
@@ -43,11 +43,15 @@ class HauntedField(object):
         :type height: int
         :param width: width of the field
         :type width : int
+        :param nb_monsters: maximum number of monsters on each line
+        :type nb_monsters: int
+        :UC: 1 <= nb_monsters < width
         """
         self.__width = width
         self.__height = height
         self.__field = [[EMPTY for _ in range(self.__width + 2)] for _ in range(self.__height + 2)]
         self.__init_borders()
+        self.init_monsters(nb_monsters)
         self.__player_pos = (1, ceil(self.__width / 2))
 
     def __init_borders(self):
@@ -144,6 +148,7 @@ class HauntedField(object):
         self.backup_field()
         commands = individual.get_value()
         used = 0
+        individual.is_active()
         while individual.get_state() == PlayerState.active:
             used += 1
             view = self.get_front_view()
@@ -184,6 +189,5 @@ class HauntedField(object):
 
 
 if __name__ == "__main__":
-    b = HauntedField(6, 6)
-    b.init_monsters(4)
+    b = HauntedField(6, 6, 4)
     print(b)
