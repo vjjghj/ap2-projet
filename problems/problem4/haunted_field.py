@@ -148,7 +148,7 @@ class HauntedField(object):
         self.backup_field()
         commands = individual.get_value()
         used = 0
-        individual.is_active()
+        individual.active()
         while individual.get_state() == PlayerState.active:
             used += 1
             view = self.get_front_view()
@@ -158,16 +158,16 @@ class HauntedField(object):
             target_line = self.__player_pos[0] + move[0]
             target_column = self.__player_pos[1] + move[1]
             target_cell_state = self.__field[target_line][target_column]
+            if used >= self.__height * self.__width / 2:
+                individual.alive()
             if target_cell_state == EMPTY:
                 self.__player_pos = target_line, target_column
             elif target_cell_state == MONSTER:
-                individual.is_monster()
+                individual.monster()
             elif target_cell_state == OBSTACLE:
-                individual.is_blocked()
-            elif used >= self.__height * self.__width / 2:
-                individual.is_alive()
+                individual.blocked()
             if self.__player_pos == self.__height - 1:
-                individual.is_succes()
+                individual.success()
         self.restore_field()
         return self.__player_pos[0], used
 

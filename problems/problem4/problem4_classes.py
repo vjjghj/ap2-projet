@@ -20,7 +20,7 @@ class HauntedFieldProblem(Problem):
         line, used = self.haunted_field.cross(individual)
         score = used + line * self.haunted_field.get_height()
         state = individual.get_state()
-        if state == PlayerState.succes:
+        if state == PlayerState.success:
             score += (self.haunted_field.get_width() * self.haunted_field.get_height() - used) * 10
         elif state == PlayerState.blocked:
             score += (self.haunted_field.get_height() - line) * 2
@@ -77,17 +77,17 @@ class HauntedFieldIndividual(Individual):
     def get_state(self):
         return self.state
 
-    def is_active(self):
+    def active(self):
         self.state = PlayerState.active
 
-    def is_success(self):
+    def success(self):
         self.state = PlayerState.success
 
-    def is_monster(self):
+    def monster(self):
         self.state = PlayerState.monster
 
-    def is_blocked(self):
+    def blocked(self):
         self.state = PlayerState.blocked
 
-    def is_alive(self):
+    def alive(self):
         self.state = PlayerState.alive

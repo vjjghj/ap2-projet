@@ -13,6 +13,7 @@ class Problem(object):
         :type maximize: boolean
         """
         self.maximize = maximize
+        print('Problem initialized')
 
     # def best_individual(self, population):
     #     """

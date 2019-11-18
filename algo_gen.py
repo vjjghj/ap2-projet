@@ -24,6 +24,7 @@ class AlgoGen(object):
         self.problem = problem
         self.mutation_probability = mutation_probability
         self.crossover_rate = crossover_rate
+        print('Solver initialized')
 
     def shuffle(self):
         """
