@@ -1,6 +1,5 @@
 from random import shuffle
 from problem_interface import Problem
-from individual_interface import Individual
 
 
 class AlgoGen(object):
@@ -18,10 +17,8 @@ class AlgoGen(object):
         :param mutation_probability: The probability a gene mutates
         :type mutation_probability: int or float
         :param crossover_rate:
-        :UC: population_size % 2 == 0 and population_size >= 5
+        :UC: population_size % 2 == 0 and population_size >= 5 and 0 < mutation_probability < 1
         """
-        if population_size % 2 == 1 or population_size < 5:
-            raise ValueError('The population size must be even and greater than 4')
         self.population = [problem.create_individual() for _ in range(population_size)]
         self.size = population_size
         self.problem = problem
@@ -37,9 +34,10 @@ class AlgoGen(object):
 
     def iter_random_pairs(self):
         """
-        Returns an zip object formed with pairs of individuals from population
+        Returns a zip object formed with pairs of individuals from population
         Each individual is taken exactly once unless self.size % 2 != 0
         :rtype: zip
+        :UC: self.size % 2 == 0 and len(self.population) == self.size
         """
         return zip(self.population[:self.size // 2], self.population[self.size // 2:])
 
@@ -48,7 +46,7 @@ class AlgoGen(object):
         Creates a list of individuals from self.population using selection_method
         :type selection_method: function
         :rtype: list(Individual)
-        :UC: selection must a valid function with shape [Individual, Individual] -> Individual
+        :UC: selection_method must a valid function with shape [Individual, Individual] -> Individual
         """
         return [selection_method(i1, i2) for i1, i2 in self.iter_random_pairs()]
 
@@ -93,11 +91,16 @@ class AlgoGen(object):
         return current_best, self.problem.adapt(current_best), current_best.score
 
     def average_fitness(self):
+        """
+        Returns the average fitness score of population for problem
+        :rtype: float
+        """
         return sum([individual.get_score() for individual in self.population]) / self.size
 
     def solve(self, iterations):
         """
         Runs the genetic algorithm to solve the given problem
+        On each round, prints the current best element of population
         :param iterations: number of iterations to run to optimize the solution
         :type iterations: int
         :rtype: Individual, depending on the problem, int or float

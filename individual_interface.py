@@ -19,8 +19,8 @@ class Individual(object):
         Returns a copy of self
         :rtype: Individual
         """
-        other = type(self)(self.size)
-        other.set_score(self.score)
+        other = type(self)(self.size)  # Allows sub class objects to be copied into the same sub class
+        # other.set_score(self.score)  # Copying score turned out to be unneeded during further development
         other.set_value(self.genome)
         return other
     
@@ -69,6 +69,7 @@ class Individual(object):
     def get_random_gene():
         """
         Returns a random value for a gene, depending on the problem
+        Will be defined in sub classes, as genes used depend on the problem
         :rtype: depends on the problem
         """
         pass
@@ -97,6 +98,7 @@ class Individual(object):
         :return: none
         :UC: 0 <= probability < 1
         """
+        # A different approach should be implemented later to decrease the time and memory needed
         self.genome = [self.mutate_once(gene, probability) for gene in self.genome]
 
     def set_score(self, new_score):
@@ -112,7 +114,7 @@ class Individual(object):
         Changes the genome value of self
         If a problem is given, will actualize self.score accordingly
         :type new_value: list
-        :type problem: Problem
+        :type problem: Problem or NoneType
         :return: none
         """
         self.genome = new_value

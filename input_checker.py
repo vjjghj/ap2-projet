@@ -2,7 +2,7 @@ def test_arg_validity(x, desired_type, condition_test=lambda x: True):
     """
     Tries to convert given variable to desired_type
     Will also check if the variable respects given condition_test function (after conversion)
-    :type x: any
+    :type x: any, will be used for str
     :type desired_type: type
     :type condition_test: function of shape [desired_type] -> boolean
     :rtype: desired_type

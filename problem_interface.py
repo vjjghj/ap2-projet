@@ -14,14 +14,14 @@ class Problem(object):
         """
         self.maximize = maximize
 
-    def best_individual(self, population):
-        """
-        Returns the best fitted individual from population.
-        Depending on the problem, it can corresponds to the individual with highest or lowest fitness value
-        :type population: list(Individual)
-        :rtype: Individual
-        """
-        return max(population, key=lambda x: self.evaluate_fitness(x))
+    # def best_individual(self, population):
+    #     """
+    #     Returns the best fitted individual from population.
+    #     Depending on the problem, it can corresponds to the individual with highest or lowest fitness value
+    #     :type population: list(Individual)
+    #     :rtype: Individual
+    #     """
+    #     return max(population, key=lambda x: self.evaluate_fitness(x))
 
     def create_individual(self):
         """
@@ -55,7 +55,7 @@ class Problem(object):
         :rtype: list(Individual)
         """
         self.evaluate_fitness_for_all(population)
-        return sorted(population, key=lambda x: x.score, reverse=self.maximize)
+        return sorted(population, key=lambda x: x.get_score(), reverse=self.maximize)
 
     def tournament(self, first, second):
         """
