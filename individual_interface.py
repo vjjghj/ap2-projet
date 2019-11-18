@@ -127,3 +127,7 @@ class Individual(object):
         :rtype: str
         """
         return ''.join(map(str, self.genome))
+        # Most individual sub classes use list(str) as genome
+        # this will prevent any error in case of new problem adding
+        # (At the moment, only problem1 and problem2 uses list(int),
+        # which could be changed into list(str) with few modifications)

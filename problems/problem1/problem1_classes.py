@@ -34,7 +34,7 @@ class MaxFunctionProblem(Problem):
         self.x_min = x_min
         self.x_max = x_max
         self.bit_length = bit_length
-        self.biggest_int_value = 2 ** bit_length - 1
+        self.biggest_int_value = 2 ** bit_length - 1  # Equal to int(''.join(['1' for _ in range(bit_length)]), 2)
         super(MaxFunctionProblem, self).__init__(maximize=True)
         # By changing True by False we can aim for the minimum of the function
 
@@ -52,7 +52,7 @@ class MaxFunctionProblem(Problem):
         :type individual: Individual
         :rtype: float
         """
-        n = int(str(individual), 2)
+        n = int(str(individual), 2)  # reminder: Individual.__str__() returns the genome as a string
         int_range = (self.x_max - self.x_min) / self.biggest_int_value
         return self.x_min + n * int_range
 

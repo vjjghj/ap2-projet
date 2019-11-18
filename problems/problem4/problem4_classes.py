@@ -11,7 +11,7 @@ class HauntedFieldProblem(Problem):
 
     def create_individual(self):
         """
-        Creates individual with genome length 243 = 3^5
+        Creates individual with genome length 3^5 = 243
         :rtype: Individual
         """
         return HauntedFieldIndividual(243)
@@ -45,6 +45,7 @@ class HauntedFieldIndividual(Individual):
     def __init__(self, *args, **kwargs):
         """
         Creates an individual to solve the haunted field problem
+        We use not kwarg but we leave it here in case of later modifications
         """
         self.state = PlayerState.active
         super(HauntedFieldIndividual, self).__init__(*args, **kwargs)
@@ -55,7 +56,7 @@ class HauntedFieldIndividual(Individual):
         Returns a random valid direction
         :rtype: str
         """
-        return choice(list('udrl'))
+        return choice(['u', 'd', 'r', 'l'])
 
     @staticmethod
     def mutate_once(gene, probability):

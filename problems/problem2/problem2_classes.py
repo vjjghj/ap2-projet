@@ -1,6 +1,6 @@
 from problem_interface import Problem
 from individual_interface import Individual
-from random import choice, random
+from random import randint, random
 
 
 LETTERS = [chr(i) for i in range(ord('a'), ord('z') + 1)] + [' ']
@@ -17,6 +17,7 @@ class SecretMessageProblem(Problem):
         :UC: all([x in LETTERS for x in message_to_find])
         """
         self.message_to_find = list(map(lambda x: LETTERS.index(x), list(message_to_find)))
+        # We don't need to store the message value, we only keep the corresponding genome
         self.message_length = len(message_to_find)
         super(SecretMessageProblem, self).__init__(maximize=False)
 
@@ -33,7 +34,7 @@ class SecretMessageProblem(Problem):
         :type individual: Individual
         :rtype: int
         """
-        return sum([abs(i - LETTERS.index(c)) for i, c in zip(self.message_to_find, individual.get_value())])
+        return sum([abs(i - j) for i, j in zip(self.message_to_find, individual.get_value())])
 
     def adapt(self, individual):
         """
@@ -41,7 +42,7 @@ class SecretMessageProblem(Problem):
         :type individual: Individual
         :rtype: str
         """
-        return ''.join(individual.get_value())
+        return ''.join([LETTERS[i] for i in individual.get_value()])
 
 
 class SecretMessageIndividual(Individual):
@@ -52,9 +53,11 @@ class SecretMessageIndividual(Individual):
     def get_random_gene():
         """
         Returns a random letter from valid choices
+        As we need to find an individual's score more often than printing the corresponding message,
+        Using the letters' index as genes will gain us computations
         :rtype: str
         """
-        return choice(LETTERS)
+        return randint(0, 26)
 
     @staticmethod
     def mutate_once(gene, probability):
