@@ -67,8 +67,8 @@ class Problem(object):
         self.evaluate_fitness_for_all([first, second])
         first_is_bigger = first.get_score() > second.get_score()
         if first_is_bigger and self.maximize or not self.maximize and not first_is_bigger:
-            return first
-        return second
+            return first.copy()
+        return second.copy()
 
     def adapt(self, individual):
         """

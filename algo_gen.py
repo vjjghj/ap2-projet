@@ -39,6 +39,7 @@ class AlgoGen(object):
         :rtype: zip
         :UC: self.size % 2 == 0 and len(self.population) == self.size
         """
+        self.shuffle()
         return zip(self.population[:self.size // 2], self.population[self.size // 2:])
 
     def next_gen_creator(self, selection_method):
@@ -89,6 +90,16 @@ class AlgoGen(object):
         else:
             current_best = min(self.population, key=lambda x: x.score)
         return current_best, self.problem.adapt(current_best), current_best.score
+
+    @staticmethod
+    def display_pop(population):
+        """
+        Used for debugging purposes,
+        Prints every individual's fitness from population
+        :type population: list(Individual)
+        :return: none
+        """
+        print(', '.join([str(individual.get_score()) for individual in population]))
 
     def average_fitness(self):
         """

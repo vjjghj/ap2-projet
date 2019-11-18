@@ -143,7 +143,7 @@ class Maze(object):
         :type individual: Individual
         :return: none
         """
-        pass
+        print('not yet supported')
 
 
 if __name__ == "__main__":
