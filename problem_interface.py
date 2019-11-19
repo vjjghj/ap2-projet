@@ -2,6 +2,12 @@ from functools import wraps
 
 
 def init_store(init):
+    """
+    Wraps the __init__ from a class
+    Will store the params names and values in self.init_values as a dictionary
+    :param init: __init__ function
+    :return: __init__ function storing the params names and values
+    """
     @wraps(init)
     def wrapper(*args, **kwargs):
         self = args[0]

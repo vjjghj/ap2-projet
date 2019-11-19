@@ -94,7 +94,7 @@ class AlgoGen(object):
 
     def current_best_str(self):
         current_best = self.get_current_best()
-        return 'value:{}, fitness: {}'.format(*current_best[1:])
+        return 'value: {}, fitness: {}'.format(*current_best[1:])
 
     @staticmethod
     def display_pop(population):

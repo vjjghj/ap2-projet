@@ -23,4 +23,4 @@ if __name__ == '__main__':
     solver = AlgoGen(problem, population_size, mutation_probability, crossover_rate)
     best = solver.solve(iterations)
     print('Best path found: {}, value: {}'.format(*best[1:]))
-    print(problem.maze.draw_path(best))
+    problem.maze.draw_path(best)

@@ -6,8 +6,8 @@ from problems.problem4.haunted_field import PlayerState, HauntedField
 
 class HauntedFieldProblem(Problem):
     @init_store
-    def __init__(self, height, width, nb_monsters):
-        self.haunted_field = HauntedField(height, width, nb_monsters)
+    def __init__(self, height, width, nb_monsters, fields_to_cross):
+        self.fields = [HauntedField(height, width, nb_monsters) for _ in range(fields_to_cross)]
         super(HauntedFieldProblem, self).__init__(True)
 
     def create_individual(self):
@@ -18,15 +18,17 @@ class HauntedFieldProblem(Problem):
         return HauntedFieldIndividual(243)
 
     def evaluate_fitness(self, individual):
-        line, used = self.haunted_field.cross(individual)
-        score = used + line * self.haunted_field.get_height()
-        state = individual.get_state()
-        if state == PlayerState.success:
-            score += (self.haunted_field.get_width() * self.haunted_field.get_height() - used) * 10
-        elif state == PlayerState.blocked:
-            score += (self.haunted_field.get_height() - line) * 2
-        elif state == PlayerState.monster:
-            score += (self.haunted_field.get_height() - line) * 20
+        score = 0
+        for field in self.fields:
+            line, used = field.cross(individual)
+            score += used + line * field.get_height()
+            state = individual.get_state()
+            if state == PlayerState.success:
+                score += (field.get_width() * field.get_height() - used) * 10
+            elif state == PlayerState.blocked:
+                score += (field.get_height() - line) * 2
+            elif state == PlayerState.monster:
+                score += (field.get_height() - line) * 20
         return score
 
     def adapt(self, individual):
@@ -92,3 +94,22 @@ class HauntedFieldIndividual(Individual):
 
     def alive(self):
         self.state = PlayerState.alive
+
+
+def tester(individual, width, height, nb_monsters, fields_to_cross):
+    """
+    Tests the number of fields the given individual can cross when trying fields_to_cross times
+    :type individual: HauntedFieldIndividual
+    :type width: int
+    :type height: int
+    :type nb_monsters: int
+    :type fields_to_cross: int
+    :rtype: int
+    """
+    fields = [HauntedField(height, width, nb_monsters) for _ in range(fields_to_cross)]
+    crossed = 0
+    for field in fields:
+        field.cross(individual)
+        if individual.get_state() is PlayerState.success:
+            crossed += 1
+    return crossed

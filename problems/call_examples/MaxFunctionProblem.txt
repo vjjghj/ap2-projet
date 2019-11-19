@@ -1,2 +1,2 @@
 x_min: 13.0 | x_max: 18.0 | bit_length: 12 | Problem: MaxFunctionProblem
-value:16.526251526251528, fitness: 136.26315469105566
+value: 16.525030525030523, fitness: 136.26453131778314
