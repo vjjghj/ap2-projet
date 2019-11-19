@@ -1,10 +1,11 @@
-from problem_interface import Problem
+from problem_interface import Problem, init_store
 from individual_interface import Individual
 from random import choice, random
 from problems.problem4.haunted_field import PlayerState, HauntedField
 
 
 class HauntedFieldProblem(Problem):
+    @init_store
     def __init__(self, height, width, nb_monsters):
         self.haunted_field = HauntedField(height, width, nb_monsters)
         super(HauntedFieldProblem, self).__init__(True)

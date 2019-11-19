@@ -1,0 +1,2 @@
+maze_file: D:\python\AP2\projet\problems\problem3\mazes\maze1.txt | Problem: LabyrinthProblem
+value:SSENNEESSSENNESSESSWSEENWNWSWEESESSWSENEEEWNWNSWN, fitness: 1031

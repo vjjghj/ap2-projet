@@ -1,4 +1,4 @@
-from problem_interface import Problem
+from problem_interface import Problem, init_store
 from individual_interface import Individual
 from random import randint, random
 
@@ -10,6 +10,7 @@ class SecretMessageProblem(Problem):
     """
     In this problem we want to find a given secret message
     """
+    @init_store
     def __init__(self, message_to_find):
         """
         Creates the problem with a given secret message

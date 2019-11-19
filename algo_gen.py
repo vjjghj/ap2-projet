@@ -113,12 +113,13 @@ class AlgoGen(object):
         """
         return sum([individual.get_score() for individual in self.population]) / self.size
 
-    def solve(self, iterations):
+    def solve(self, iterations, export=True):
         """
         Runs the genetic algorithm to solve the given problem
         On each round, prints the current best element of population
         :param iterations: number of iterations to run to optimize the solution
         :type iterations: int
+        :type export: boolean
         :rtype: Individual, depending on the problem, int or float
         :UC: iterations > 0
         """
@@ -127,11 +128,15 @@ class AlgoGen(object):
             average = self.average_fitness()
             best = self.current_best_str()
             print('Iterations {}; {}; average {}'.format(i, best, average))
-        print(str(self.problem))
-        print(self.current_best_str())
+        if export:
+            self.export_best()
         return self.get_current_best()
 
-    def export_best(self, target_file):
+    def export_best(self, target_file=None):
+        problem = self.problem
+        if not target_file:
+            target_file = 'call_examples/' + str(problem.init_values['Problem']) + '.txt'
         with open(target_file, 'w') as target:
-            target.write(str(self.problem))
+            target.write(str(problem) + '\n')
             target.write(self.current_best_str())
+        print('Exported')

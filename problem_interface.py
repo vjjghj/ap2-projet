@@ -1,3 +1,18 @@
+from functools import wraps
+
+
+def init_store(init):
+    @wraps(init)
+    def wrapper(*args, **kwargs):
+        self = args[0]
+        fields = args[1:]
+        field_dict = {fName: fVal for fName, fVal in zip(init.__code__.co_varnames[1:], fields)}
+        self.init_values = dict(**field_dict, **kwargs)
+        self.init_values['Problem'] = type(self).__name__
+        init(*args, **kwargs)
+    return wrapper
+
+
 class Problem(object):
     """
     Parent class for the different problems we will have to solve
@@ -84,4 +99,4 @@ class Problem(object):
         Converts problem into a string
         :rtype: str
         """
-        return ' | '.join(['{}: {}'.format(key, item) for key, item in self.__dict__.items()])
+        return ' | '.join(['{}: {}'.format(key, item) for key, item in self.init_values.items()])

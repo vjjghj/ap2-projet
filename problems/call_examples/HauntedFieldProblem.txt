@@ -1,0 +1,2 @@
+height: 16 | width: 16 | nb_monsters: 4 | Problem: HauntedFieldProblem
+value:rrlluullululldrllludddrdlrddudlduruulllurllrudurrulllrulddudlluudluddlrldlrdrrlludldldluuululruludrrullrlllddrlruldruuruuddlrrrudurdldrdrlrrlddllldlddlrurrddudldrdrdrduuuuddllludluddllurlrrrrddluduuurdurrlrlurrluuldrdddduldruuruurlrrrlllldlrdl, fitness: 378

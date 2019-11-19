@@ -1,4 +1,4 @@
-from problem_interface import Problem
+from problem_interface import Problem, init_store
 from individual_interface import Individual
 from problems.problem3.maze import Maze
 from random import choice, random
@@ -10,6 +10,7 @@ class LabyrinthProblem(Problem):
     In this problem we want to find the shortest way out of a maze
     Individual's genome will be a list of directions
     """
+    @init_store
     def __init__(self, maze_file):
         """
         Creates a problem where the goal is to find the shortest way out of a maze

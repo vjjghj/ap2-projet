@@ -1,4 +1,4 @@
-from problem_interface import Problem
+from problem_interface import Problem, init_store
 from individual_interface import Individual
 from math import sin, cos
 from random import randint, random
@@ -20,6 +20,7 @@ class MaxFunctionProblem(Problem):
     We work in a given interval
     Individual's genome will be a list of bits, representing a floating value in the interval
     """
+    @init_store
     def __init__(self, x_min, x_max, bit_length, fx=f):
         """
         Creates a problem where the goal is to find the maximum of a function in a given interval
