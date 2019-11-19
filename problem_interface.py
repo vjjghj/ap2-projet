@@ -84,4 +84,4 @@ class Problem(object):
         Converts problem into a string
         :rtype: str
         """
-        pass
+        return ' | '.join(['{}: {}'.format(key, item) for key, item in self.__dict__.items()])

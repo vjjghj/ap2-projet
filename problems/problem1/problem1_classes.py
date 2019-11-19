@@ -62,7 +62,7 @@ class MaxFunctionProblem(Problem):
         :type individual: Individual
         :rtype: float
         """
-        return f(self.adapt(individual))
+        return self.f(self.adapt(individual))
 
 
 class MaxFunctionIndividual(Individual):

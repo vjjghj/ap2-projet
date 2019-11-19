@@ -17,7 +17,7 @@ class AlgoGen(object):
         :param mutation_probability: The probability a gene mutates
         :type mutation_probability: int or float
         :param crossover_rate:
-        :UC: population_size % 2 == 0 and population_size >= 5 and 0 < mutation_probability < 1
+        :UC: population_size % 2 == 0 and population_size >= 5 and 0 <= mutation_probability < 1
         """
         self.population = [problem.create_individual() for _ in range(population_size)]
         self.size = population_size
@@ -57,7 +57,7 @@ class AlgoGen(object):
         Creates the next generation basis according to the problem
         :rtype: list(Individual)
         """
-        next_gen1 = self.next_gen_creator(lambda x, y: self.problem.tournament(x, y))
+        next_gen1 = self.next_gen_creator(self.problem.tournament)
         next_gen2 = self.next_gen_creator(lambda x, y: self.problem.tournament(*x.cross_with(y)))
         return next_gen1 + next_gen2
 
@@ -92,6 +92,10 @@ class AlgoGen(object):
             current_best = min(self.population, key=lambda x: x.score)
         return current_best, self.problem.adapt(current_best), current_best.score
 
+    def current_best_str(self):
+        current_best = self.get_current_best()
+        return 'value:{}, fitness: {}'.format(*current_best[1:])
+
     @staticmethod
     def display_pop(population):
         """
@@ -118,15 +122,16 @@ class AlgoGen(object):
         :rtype: Individual, depending on the problem, int or float
         :UC: iterations > 0
         """
-        current_best = ()
         for i in range(iterations):
             self.iter_gen()
-            current_best = self.get_current_best()
             average = self.average_fitness()
-            print('Iteration {}: value:{}, fitness: {}, average: {}'.format(i, *current_best[1:], average))
-        return current_best
+            best = self.current_best_str()
+            print('Iterations {}; {}; average {}'.format(i, best, average))
+        print(str(self.problem))
+        print(self.current_best_str())
+        return self.get_current_best()
 
     def export_best(self, target_file):
         with open(target_file, 'w') as target:
-            target.write(self.get_current_best())
             target.write(str(self.problem))
+            target.write(self.current_best_str())
