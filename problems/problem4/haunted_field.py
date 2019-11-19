@@ -149,7 +149,7 @@ class HauntedField(object):
         commands = individual.get_value()
         used = 0
         individual.active()
-        while individual.get_state() == PlayerState.active:
+        while individual.get_state() is PlayerState.active:
             used += 1
             view = self.get_front_view()
             code = self.get_view_code(view)

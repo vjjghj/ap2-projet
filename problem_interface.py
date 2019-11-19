@@ -78,3 +78,10 @@ class Problem(object):
         :rtype: depends on the problem
         """
         pass
+
+    def __str__(self):
+        """
+        Converts problem into a string
+        :rtype: str
+        """
+        pass

@@ -125,3 +125,8 @@ class AlgoGen(object):
             average = self.average_fitness()
             print('Iteration {}: value:{}, fitness: {}, average: {}'.format(i, *current_best[1:], average))
         return current_best
+
+    def export_best(self, target_file):
+        with open(target_file, 'w') as target:
+            target.write(self.get_current_best())
+            target.write(str(self.problem))
