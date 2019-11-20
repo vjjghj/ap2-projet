@@ -7,7 +7,7 @@ class AlgoGen(object):
     This class is used to solve a given problem by using a genetic algorithm
     Handles the population, its evolution, and returns the best fitted individual for the given problem
     """
-    def __init__(self, problem, population_size, mutation_probability, crossover_rate):
+    def __init__(self, problem, population_size, mutation_probability):
         """
         Creates a AlgoGen object
         :param problem: The problem the population is used to solve.
@@ -16,14 +16,12 @@ class AlgoGen(object):
         :type population_size: int
         :param mutation_probability: The probability a gene mutates
         :type mutation_probability: int or float
-        :param crossover_rate:
         :UC: population_size % 2 == 0 and population_size >= 5 and 0 <= mutation_probability < 1
         """
-        self.population = [problem.create_individual() for _ in range(population_size)]
-        self.size = population_size
-        self.problem = problem
-        self.mutation_probability = mutation_probability
-        self.crossover_rate = crossover_rate
+        self.__population = [problem.create_individual() for _ in range(population_size)]
+        self.__size = population_size
+        self.__problem = problem
+        self.__mutation_probability = mutation_probability
         print('Solver initialized')
 
     def shuffle(self):
@@ -31,7 +29,7 @@ class AlgoGen(object):
         Randomly shuffles the population
         :return: none
         """
-        shuffle(self.population)
+        shuffle(self.__population)
 
     def iter_random_pairs(self):
         """
@@ -41,7 +39,7 @@ class AlgoGen(object):
         :UC: self.size % 2 == 0 and len(self.population) == self.size
         """
         self.shuffle()
-        return zip(self.population[:self.size // 2], self.population[self.size // 2:])
+        return zip(self.__population[:self.__size // 2], self.__population[self.__size // 2:])
 
     def next_gen_creator(self, selection_method):
         """
@@ -57,8 +55,8 @@ class AlgoGen(object):
         Creates the next generation basis according to the problem
         :rtype: list(Individual)
         """
-        next_gen1 = self.next_gen_creator(self.problem.tournament)
-        next_gen2 = self.next_gen_creator(lambda x, y: self.problem.tournament(*x.cross_with(y)))
+        next_gen1 = self.next_gen_creator(self.__problem.tournament)
+        next_gen2 = self.next_gen_creator(lambda x, y: self.__problem.tournament(*x.cross_with(y)))
         return next_gen1 + next_gen2
 
     def mutate(self, population):
@@ -68,29 +66,29 @@ class AlgoGen(object):
         :return: none
         """
         for individual in population:
-            individual.mutate(self.mutation_probability)
+            individual.mutate(self.__mutation_probability)
 
     def iter_gen(self):
         """
         Iterates a round of adaptation to self.population
         :return: none
         """
-        best_five = self.problem.sort_population(self.population)[:5]
+        best_five = self.__problem.sort_population(self.__population)[:5]
         next_gen = self.next_gen()
         self.mutate(next_gen)
-        next_gen_best = self.problem.sort_population(next_gen)[:-5]
-        self.population = best_five + next_gen_best
+        next_gen_best = self.__problem.sort_population(next_gen)[:-5]
+        self.__population = best_five + next_gen_best
 
     def get_current_best(self):
         """
         Returns the current best fitted Individual in self.population and its fitness
         :rtype: Individual, depending on the problem, int or float
         """
-        if self.problem.maximize:
-            current_best = max(self.population, key=lambda x: x.score)
+        if self.__problem.get_maximize():
+            current_best = max(self.__population, key=lambda x: x.get_score())
         else:
-            current_best = min(self.population, key=lambda x: x.score)
-        return current_best, self.problem.adapt(current_best), current_best.score
+            current_best = min(self.__population, key=lambda x: x.get_score())
+        return current_best, self.__problem.adapt(current_best), current_best.get_score()
 
     def current_best_str(self):
         current_best = self.get_current_best()
@@ -111,7 +109,7 @@ class AlgoGen(object):
         Returns the average fitness score of population for problem
         :rtype: float
         """
-        return sum([individual.get_score() for individual in self.population]) / self.size
+        return sum([individual.get_score() for individual in self.__population]) / self.__size
 
     def solve(self, iterations, export=True):
         """
@@ -133,12 +131,12 @@ class AlgoGen(object):
         return self.get_current_best()
 
     def export_best(self, iterations, target_file=None):
-        problem = self.problem
+        problem = self.__problem
         if not target_file:
-            target_file = 'call_examples/' + str(problem.init_values['Problem']) + '.txt'
+            target_file = 'call_examples/' + str(problem.get_init_values()['Problem']) + '.txt'
         with open(target_file, 'w') as target:
             target.write('Iterations: {} | Mutation probability: {} |'
-                         ' Population size: {}\n'.format(iterations, self.mutation_probability, self.size))
+                         ' Population size: {}\n'.format(iterations, self.__mutation_probability, self.__size))
             target.write(str(problem) + '\n')
             target.write(self.current_best_str())
         print('Exported')

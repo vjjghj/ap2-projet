@@ -19,8 +19,7 @@ if __name__ == '__main__':
     iterations = test_arg_validity(sys.argv[3], int, is_positive)
     maze_file = test_arg_validity(sys.argv[4], str)  # Actually useless, only use for coherence
     problem = LabyrinthProblem(maze_file)
-    crossover_rate = 0
-    solver = AlgoGen(problem, population_size, mutation_probability, crossover_rate)
+    solver = AlgoGen(problem, population_size, mutation_probability)
     best = solver.solve(iterations)
     print('Best path found: {}, value: {}'.format(*best[1:]))
-    problem.maze.draw_path(best)
+    problem.get_maze().draw_path(best)

@@ -17,9 +17,9 @@ class SecretMessageProblem(Problem):
         :type message_to_find: str
         :UC: all([x in LETTERS for x in message_to_find])
         """
-        self.message_to_find = list(map(lambda x: LETTERS.index(x), list(message_to_find)))
+        self.__message_to_find = list(map(lambda x: LETTERS.index(x), list(message_to_find)))
         # We don't need to store the message value, we only keep the corresponding genome
-        self.message_length = len(message_to_find)
+        self.__message_length = len(message_to_find)
         super(SecretMessageProblem, self).__init__(maximize=False)
 
     def create_individual(self):
@@ -27,7 +27,7 @@ class SecretMessageProblem(Problem):
         Creates individual with genome equal to the length of the secret message
         :rtype: Individual
         """
-        return SecretMessageIndividual(self.message_length)
+        return SecretMessageIndividual(self.__message_length)
 
     def evaluate_fitness(self, individual):
         """
@@ -35,7 +35,7 @@ class SecretMessageProblem(Problem):
         :type individual: Individual
         :rtype: int
         """
-        return sum([abs(i - j) for i, j in zip(self.message_to_find, individual.get_value())])
+        return sum([abs(i - j) for i, j in zip(self.__message_to_find, individual.get_value())])
 
     def adapt(self, individual):
         """

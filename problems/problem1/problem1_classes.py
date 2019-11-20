@@ -31,11 +31,11 @@ class MaxFunctionProblem(Problem):
         :type fx: function
         :UC: x_min < x_max and bit_length > 0
         """
-        self.f = fx
-        self.x_min = x_min
-        self.x_max = x_max
-        self.bit_length = bit_length
-        self.biggest_int_value = 2 ** bit_length - 1  # Equal to int(''.join(['1' for _ in range(bit_length)]), 2)
+        self.__f = fx
+        self.__x_min = x_min
+        self.__x_max = x_max
+        self.__bit_length = bit_length
+        self.__biggest_int_value = 2 ** bit_length - 1  # Equal to int(''.join(['1' for _ in range(bit_length)]), 2)
         super(MaxFunctionProblem, self).__init__(maximize=True)
         # By changing True by False we can aim for the minimum of the function
 
@@ -44,7 +44,7 @@ class MaxFunctionProblem(Problem):
         Creates an individual with genome length equals to bit_length
         :rtype: Individual
         """
-        return MaxFunctionIndividual(self.bit_length)
+        return MaxFunctionIndividual(self.__bit_length)
 
     def adapt(self, individual):
         """
@@ -54,8 +54,8 @@ class MaxFunctionProblem(Problem):
         :rtype: float
         """
         n = int(str(individual), 2)  # reminder: Individual.__str__() returns the genome as a string
-        int_range = (self.x_max - self.x_min) / self.biggest_int_value
-        return self.x_min + n * int_range
+        int_range = (self.__x_max - self.__x_min) / self.__biggest_int_value
+        return self.__x_min + n * int_range
 
     def evaluate_fitness(self, individual):
         """
@@ -63,7 +63,7 @@ class MaxFunctionProblem(Problem):
         :type individual: Individual
         :rtype: float
         """
-        return self.f(self.adapt(individual))
+        return self.__f(self.adapt(individual))
 
 
 class MaxFunctionIndividual(Individual):

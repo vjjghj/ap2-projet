@@ -18,8 +18,8 @@ class LabyrinthProblem(Problem):
         :type maze_file: str
         :UC: maze_file has to be a valid path to a valid maze file
         """
-        self.maze = Maze(maze_file)
-        self.max_length = self.maze.get_size()
+        self.__maze = Maze(maze_file)
+        self.__max_length = self.__maze.get_size()
         super(LabyrinthProblem, self).__init__(maximize=True)
 
     def create_individual(self):
@@ -27,7 +27,7 @@ class LabyrinthProblem(Problem):
         Creates individual with genome length equal to max_length
         :rtype: Individual
         """
-        return LabyrinthIndividual(self.max_length)
+        return LabyrinthIndividual(self.__max_length)
 
     def evaluate_fitness(self, individual):
         """
@@ -36,8 +36,8 @@ class LabyrinthProblem(Problem):
         :type individual: Individual
         :rtype: int
         """
-        nb_steps, distance = self.maze.try_path(individual.get_value())
-        adapted_distance = floor(self.maze.get_width() / 2) - distance
+        nb_steps, distance = self.__maze.try_path(individual.get_value())
+        adapted_distance = floor(self.__maze.get_width() / 2) - distance
         score = max(0, adapted_distance) ** 2 + nb_steps
         if distance == 0:
             score += 1000
@@ -51,6 +51,13 @@ class LabyrinthProblem(Problem):
         :rtype: str
         """
         return str(individual)
+
+    def get_maze(self):
+        """
+        Returns the current maze
+        :rtype: Maze
+        """
+        return self.__maze
 
 
 class LabyrinthIndividual(Individual):

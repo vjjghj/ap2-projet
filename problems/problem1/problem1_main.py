@@ -20,8 +20,7 @@ if __name__ == '__main__':
     x_min = test_arg_validity(sys.argv[4], float)
     x_max = test_arg_validity(sys.argv[5], float, lambda x: is_greater(x, x_min))
     bit_length = test_arg_validity(sys.argv[6], int, is_positive)
-    crossover_rate = 0  # To change
     problem = MaxFunctionProblem(x_min, x_max, bit_length)
-    solver = AlgoGen(problem, population_size, mutation_probability, crossover_rate)
+    solver = AlgoGen(problem, population_size, mutation_probability)
     best = solver.solve(iterations)
     print('Maximum found: f({}) = {} (literal value: {})'.format(*best[1:], best[0]))

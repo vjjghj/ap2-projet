@@ -33,7 +33,7 @@ class Problem(object):
         Creates a problem, only argument is used to choose whether the fitness score has to be maximized or not
         :type maximize: boolean
         """
-        self.maximize = maximize
+        self.__maximize = maximize
         print('Problem initialized')
 
     # def best_individual(self, population):
@@ -77,7 +77,7 @@ class Problem(object):
         :rtype: list(Individual)
         """
         self.evaluate_fitness_for_all(population)
-        return sorted(population, key=lambda x: x.get_score(), reverse=self.maximize)
+        return sorted(population, key=lambda x: x.get_score(), reverse=self.__maximize)
 
     def tournament(self, first, second):
         """
@@ -88,7 +88,7 @@ class Problem(object):
         """
         self.evaluate_fitness_for_all([first, second])
         first_is_bigger = first.get_score() > second.get_score()
-        if first_is_bigger and self.maximize or not self.maximize and not first_is_bigger:
+        if first_is_bigger and self.__maximize or not self.__maximize and not first_is_bigger:
             return first.copy()
         return second.copy()
 
@@ -99,6 +99,20 @@ class Problem(object):
         :rtype: depends on the problem
         """
         pass
+
+    def get_maximize(self):
+        """
+        Returns the value of maximize
+        :rtype: boolean
+        """
+        return self.__maximize
+
+    def get_init_values(self):
+        """
+        Returns the initialization values of the problem
+        :rtype: dict
+        """
+        return self.init_values
 
     def __str__(self):
         """

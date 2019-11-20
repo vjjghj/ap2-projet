@@ -50,7 +50,7 @@ class HauntedFieldIndividual(Individual):
         Creates an individual to solve the haunted field problem
         We use not kwarg but we leave it here in case of later modifications
         """
-        self.state = PlayerState.active
+        self.__state = PlayerState.active
         super(HauntedFieldIndividual, self).__init__(*args, **kwargs)
 
     @staticmethod
@@ -78,22 +78,22 @@ class HauntedFieldIndividual(Individual):
         return gene
 
     def get_state(self):
-        return self.state
+        return self.__state
 
     def active(self):
-        self.state = PlayerState.active
+        self.__state = PlayerState.active
 
     def success(self):
-        self.state = PlayerState.success
+        self.__state = PlayerState.success
 
     def monster(self):
-        self.state = PlayerState.monster
+        self.__state = PlayerState.monster
 
     def blocked(self):
-        self.state = PlayerState.blocked
+        self.__state = PlayerState.blocked
 
     def alive(self):
-        self.state = PlayerState.alive
+        self.__state = PlayerState.alive
 
 
 def tester(individual, width, height, nb_monsters, fields_to_cross):

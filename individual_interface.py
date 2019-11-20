@@ -9,19 +9,19 @@ class Individual(object):
         mutate_once(gene, probability) <- static method
     """
     def __init__(self, size):
-        self.size = size
-        self.genome = list()
+        self.__size = size
+        self.__genome = list()
         self.init_value()
-        self.score = 0
+        self.__score = 0
 
     def copy(self):
         """
         Returns a copy of self
         :rtype: Individual
         """
-        other = type(self)(self.size)  # Allows sub class objects to be copied into the same sub class
+        other = type(self)(self.__size)  # Allows sub class objects to be copied into the same sub class
         # other.set_score(self.score)  # Copying score turned out to be unneeded during further development
-        other.set_value(self.genome)
+        other.set_value(self.__genome)
         return other
     
     def cross_with(self, other):
@@ -30,10 +30,10 @@ class Individual(object):
         :type other: Individual
         :rtype: Individual, Individual
         """
-        n = randint(0, len(self.genome) - 1)
+        n = randint(0, len(self.__genome) - 1)
         x1, x2 = self.copy(), other.copy()
-        x1.set_value(self.genome[:n] + other.genome[n:])
-        x2.set_value(other.genome[:n] + self.genome[n:])
+        x1.set_value(self.__genome[:n] + other.get_value()[n:])
+        x2.set_value(other.get_value()[:n] + self.__genome[n:])
         return x1, x2
 
     def evaluate(self, problem):
@@ -42,28 +42,28 @@ class Individual(object):
         :type problem: Problem
         :return: none
         """
-        self.score = problem.evaluate_fitness(self)
+        self.__score = problem.evaluate_fitness(self)
 
     def get_score(self):
         """
         Returns the fitness score for self
         :rtype: int or float
         """
-        return self.score
+        return self.__score
 
     def get_size(self):
         """
         Returns the size of self's genome
         :rtype: int
         """
-        return self.size
+        return self.__size
 
     def get_value(self):
         """
         Returns the genome of self
         :rtype: list
         """
-        return self.genome
+        return self.__genome
 
     @staticmethod
     def get_random_gene():
@@ -79,7 +79,7 @@ class Individual(object):
         Randomly initializes self's genome
         :return: none
         """
-        self.genome = [self.get_random_gene() for _ in range(self.size)]
+        self.__genome = [self.get_random_gene() for _ in range(self.__size)]
 
     @staticmethod
     def mutate_once(gene, probability):
@@ -99,7 +99,7 @@ class Individual(object):
         :UC: 0 <= probability < 1
         """
         # A different approach should be implemented later to decrease the time and memory needed
-        self.genome = [self.mutate_once(gene, probability) for gene in self.genome]
+        self.__genome = [self.mutate_once(gene, probability) for gene in self.__genome]
 
     def set_score(self, new_score):
         """
@@ -107,7 +107,7 @@ class Individual(object):
         :type new_score: int or float
         :return: none
         """
-        self.score = new_score
+        self.__score = new_score
 
     def set_value(self, new_value, problem=None):
         """
@@ -117,7 +117,7 @@ class Individual(object):
         :type problem: Problem or NoneType
         :return: none
         """
-        self.genome = new_value
+        self.__genome = new_value
         if problem:
             self.evaluate(problem)
 
@@ -126,7 +126,7 @@ class Individual(object):
         Returns a str representing self's genome
         :rtype: str
         """
-        return ''.join(map(str, self.genome))
+        return ''.join(map(str, self.__genome))
         # Most individual sub classes use list(str) as genome
         # this will prevent any error in case of new problem adding
         # (At the moment, only problem1 and problem2 uses list(int),
