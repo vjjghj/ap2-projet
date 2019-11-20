@@ -12,7 +12,7 @@ def init_store(init):
     def wrapper(*args, **kwargs):
         self = args[0]
         fields = args[1:]
-        field_dict = {fName: fVal for fName, fVal in zip(init.__code__.co_varnames[1:], fields)}
+        field_dict = {arg_name: arg_val for arg_name, arg_val in zip(init.__code__.co_varnames[1:], fields)}
         self.init_values = dict(**field_dict, **kwargs)
         self.init_values['Problem'] = type(self).__name__
         init(*args, **kwargs)

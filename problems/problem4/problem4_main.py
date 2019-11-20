@@ -37,7 +37,8 @@ if __name__ == '__main__':
     else:
         individual = HauntedFieldIndividual(243)
         with open(parentdir + '/problems/call_examples/HauntedFieldProblem.txt', 'r') as call_file:
-            call_file.readline()  # First line contains unneeded problem's informations
+            call_file.readline()  # First two lines contains unneeded problem's informations
+            call_file.readline()
             individual.set_value(list(call_file.readline().split(' ')[1][:-1]))
         print('Successfully imported')
         print(str(individual))

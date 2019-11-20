@@ -129,14 +129,16 @@ class AlgoGen(object):
             best = self.current_best_str()
             print('Iterations {}; {}; average {}'.format(i, best, average))
         if export:
-            self.export_best()
+            self.export_best(iterations)
         return self.get_current_best()
 
-    def export_best(self, target_file=None):
+    def export_best(self, iterations, target_file=None):
         problem = self.problem
         if not target_file:
             target_file = 'call_examples/' + str(problem.init_values['Problem']) + '.txt'
         with open(target_file, 'w') as target:
+            target.write('Iterations: {} | Mutation probability: {} |'
+                         ' Population size: {}\n'.format(iterations, self.mutation_probability, self.size))
             target.write(str(problem) + '\n')
             target.write(self.current_best_str())
         print('Exported')
