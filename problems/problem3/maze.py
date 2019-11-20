@@ -86,7 +86,6 @@ class Maze(object):
         """
         visited = []
         nb_steps = 0
-        distance = -1
         current_cell = self.__start
         while current_cell != self.__exit and \
                 nb_steps < len(path) and \
