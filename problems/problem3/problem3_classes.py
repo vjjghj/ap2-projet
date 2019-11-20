@@ -1,4 +1,4 @@
-from problem_interface import Problem, init_store
+from problem_interface import Problem
 from individual_interface import Individual
 from problems.problem3.maze import Maze
 from random import choice, random
@@ -10,17 +10,16 @@ class LabyrinthProblem(Problem):
     In this problem we want to find the shortest way out of a maze
     Individual's genome will be a list of directions
     """
-    @init_store
-    def __init__(self, maze_file):
+    def __init__(self, **kwargs):
         """
         Creates a problem where the goal is to find the shortest way out of a maze
         Uses individuals with direction genes, with genome length equal to the number of cells in the maze
         :type maze_file: str
         :UC: maze_file has to be a valid path to a valid maze file
         """
-        self.__maze = Maze(maze_file)
+        self.__maze = Maze(kwargs['maze_file'])
         self.__max_length = self.__maze.get_size()
-        super(LabyrinthProblem, self).__init__(maximize=True)
+        super(LabyrinthProblem, self).__init__(maximize=True, **kwargs)
 
     def create_individual(self):
         """

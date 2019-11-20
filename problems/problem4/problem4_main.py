@@ -30,8 +30,9 @@ if __name__ == '__main__':
     # To ensure every field is crossable we could use:
     # nb_monster = test_arg_validity(sys.argv[6], int, is_in_range(1, (width - 1) // 2))
     if run == 'r':
-        problem = HauntedFieldProblem(height, width, nb_monsters, fields_to_cross)
-        solver = AlgoGen(problem, population_size, mutation_probability)
+        problem = HauntedFieldProblem(height=height, width=width, nb_monsters=nb_monsters,
+                                      fields_to_cross=fields_to_cross)
+        solver = AlgoGen(problem=problem, population_size=population_size, mutation_probability=mutation_probability)
         best = solver.solve(iterations)
     else:
         individual = HauntedFieldIndividual(243)

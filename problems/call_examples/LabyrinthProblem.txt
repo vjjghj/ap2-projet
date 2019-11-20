@@ -1,3 +1,3 @@
 Iterations: 200 | Mutation probability: 0.05 | Population size: 150
 maze_file: D:\python\AP2\projet\problems\problem3\mazes\maze1.txt | Problem: LabyrinthProblem
-value: SSEESWWSSSENENESSENNEESWSENSNSWESWENWESSSNESEWESW, fitness: 1035
+value: SSENEESSENNESSESSWSEESSNNWESSNSNNWEEESWWSENENEWNS, fitness: 1029

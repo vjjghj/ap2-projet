@@ -1,25 +1,7 @@
-from functools import wraps
+from base_class import Base
 
 
-def init_store(init):
-    """
-    Wraps the __init__ from a class
-    Will store the params names and values in self.init_values as a dictionary
-    :param init: __init__ function
-    :return: __init__ function storing the params names and values
-    """
-    @wraps(init)
-    def wrapper(*args, **kwargs):
-        self = args[0]
-        fields = args[1:]
-        field_dict = {arg_name: arg_val for arg_name, arg_val in zip(init.__code__.co_varnames[1:], fields)}
-        self.init_values = dict(**field_dict, **kwargs)
-        self.init_values['Problem'] = type(self).__name__
-        init(*args, **kwargs)
-    return wrapper
-
-
-class Problem(object):
+class Problem(Base):
     """
     Parent class for the different problems we will have to solve
     Function to create/override:
@@ -28,12 +10,13 @@ class Problem(object):
         evaluate_fitness(self, individual)
         adapt(self, individual)
     """
-    def __init__(self, maximize):
+    def __init__(self, maximize, **kwargs):
         """
         Creates a problem, only argument is used to choose whether the fitness score has to be maximized or not
         :type maximize: boolean
         """
         self.__maximize = maximize
+        super(Problem, self).__init__(**kwargs)
         print('Problem initialized')
 
     # def best_individual(self, population):
@@ -107,16 +90,3 @@ class Problem(object):
         """
         return self.__maximize
 
-    def get_init_values(self):
-        """
-        Returns the initialization values of the problem
-        :rtype: dict
-        """
-        return self.init_values
-
-    def __str__(self):
-        """
-        Converts problem into a string
-        :rtype: str
-        """
-        return ' | '.join(['{}: {}'.format(key, item) for key, item in self.init_values.items()])

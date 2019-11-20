@@ -1,4 +1,4 @@
-from problem_interface import Problem, init_store
+from problem_interface import Problem
 from individual_interface import Individual
 from random import randint, random
 
@@ -10,17 +10,16 @@ class SecretMessageProblem(Problem):
     """
     In this problem we want to find a given secret message
     """
-    @init_store
-    def __init__(self, message_to_find):
+    def __init__(self, **kwargs):
         """
         Creates the problem with a given secret message
         :type message_to_find: str
         :UC: all([x in LETTERS for x in message_to_find])
         """
-        self.__message_to_find = list(map(lambda x: LETTERS.index(x), list(message_to_find)))
+        self.__message_to_find = list(map(lambda x: LETTERS.index(x), list(kwargs['message_to_find'])))
         # We don't need to store the message value, we only keep the corresponding genome
-        self.__message_length = len(message_to_find)
-        super(SecretMessageProblem, self).__init__(maximize=False)
+        self.__message_length = len(kwargs['message_to_find'])
+        super(SecretMessageProblem, self).__init__(maximize=False, **kwargs)
 
     def create_individual(self):
         """

@@ -18,8 +18,8 @@ if __name__ == '__main__':
     mutation_probability = test_arg_validity(sys.argv[2], float, lambda x: is_in_range(x, 0, 1))
     iterations = test_arg_validity(sys.argv[3], int, is_positive)
     maze_file = test_arg_validity(sys.argv[4], str)  # Actually useless, only use for coherence
-    problem = LabyrinthProblem(maze_file)
-    solver = AlgoGen(problem, population_size, mutation_probability)
+    problem = LabyrinthProblem(maze_file=maze_file)
+    solver = AlgoGen(problem=problem, population_size=population_size, mutation_probability=mutation_probability)
     best = solver.solve(iterations)
     print('Best path found: {}, value: {}'.format(*best[1:]))
     problem.get_maze().draw_path(best)

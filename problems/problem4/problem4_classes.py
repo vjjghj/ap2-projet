@@ -1,14 +1,17 @@
-from problem_interface import Problem, init_store
+from problem_interface import Problem
 from individual_interface import Individual
 from random import choice, random
 from problems.problem4.haunted_field import PlayerState, HauntedField
 
 
 class HauntedFieldProblem(Problem):
-    @init_store
-    def __init__(self, height, width, nb_monsters, fields_to_cross):
+    def __init__(self, **kwargs):
+        height = kwargs['height']
+        width = kwargs['width']
+        nb_monsters = kwargs['nb_monsters']
+        fields_to_cross = kwargs['fields_to_cross']
         self.fields = [HauntedField(height, width, nb_monsters) for _ in range(fields_to_cross)]
-        super(HauntedFieldProblem, self).__init__(True)
+        super(HauntedFieldProblem, self).__init__(True, **kwargs)
 
     def create_individual(self):
         """

@@ -1,4 +1,4 @@
-from problem_interface import Problem, init_store
+from problem_interface import Problem
 from individual_interface import Individual
 from math import sin, cos
 from random import randint, random
@@ -20,8 +20,7 @@ class MaxFunctionProblem(Problem):
     We work in a given interval
     Individual's genome will be a list of bits, representing a floating value in the interval
     """
-    @init_store
-    def __init__(self, x_min, x_max, bit_length, fx=f):
+    def __init__(self, **kwargs):
         """
         Creates a problem where the goal is to find the maximum of a function in a given interval
         Uses individual with bit genes, with bit_length genes
@@ -31,12 +30,12 @@ class MaxFunctionProblem(Problem):
         :type fx: function
         :UC: x_min < x_max and bit_length > 0
         """
-        self.__f = fx
-        self.__x_min = x_min
-        self.__x_max = x_max
-        self.__bit_length = bit_length
-        self.__biggest_int_value = 2 ** bit_length - 1  # Equal to int(''.join(['1' for _ in range(bit_length)]), 2)
-        super(MaxFunctionProblem, self).__init__(maximize=True)
+        self.__f = f if 'f' not in kwargs else kwargs['f']
+        self.__x_min = kwargs['x_min']
+        self.__x_max = kwargs['x_max']
+        self.__bit_length = kwargs['bit_length']
+        self.__biggest_int_value = 2 ** self.__bit_length - 1
+        super(MaxFunctionProblem, self).__init__(maximize=True, ** kwargs)
         # By changing True by False we can aim for the minimum of the function
 
     def create_individual(self):

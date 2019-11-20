@@ -1,13 +1,14 @@
 from random import shuffle
 from problem_interface import Problem
+from base_class import Base
 
 
-class AlgoGen(object):
+class AlgoGen(Base):
     """
     This class is used to solve a given problem by using a genetic algorithm
     Handles the population, its evolution, and returns the best fitted individual for the given problem
     """
-    def __init__(self, problem, population_size, mutation_probability):
+    def __init__(self, **kwargs):
         """
         Creates a AlgoGen object
         :param problem: The problem the population is used to solve.
@@ -18,10 +19,11 @@ class AlgoGen(object):
         :type mutation_probability: int or float
         :UC: population_size % 2 == 0 and population_size >= 5 and 0 <= mutation_probability < 1
         """
-        self.__population = [problem.create_individual() for _ in range(population_size)]
-        self.__size = population_size
-        self.__problem = problem
-        self.__mutation_probability = mutation_probability
+        self.__problem = kwargs['problem']
+        self.__size = kwargs['population_size']
+        self.__population = [self.__problem.create_individual() for _ in range(self.__size)]
+        self.__mutation_probability = kwargs['mutation_probability']
+        super(AlgoGen, self).__init__(**kwargs)
         print('Solver initialized')
 
     def shuffle(self):
@@ -127,16 +129,14 @@ class AlgoGen(object):
             best = self.current_best_str()
             print('Iterations {}; {}; average {}'.format(i, best, average))
         if export:
-            self.export_best(iterations)
+            self.export_best()
         return self.get_current_best()
 
-    def export_best(self, iterations, target_file=None):
+    def export_best(self, target_file=None):
         problem = self.__problem
         if not target_file:
-            target_file = 'call_examples/' + str(problem.get_init_values()['Problem']) + '.txt'
+            target_file = 'call_examples/' + str(problem.get_init_values()['Class']) + '.txt'
         with open(target_file, 'w') as target:
-            target.write('Iterations: {} | Mutation probability: {} |'
-                         ' Population size: {}\n'.format(iterations, self.__mutation_probability, self.__size))
-            target.write(str(problem) + '\n')
+            target.write(str(self) + '\n')
             target.write(self.current_best_str())
         print('Exported')
