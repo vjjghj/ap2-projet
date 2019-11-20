@@ -15,8 +15,8 @@ class Base(object):
         Converts problem into a string
         :rtype: str
         """
-        s = ' | '.join(['{}: {}'.format(key, item)
-                         for key, item in self.__init_values.items() if not key == 'problem'])
+        s = ' | '.join(['{}: {}'.format(key, item) for key, item in self.__init_values.items()
+                        if not key == 'problem'])
         if 'problem' in self.__init_values:
             s += ('\n' + str(self.__init_values['problem']))
         return s
