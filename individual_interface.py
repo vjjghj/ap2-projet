@@ -100,8 +100,6 @@ class Individual(object):
         number_of_mutations = sum([1 for _ in range(self.__size) if probability > random()])
         for i in choices(range(self.__size), k=number_of_mutations):
             self.__genome[i] = self.mutate_once(self.__genome[i])
-        # A different approach should be implemented later to decrease the time and memory needed
-        # self.__genome = [self.mutate_once(gene, probability) for gene in self.__genome]
 
     def set_score(self, new_score):
         """
@@ -119,7 +117,7 @@ class Individual(object):
         :type problem: Problem or NoneType
         :return: none
         """
-        self.__genome = new_value.copy()  # Using copy prevents unwanted side effects
+        self.__genome = new_value.copy()  # Using copy prevents unwanted side effects (happened with mutations)
         if problem:
             self.evaluate(problem)
 
