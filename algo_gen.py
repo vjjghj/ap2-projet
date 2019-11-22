@@ -23,6 +23,8 @@ class AlgoGen(Base):
         self.__size = kwargs['population_size']
         self.__population = [self.__problem.create_individual() for _ in range(self.__size)]
         self.__mutation_probability = kwargs['mutation_probability']
+        self.__export = kwargs.get('export', False)     # Default value is False
+        self.__target_file = kwargs.get('target_file')  # Default value is None
         super(AlgoGen, self).__init__(**kwargs)
         print('Solver initialized')
 
@@ -113,13 +115,12 @@ class AlgoGen(Base):
         """
         return sum([individual.get_score() for individual in self.__population]) / self.__size
 
-    def solve(self, iterations, export=True):
+    def solve(self, iterations):
         """
         Runs the genetic algorithm to solve the given problem
         On each round, prints the current best element of population
         :param iterations: number of iterations to run to optimize the solution
         :type iterations: int
-        :type export: boolean
         :rtype: Individual, depending on the problem, int or float
         :UC: iterations > 0
         """
@@ -128,12 +129,13 @@ class AlgoGen(Base):
             average = self.average_fitness()
             best = self.current_best_str()
             print('Iterations {}; {}; average {}'.format(i, best, average))
-        if export:
+        if self.__export:
             self.export_best()
         return self.get_current_best()
 
-    def export_best(self, target_file=None):
+    def export_best(self):
         problem = self.__problem
+        target_file = self.__target_file
         if not target_file:
             target_file = 'call_examples/' + str(problem.get_init_values()['Class']) + '.txt'
         with open(target_file, 'w') as target:

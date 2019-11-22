@@ -1,6 +1,6 @@
 from problem_interface import Problem
 from individual_interface import Individual
-from random import randint, random
+from random import randint
 
 
 LETTERS = [chr(i) for i in range(ord('a'), ord('z') + 1)] + [' ']
@@ -60,17 +60,13 @@ class SecretMessageIndividual(Individual):
         return randint(0, 26)
 
     @staticmethod
-    def mutate_once(gene, probability):
+    def mutate_once(gene):
         """
-        Applies mutation with given probability to a gene
-        If it mutates, the gene takes the value of a random different valid letter
+        The gene takes the value of a random different valid letter
         :type gene: str
-        :type probability: int or float
         :rtype: str
         """
-        if probability > random():
-            new_gene = gene
-            while gene == new_gene:
-                new_gene = SecretMessageIndividual.get_random_gene()
-            return new_gene
-        return gene
+        new_gene = SecretMessageIndividual.get_random_gene()
+        while gene == new_gene:
+            new_gene = SecretMessageIndividual.get_random_gene()
+        return new_gene

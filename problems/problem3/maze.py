@@ -136,7 +136,7 @@ class Maze(object):
         """
         return self.__width
 
-    def draw_path(self, individual):
+    def draw_path(self, individual):  # WIP
         """
         Draws the maze and the path of individual within it
         :type individual: Individual

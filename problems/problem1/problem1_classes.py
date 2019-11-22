@@ -1,7 +1,7 @@
 from problem_interface import Problem
 from individual_interface import Individual
 from math import sin, cos
-from random import randint, random
+from random import randint
 
 
 def f(x):
@@ -30,7 +30,7 @@ class MaxFunctionProblem(Problem):
         :type fx: function
         :UC: x_min < x_max and bit_length > 0
         """
-        self.__f = f if 'f' not in kwargs else kwargs['f']
+        self.__f = kwargs.get('f', f)
         self.__x_min = kwargs['x_min']
         self.__x_max = kwargs['x_max']
         self.__bit_length = kwargs['bit_length']
@@ -78,13 +78,11 @@ class MaxFunctionIndividual(Individual):
         return randint(0, 1)
 
     @staticmethod
-    def mutate_once(gene, probability):
+    def mutate_once(gene):
         """
-        Applies mutation with given probability to a gene
-        If it mutates, flips the bit value
+        Flips the bit value
         :type gene: int
-        :type probability: int or float
         :rtype: int
         :UC: gene in {0, 1}
         """
-        return gene if probability > random() else 1 - gene
+        return 1 - gene

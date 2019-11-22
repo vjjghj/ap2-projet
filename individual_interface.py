@@ -1,4 +1,4 @@
-from random import randint
+from random import randint, choices, random
 
 
 class Individual(object):
@@ -82,11 +82,10 @@ class Individual(object):
         self.__genome = [self.get_random_gene() for _ in range(self.__size)]
 
     @staticmethod
-    def mutate_once(gene, probability):
+    def mutate_once(gene):
         """
         Returns the given gene, changed accordingly to the problem with a given probability
         :type gene: depends on the problem
-        :type probability: int or float
         :rtype: same as gene
         """
         pass
@@ -98,8 +97,11 @@ class Individual(object):
         :return: none
         :UC: 0 <= probability < 1
         """
+        number_of_mutations = sum([1 for _ in range(self.__size) if probability > random()])
+        for i in choices(range(self.__size), k=number_of_mutations):
+            self.__genome[i] = self.mutate_once(self.__genome[i])
         # A different approach should be implemented later to decrease the time and memory needed
-        self.__genome = [self.mutate_once(gene, probability) for gene in self.__genome]
+        # self.__genome = [self.mutate_once(gene, probability) for gene in self.__genome]
 
     def set_score(self, new_score):
         """
@@ -117,7 +119,7 @@ class Individual(object):
         :type problem: Problem or NoneType
         :return: none
         """
-        self.__genome = new_value
+        self.__genome = new_value.copy()  # Using copy prevents unwanted side effects
         if problem:
             self.evaluate(problem)
 

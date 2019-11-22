@@ -1,7 +1,7 @@
 from problem_interface import Problem
 from individual_interface import Individual
 from problems.problem3.maze import Maze
-from random import choice, random
+from random import choice
 from math import floor
 
 
@@ -72,17 +72,13 @@ class LabyrinthIndividual(Individual):
         return choice(Maze.DIRECTIONS)
 
     @staticmethod
-    def mutate_once(gene, probability):
+    def mutate_once(gene):
         """
-        Applies mutation with given probability to a gene
-        If it mutates, the gene takes the value of a random different valid direction
+        The gene takes the value of a random different valid direction
         :type gene: str
-        :type probability: int or float
         :rtype: str
         """
-        if probability > random():
-            new_gene = gene
-            while gene == new_gene:
-                new_gene = LabyrinthIndividual.get_random_gene()
-            return new_gene
-        return gene
+        new_gene = LabyrinthIndividual.get_random_gene()
+        while gene == new_gene:
+            new_gene = LabyrinthIndividual.get_random_gene()
+        return new_gene

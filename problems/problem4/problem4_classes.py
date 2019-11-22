@@ -1,6 +1,6 @@
 from problem_interface import Problem
 from individual_interface import Individual
-from random import choice, random
+from random import choice
 from problems.problem4.haunted_field import PlayerState, HauntedField
 
 
@@ -65,20 +65,16 @@ class HauntedFieldIndividual(Individual):
         return choice(['u', 'd', 'r', 'l'])
 
     @staticmethod
-    def mutate_once(gene, probability):
+    def mutate_once(gene):
         """
-        Applies mutation with given probability to a gene
-        If it mutates, the gene takes the value of a random different valid direction
+        The gene takes the value of a random different valid direction
         :type gene: str
-        :type probability: int or float
         :rtype: str
         """
-        if probability > random():
-            new_gene = gene
-            while gene == new_gene:
-                new_gene = HauntedFieldIndividual.get_random_gene()
-            return new_gene
-        return gene
+        new_gene = HauntedFieldIndividual.get_random_gene()
+        while gene == new_gene:
+            new_gene = HauntedFieldIndividual.get_random_gene()
+        return new_gene
 
     def get_state(self):
         return self.__state
