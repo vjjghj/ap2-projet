@@ -89,4 +89,3 @@ class Problem(Base):
         :rtype: boolean
         """
         return self.__maximize
-
