@@ -166,7 +166,7 @@ class HauntedField(object):
                 individual.monster()
             elif target_cell_state == OBSTACLE:
                 individual.blocked()
-            if self.__player_pos == self.__height - 1:
+            if self.__player_pos[0] == self.__height - 1:
                 individual.success()
         self.restore_field()
         return self.__player_pos[0], used

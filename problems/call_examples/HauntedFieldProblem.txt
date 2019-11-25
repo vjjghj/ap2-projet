@@ -1,3 +1,3 @@
-Iterations: 200 | Mutation probability: 0.05 | Population size: 150
-height: 16 | width: 16 | nb_monsters: 4 | fields_to_cross: 1 | Problem: HauntedFieldProblem
-value: ddrrrudrurrrrdllrrluddrrlrdldludludulruuurrrrllruuuuddrruluudrullllrrrllrllrrulduddddrrldurludurudurludddudurullldrrddrulrlrrdrlludullluluulrrrdddllrdrlulldudludlrrrdrlddudddllluldudllrdrruudruluuddlrllurduurulullrrdlruldduululrdlrulrlldldulru, fitness: 366
+population_size: 20 | mutation_probability: 0.05 | Class: AlgoGen
+height: 16 | width: 16 | nb_monsters: 4 | fields_to_cross: 25 | Class: HauntedFieldProblem
+value: rdrrurddrrrrrddlrulruuldururdudururrrlduldludlluulrurulduuuuuldldlulrrluldrdrruldddlrdllrulrruuluuduldluddrududrrrrldrrdrrurrudlrllrdduurldullrdlrrrurudlduddrurdrlllludludldldddududuurdulluudurdddldlluuurdrlldlulluldddrddlduddlrlllrrddrrlllllr, fitness: 8157
