@@ -14,6 +14,7 @@ class Maze(object):
         :UC: filename must contain a valid Maze file
         """
         self.__cells = {}
+        self.__file = filename
         self.__width = 0
         self.__height = 0
         self.init_cells(filename)
@@ -72,9 +73,9 @@ class Maze(object):
         """
         return self.__width * self.__height
 
-    def try_path(self, path):
+    def try_path(self, path, get_visited=False):
         """
-        path is tried from entry point, step by step.
+        Path is tried from entry point, step by step.
         Course stops either as soon as a wall is met, or it returns to an already visited cell, or reaches the exit.
         Successful steps are steps until stop.
 
@@ -82,6 +83,8 @@ class Maze(object):
         :type path: an sequence (actually a string but could be list) of DIRECTIONS
         :return: a tuple containing number of successful steps using path and manhattan
                  distance between reached cell and exit
+        :param get_visited: if True, returns
+        :type get_visited: boolean
         :rtype: (int, int)
         :UC: none
         """
@@ -95,7 +98,9 @@ class Maze(object):
             visited.append(current_cell)
             current_cell = current_cell + self.offset(path[nb_steps])
             nb_steps += 1
-        return nb_steps, self.manhattan_distance(current_cell, self.__exit)
+        if current_cell == self.__exit:
+            visited.append(self.__exit)  # Used when drawing path through maze
+        return (nb_steps, self.manhattan_distance(current_cell, self.__exit)) if not get_visited else visited
 
     def offset(self, direction):
         """
@@ -139,14 +144,31 @@ class Maze(object):
         """
         return self.__width
 
-    def draw_path(self, individual):  # WIP
+    def draw_path(self, individual):
         """
         Draws the maze and the path of individual within it
         :type individual: Individual
         :return: none
         :UC: none
         """
-        print('not yet supported')
+        path = self.try_path(individual.get_value(), True)
+        with open(self.__file, 'r') as file:
+            file.readline()  # Get rid of the maze size
+            maze = file.readlines()
+        cell_index = -1
+        for i in range(1, len(maze), 2):
+            is_cell = True
+            new_line = ''
+            for c in maze[i][:-1]:
+                is_cell = not is_cell
+                if is_cell:
+                    cell_index += 1
+                if cell_index not in path or not is_cell:
+                    new_line += c
+                else:
+                    new_line += '*'
+            maze[i] = new_line + '\n'
+        print(''.join(maze))
 
 
 if __name__ == "__main__":

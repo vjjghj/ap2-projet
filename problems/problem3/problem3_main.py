@@ -22,4 +22,4 @@ if __name__ == '__main__':
     solver = AlgoGen(problem=problem, population_size=population_size, mutation_probability=mutation_probability)
     best = solver.solve(iterations)
     print('Best path found: {}, value: {}'.format(*best[1:]))
-    problem.get_maze().draw_path(best)
+    problem.get_maze().draw_path(best[0])

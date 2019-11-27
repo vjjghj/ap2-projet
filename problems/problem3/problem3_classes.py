@@ -2,7 +2,7 @@ from problem_interface import Problem
 from individual_interface import Individual
 from problems.problem3.maze import Maze
 from random import choice
-from math import floor
+from math import ceil
 
 
 class LabyrinthProblem(Problem):
@@ -38,7 +38,7 @@ class LabyrinthProblem(Problem):
         :UC: none
         """
         nb_steps, distance = self.__maze.try_path(individual.get_value())
-        adapted_distance = floor(self.__maze.get_width() / 2) - distance
+        adapted_distance = ceil(self.__maze.get_width() / 2) - distance
         score = max(0, adapted_distance) ** 2 + nb_steps
         if distance == 0:
             score += 1000

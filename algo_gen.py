@@ -95,6 +95,10 @@ class AlgoGen(Base):
         return current_best, self.__problem.adapt(current_best), current_best.get_score()
 
     def current_best_str(self):
+        """
+        Returns a string with the best individual and its fitness
+        :rtype: str
+        """
         current_best = self.get_current_best()
         return 'value: {}, fitness: {}'.format(*current_best[1:])
 
