@@ -25,6 +25,7 @@ class LabyrinthProblem(Problem):
         """
         Creates individual with genome length equal to max_length
         :rtype: Individual
+        :UC: none
         """
         return LabyrinthIndividual(self.__max_length)
 
@@ -34,6 +35,7 @@ class LabyrinthProblem(Problem):
         Depends on the maze
         :type individual: Individual
         :rtype: int
+        :UC: none
         """
         nb_steps, distance = self.__maze.try_path(individual.get_value())
         adapted_distance = floor(self.__maze.get_width() / 2) - distance
@@ -48,6 +50,7 @@ class LabyrinthProblem(Problem):
             adapt will only return the genome of individual as a str
         :type individual: Individual
         :rtype: str
+        :UC: none
         """
         return str(individual)
 
@@ -55,6 +58,7 @@ class LabyrinthProblem(Problem):
         """
         Returns the current maze
         :rtype: Maze
+        :UC: none
         """
         return self.__maze
 
@@ -68,6 +72,7 @@ class LabyrinthIndividual(Individual):
         """
         Returns a random direction
         :rtype: str
+        :UC: none
         """
         return choice(Maze.DIRECTIONS)
 
@@ -77,6 +82,7 @@ class LabyrinthIndividual(Individual):
         The gene takes the value of a random different valid direction
         :type gene: str
         :rtype: str
+        :UC: none
         """
         new_gene = LabyrinthIndividual.get_random_gene()
         while gene == new_gene:

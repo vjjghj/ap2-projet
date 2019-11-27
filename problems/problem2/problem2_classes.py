@@ -33,6 +33,7 @@ class SecretMessageProblem(Problem):
         Returns the divergence of individual from secret message
         :type individual: Individual
         :rtype: int
+        :UC: none
         """
         return sum([abs(i - j) for i, j in zip(self.__message_to_find, individual.get_value())])
 
@@ -41,6 +42,7 @@ class SecretMessageProblem(Problem):
         Returns the message corresponding to individual's genome
         :type individual: Individual
         :rtype: str
+        :UC: none
         """
         return ''.join([LETTERS[i] for i in individual.get_value()])
 
@@ -56,6 +58,7 @@ class SecretMessageIndividual(Individual):
         As we need to find an individual's score more often than printing the corresponding message,
         Using the letters' index as genes will gain us computations
         :rtype: str
+        :UC: none
         """
         return randint(0, 26)
 
@@ -65,6 +68,7 @@ class SecretMessageIndividual(Individual):
         The gene takes the value of a random different valid letter
         :type gene: str
         :rtype: str
+        :UC: none
         """
         new_gene = SecretMessageIndividual.get_random_gene()
         while gene == new_gene:

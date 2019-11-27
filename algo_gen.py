@@ -40,7 +40,6 @@ class AlgoGen(Base):
         Returns a zip object formed with pairs of individuals from population
         Each individual is taken exactly once unless self.size % 2 != 0
         :rtype: zip
-        :UC: self.size % 2 == 0 and len(self.population) == self.size
         """
         self.shuffle()
         return zip(self.__population[:self.__size // 2], self.__population[self.__size // 2:])
@@ -68,6 +67,7 @@ class AlgoGen(Base):
         Make all individuals from population mutate
         :type population: list(Individual)
         :return: none
+        :UC: none
         """
         for individual in population:
             individual.mutate(self.__mutation_probability)
@@ -99,12 +99,13 @@ class AlgoGen(Base):
         return 'value: {}, fitness: {}'.format(*current_best[1:])
 
     @staticmethod
-    def display_pop(population):
+    def __display_pop(population):
         """
         Used for debugging purposes,
         Prints every individual's fitness from population
         :type population: list(Individual)
         :return: none
+        :UC: none
         """
         print(', '.join([str(individual.get_score()) for individual in population]))
 
@@ -134,6 +135,10 @@ class AlgoGen(Base):
         return self.get_current_best()
 
     def export_best(self):
+        """
+        Exports the best individual in a .txt file
+        :return: none
+        """
         problem = self.__problem
         target_file = self.__target_file
         if not target_file:

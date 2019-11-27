@@ -1,4 +1,7 @@
 class Base(object):
+    """
+    This class is used to store the initialisation values aof its subclasses
+    """
     def __init__(self, **kwargs):
         self.__init_values = kwargs
         self.__init_values['Class'] = type(self).__name__

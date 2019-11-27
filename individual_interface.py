@@ -29,6 +29,7 @@ class Individual(object):
         Performs a 1 point crossover between self and other, return two new individuals
         :type other: Individual
         :rtype: Individual, Individual
+        :UC: none
         """
         n = randint(0, len(self.__genome) - 1)
         x1, x2 = self.copy(), other.copy()
@@ -41,6 +42,7 @@ class Individual(object):
         Set the fitness score with the fitness computed by problem for self
         :type problem: Problem
         :return: none
+        :UC: none
         """
         self.__score = problem.evaluate_fitness(self)
 
@@ -87,6 +89,7 @@ class Individual(object):
         Returns the given gene, changed accordingly to the problem with a given probability
         :type gene: depends on the problem
         :rtype: same as gene
+        :UC: none
         """
         pass
 
@@ -106,6 +109,7 @@ class Individual(object):
         Changes the fitness score of self
         :type new_score: int or float
         :return: none
+        :UC: none
         """
         self.__score = new_score
 
@@ -116,6 +120,7 @@ class Individual(object):
         :type new_value: list
         :type problem: Problem or NoneType
         :return: none
+        :UC: new_value must be a valid genome for the problem
         """
         self.__genome = new_value.copy()  # Using copy prevents unwanted side effects (happened with mutations)
         if problem:

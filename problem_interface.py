@@ -5,7 +5,7 @@ class Problem(Base):
     """
     Parent class for the different problems we will have to solve
     Function to create/override:
-        __init__(self, *args)
+        __init__(self, **kwargs)
         create_individual(self)
         evaluate_fitness(self, individual)
         adapt(self, individual)
@@ -19,15 +19,6 @@ class Problem(Base):
         super(Problem, self).__init__(**kwargs)
         print('Problem initialized')
 
-    # def best_individual(self, population):
-    #     """
-    #     Returns the best fitted individual from population.
-    #     Depending on the problem, it can corresponds to the individual with highest or lowest fitness value
-    #     :type population: list(Individual)
-    #     :rtype: Individual
-    #     """
-    #     return max(population, key=lambda x: self.evaluate_fitness(x))
-
     def create_individual(self):
         """
         Creates a randomly generated individual for this problem
@@ -40,6 +31,7 @@ class Problem(Base):
         Compute the fitness of individual for this problem
         :type individual: Individual
         :rtype: float
+        :UC: individual must be a valid individual for the problem
         """
         pass
 
@@ -48,18 +40,20 @@ class Problem(Base):
         Updates the score value for each individual in population
         :type population: list(Individual)
         :return: none
+        :UC: none
         """
         for individual in population:
             individual.evaluate(self)
 
     def sort_population(self, population):
+        self.evaluate_fitness_for_all(population)
         """
         Sort population from best fitted to worst fitted.
         Depending on the problem, it can corresponds to ascending or descending order
         :type population: list(Individual)
         :rtype: list(Individual)
+        :UC: none
         """
-        self.evaluate_fitness_for_all(population)
         return sorted(population, key=lambda x: x.get_score(), reverse=self.__maximize)
 
     def tournament(self, first, second):
@@ -68,6 +62,7 @@ class Problem(Base):
         :type first: Individual
         :type second: Individual
         :rtype: Individual
+        :UC: none
         """
         self.evaluate_fitness_for_all([first, second])
         first_is_bigger = first.get_score() > second.get_score()
@@ -80,6 +75,7 @@ class Problem(Base):
         Returns the value of the individual, based on the problem
         :type individual: Individual
         :rtype: depends on the problem
+        :UC: none
         """
         pass
 

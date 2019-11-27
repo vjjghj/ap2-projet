@@ -53,6 +53,7 @@ class HauntedField(object):
         self.__init_borders()
         self.init_monsters(nb_monsters)
         self.__player_pos = (1, ceil(self.__width / 2))
+        self.__backup_field, self.__backup_pos = None, None
 
     def __init_borders(self):
         """
@@ -69,6 +70,7 @@ class HauntedField(object):
         """
         randomly set between 2 and nb_monsters_per_lines monsters in each line, first and last line excepted.
         Must be called to add monster to the field
+        :UC: nb_monsters_per_lines < self.__width
         """
         for line in range(2, self.__height):
             monster_columns = random.sample(range(1, self.__width + 1), random.randint(2, nb_monsters_per_lines))
@@ -144,6 +146,7 @@ class HauntedField(object):
         Tries to cross the Field
         :type individual: Individual
         :rtype: int, int
+        :UC: none
         """
         self.backup_field()
         commands = individual.get_value()

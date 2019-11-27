@@ -5,7 +5,17 @@ from problems.problem4.haunted_field import PlayerState, HauntedField
 
 
 class HauntedFieldProblem(Problem):
+    """
+    In this problem we want to find the best behaviour to cross haunted fields
+    Individual's genome will be a list of instructions
+    """
     def __init__(self, **kwargs):
+        """
+        Creates a problem where the goal is to find the best behaviour to cross haunted fields
+        Uses individuals with instruction genes, with genome length equal to the number possibilities
+        :type maze_file: str
+        :UC: maze_file has to be a valid path to a valid maze file
+        """
         height = kwargs['height']
         width = kwargs['width']
         nb_monsters = kwargs['nb_monsters']
@@ -21,6 +31,12 @@ class HauntedFieldProblem(Problem):
         return HauntedFieldIndividual(243)
 
     def evaluate_fitness(self, individual):
+        """
+        Evaluates individual's fitness
+        :param individual: Individual
+        :return: none
+        :UC: none
+        """
         score = 0
         for field in self.fields:
             line, used = field.cross(individual)
@@ -40,6 +56,7 @@ class HauntedFieldProblem(Problem):
             adapt will only return the genome of individual as a str
         :type individual: Individual
         :rtype: str
+        :UC: none
         """
         return str(individual)
 
@@ -70,6 +87,7 @@ class HauntedFieldIndividual(Individual):
         The gene takes the value of a random different valid direction
         :type gene: str
         :rtype: str
+        :UC: none
         """
         new_gene = HauntedFieldIndividual.get_random_gene()
         while gene == new_gene:
@@ -104,6 +122,7 @@ def tester(individual, width, height, nb_monsters, fields_to_cross):
     :type nb_monsters: int
     :type fields_to_cross: int
     :rtype: int
+    :UC: nb_monsters < width
     """
     fields = [HauntedField(height, width, nb_monsters) for _ in range(fields_to_cross)]
     crossed = 0

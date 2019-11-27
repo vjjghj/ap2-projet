@@ -11,6 +11,7 @@ class Maze(object):
 
         :param filename:  the name file containing the maze description
         :type filename: string
+        :UC: filename must contain a valid Maze file
         """
         self.__cells = {}
         self.__width = 0
@@ -29,27 +30,26 @@ class Maze(object):
         :type filename: string
         :return: the dictionary corresponding to the maze description
         :rtype: dictionary (int : list(DIRECTIONS))
+        :UC: filename must contain a valid Maze file
         """
-        CSV_SEPARATOR = ';'
-
         def read_content(input_stream):
-            HOLE = ' '  # a HOLE means a path
+            hole = ' '  # a hole means a path
 
             def handle_horizontal_path(chain):
                 for col in range(1, self.__width):
                     car = chain[2 * col]
-                    if car == HOLE:
+                    if car == hole:
                         cells[line * self.__width + col - 1] += 'E'
                         cells[line * self.__width + col] += 'W'
 
             def handle_vertical_path(chain):
                 for col in range(0, self.__width):
                     car = chain[2 * col + 1]
-                    if car == HOLE:
+                    if car == hole:
                         cells[line * self.__width + col] += 'S'
                         cells[(line + 1) * self.__width + col] += 'N'
             # read_content body
-            line = input_stream.readline().rstrip().split(CSV_SEPARATOR)  # first line of file
+            line = input_stream.readline().rstrip().split(';')  # first line of file
             self.__width, self.__height = int(line[0]), int(line[1])      # define __width and __height fields
             cells = dict((i, '') for i in range(self.__width * self.__height))
             lines = input_stream.readlines()                              # all other lines
@@ -60,10 +60,10 @@ class Maze(object):
 
         # init_cells body
         try:
-            with open(filename, 'r', encoding="utf-8") as input_stream:
-                self.__cells = read_content(input_stream)
+            with open(filename, 'r', encoding="utf-8") as input_s:
+                self.__cells = read_content(input_s)
         except FileNotFoundError:
-            raise FileNotFoundError('fichier inconnu')
+            raise FileNotFoundError('Unknown file')
 
     def get_size(self):
         """
@@ -83,6 +83,7 @@ class Maze(object):
         :return: a tuple containing number of successful steps using path and manhattan
                  distance between reached cell and exit
         :rtype: (int, int)
+        :UC: none
         """
         visited = []
         nb_steps = 0
@@ -104,7 +105,7 @@ class Maze(object):
         :param direction: the direction to convert
         :type direction: an element of DIRECTIONS
         :return: the offset corresponding to direction
-        :rtype:int
+        :rtype: int
         """
         if direction == 'E':
             return + 1
@@ -123,6 +124,7 @@ class Maze(object):
         :type second: int
         :return: the manhattan distance between coordinates first and second
         :rtype: int
+        :UC: none
         """
         col_first, line_first = first % self.__width, first // self.__width
         col_second, line_second = second % self.__width, second // self.__width
@@ -133,6 +135,7 @@ class Maze(object):
         Returns the width of the maze
         This function was added because the maze width is needed in the naive fitness evaluation
         :rtype: int
+        :UC: none
         """
         return self.__width
 
@@ -141,6 +144,7 @@ class Maze(object):
         Draws the maze and the path of individual within it
         :type individual: Individual
         :return: none
+        :UC: none
         """
         print('not yet supported')
 

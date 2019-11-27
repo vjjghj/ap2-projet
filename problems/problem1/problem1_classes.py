@@ -51,6 +51,7 @@ class MaxFunctionProblem(Problem):
         Depends on x_min, x_max and bit_length
         :type individual: Individual
         :rtype: float
+        :UC: none
         """
         n = int(str(individual), 2)  # reminder: Individual.__str__() returns the genome as a string
         int_range = (self.__x_max - self.__x_min) / self.__biggest_int_value
@@ -61,6 +62,7 @@ class MaxFunctionProblem(Problem):
         The fitness of the individual is given by the function we want to maximize
         :type individual: Individual
         :rtype: float
+        :UC: none
         """
         return self.__f(self.adapt(individual))
 
