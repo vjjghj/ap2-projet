@@ -1,0 +1,16 @@
+TODO:
+Maze.draw_path
+(maze.py line 140)
+
+implement double point crossover
+
+add options to mains
+
+write tests
+
+README
+
+better automation of args checking
+(problem1_main.py line 17)
+
+clean UCs

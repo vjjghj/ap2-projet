@@ -23,7 +23,7 @@ class AlgoGen(Base):
         self.__size = kwargs['population_size']
         self.__population = [self.__problem.create_individual() for _ in range(self.__size)]
         self.__mutation_probability = kwargs['mutation_probability']
-        self.__export = kwargs.get('export', False)     # Default value is True (to simplify debugging, will change)
+        self.__export = kwargs.get('export', True)     # Default value is True (to simplify debugging, will change)
         self.__target_file = kwargs.get('target_file')  # Default value is None
         super(AlgoGen, self).__init__(**kwargs)
         print('Solver initialized')
