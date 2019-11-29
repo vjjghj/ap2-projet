@@ -23,9 +23,8 @@ class AlgoGen(Base):
         self.__size = kwargs['population_size']
         self.__population = [self.__problem.create_individual() for _ in range(self.__size)]
         self.__mutation_probability = kwargs['mutation_probability']
-        self.__crossover_iter = kwargs.get('crossover_iterations', 1)
-        self.__export = kwargs.get('export', True)     # Default value is True (to simplify debugging, will change)
-        self.__target_file = kwargs.get('target_file')  # Default value is None
+        self.__crossover_iter = kwargs['crossover_iterations']
+        self.__export = kwargs['export']
         super(AlgoGen, self).__init__(**kwargs)
         print('Solver initialized')
 
@@ -146,9 +145,7 @@ class AlgoGen(Base):
         :return: none
         """
         problem = self.__problem
-        target_file = self.__target_file
-        if not target_file:
-            target_file = 'call_examples/' + str(problem.get_init_values()['Class']) + '.txt'
+        target_file = 'call_examples/' + str(problem.get_init_values()['Class']) + '.txt'
         with open(target_file, 'w') as target:
             target.write(str(self) + '\n')
             target.write(self.current_best_str())

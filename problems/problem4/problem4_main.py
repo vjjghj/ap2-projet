@@ -17,7 +17,7 @@ if __name__ == '__main__':
     run = sys.argv[1]
     if run not in {'-t', '-r'}:
         raise ValueError('Invalid instruction')
-    population_size, mutation_probability, iterations, crossover_iterations = base_args(sys.argv[1:], 8)
+    population_size, mutation_probability, iterations, crossover_iterations, export = base_args(sys.argv[1:], 8)
     fields_to_cross = test_arg_validity(sys.argv[5], int, is_positive)
     width = test_arg_validity(sys.argv[6], int, lambda x: is_greater(x, 2))
     height = test_arg_validity(sys.argv[7], int, lambda x: is_greater(x, 2))
@@ -27,8 +27,9 @@ if __name__ == '__main__':
     # nb_monster = test_arg_validity(sys.argv[6], int, is_in_range(1, (width - 1) // 2))
     if run == '-r':
         problem = HauntedFieldProblem(height=height, width=width, nb_monsters=nb_monsters,
-                                      fields_to_cross=fields_to_cross, crossover_iterations=crossover_iterations)
-        solver = AlgoGen(problem=problem, population_size=population_size, mutation_probability=mutation_probability)
+                                      fields_to_cross=fields_to_cross)
+        solver = AlgoGen(problem=problem, population_size=population_size, mutation_probability=mutation_probability,
+                         crossover_iterations=crossover_iterations, export=export)
         best = solver.solve(iterations)
     else:
         individual = HauntedFieldIndividual(243)

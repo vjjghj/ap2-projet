@@ -1,4 +1,8 @@
 def base_args(argv, nb_args):
+    export = False
+    if argv[1] == '-e':
+        export = True
+        argv.pop(1)
     crossover_iterations = 1
     if len(argv) != nb_args:
         if len(argv) == nb_args + 1:
@@ -8,7 +12,7 @@ def base_args(argv, nb_args):
     population_size = test_arg_validity(argv[1], int, is_even)
     mutation_probability = test_arg_validity(argv[2], float, lambda x: is_in_range(x, 0, 1))
     iterations = test_arg_validity(argv[3], int, is_positive)
-    return population_size, mutation_probability, iterations, crossover_iterations
+    return population_size, mutation_probability, iterations, crossover_iterations, export
 
 
 def test_arg_validity(x, desired_type, condition_test=lambda x: None):
