@@ -5,7 +5,6 @@ currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfram
 parentdir = os.path.dirname(currentdir)
 parentdir = os.path.dirname(parentdir)
 sys.path.insert(0, parentdir)
-from base_main import base_args
 from input_checker import *
 from problems.problem4.problem4_classes import HauntedFieldProblem, HauntedFieldIndividual, tester
 from algo_gen import AlgoGen

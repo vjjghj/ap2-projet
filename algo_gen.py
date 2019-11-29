@@ -29,42 +29,42 @@ class AlgoGen(Base):
         super(AlgoGen, self).__init__(**kwargs)
         print('Solver initialized')
 
-    def shuffle(self):
+    def __shuffle(self):
         """
         Randomly shuffles the population
         :return: none
         """
         shuffle(self.__population)
 
-    def iter_random_pairs(self):
+    def __iter_random_pairs(self):
         """
         Returns a zip object formed with pairs of individuals from population
         Each individual is taken exactly once unless self.size % 2 != 0
         :rtype: zip
         """
-        self.shuffle()
+        self.__shuffle()
         return zip(self.__population[:self.__size // 2], self.__population[self.__size // 2:])
 
-    def next_gen_creator(self, selection_method):
+    def __next_gen_creator(self, selection_method):
         """
         Creates a list of individuals from self.population using selection_method
         :type selection_method: function
         :rtype: list(Individual)
         :UC: selection_method must a valid function with shape [Individual, Individual] -> Individual
         """
-        return [selection_method(i1, i2) for i1, i2 in self.iter_random_pairs()]
+        return [selection_method(i1, i2) for i1, i2 in self.__iter_random_pairs()]
 
-    def next_gen(self):
+    def __next_gen(self):
         """
         Creates the next generation basis according to the problem
         :rtype: list(Individual)
         """
-        next_gen1 = self.next_gen_creator(self.__problem.tournament)
-        next_gen2 = self.next_gen_creator(
+        next_gen1 = self.__next_gen_creator(self.__problem.tournament)
+        next_gen2 = self.__next_gen_creator(
             lambda x, y: self.__problem.tournament(*x.cross_with(y, self.__crossover_iter)))
         return next_gen1 + next_gen2
 
-    def mutate(self, population):
+    def __mutate(self, population):
         """
         Make all individuals from population mutate
         :type population: list(Individual)
@@ -80,8 +80,8 @@ class AlgoGen(Base):
         :return: none
         """
         best_five = self.__problem.sort_population(self.__population)[:5]
-        next_gen = self.next_gen()
-        self.mutate(next_gen)
+        next_gen = self.__next_gen()
+        self.__mutate(next_gen)
         next_gen_best = self.__problem.sort_population(next_gen)[:-5]
         self.__population = best_five + next_gen_best
 
@@ -105,7 +105,7 @@ class AlgoGen(Base):
         return 'value: {}, fitness: {}'.format(*current_best[1:])
 
     @staticmethod
-    def __display_pop(population):
+    def display_pop(population):
         """
         Used for debugging purposes,
         Prints every individual's fitness from population

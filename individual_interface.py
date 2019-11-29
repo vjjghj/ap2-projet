@@ -11,7 +11,7 @@ class Individual(object):
     def __init__(self, size):
         self.__size = size
         self.__genome = list()
-        self.init_value()
+        self.__init_value()
         self.__score = 0
 
     def copy(self):
@@ -78,7 +78,7 @@ class Individual(object):
         """
         pass
 
-    def init_value(self):
+    def __init_value(self):
         """
         Randomly initializes self's genome
         :return: none
