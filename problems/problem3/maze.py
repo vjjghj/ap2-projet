@@ -144,7 +144,7 @@ class Maze(object):
         """
         return self.__width
 
-    def draw_path(self, individual):
+    def path_str(self, individual):
         """
         Draws the maze and the path of individual within it
         :type individual: Individual
@@ -168,7 +168,7 @@ class Maze(object):
                 else:
                     new_line += '*'
             maze[i] = new_line + '\n'
-        print(''.join(maze))
+        return ''.join(maze)
 
 
 if __name__ == "__main__":
