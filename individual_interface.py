@@ -24,17 +24,19 @@ class Individual(object):
         other.set_value(self.__genome)
         return other
     
-    def cross_with(self, other):
+    def cross_with(self, other, iterations=1):
         """
-        Performs a 1 point crossover between self and other, return two new individuals
+        Performs a iterations point(s) crossover between self and other, return two new individuals
         :type other: Individual
+        :type iterations: int
         :rtype: Individual, Individual
         :UC: none
         """
-        n = randint(0, len(self.__genome) - 1)
         x1, x2 = self.copy(), other.copy()
-        x1.set_value(self.__genome[:n] + other.get_value()[n:])
-        x2.set_value(other.get_value()[:n] + self.__genome[n:])
+        for i in range(iterations):
+            n = randint(0, len(self.__genome) - 1)
+            x1.set_value(x1.get_value()[:n] + x2.get_value()[n:])
+            x2.set_value(x2.get_value()[:n] + x1.get_value()[n:])
         return x1, x2
 
     def evaluate(self, problem):

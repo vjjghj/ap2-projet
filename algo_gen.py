@@ -23,6 +23,7 @@ class AlgoGen(Base):
         self.__size = kwargs['population_size']
         self.__population = [self.__problem.create_individual() for _ in range(self.__size)]
         self.__mutation_probability = kwargs['mutation_probability']
+        self.__crossover_iter = kwargs.get('crossover_iterations', 1)
         self.__export = kwargs.get('export', True)     # Default value is True (to simplify debugging, will change)
         self.__target_file = kwargs.get('target_file')  # Default value is None
         super(AlgoGen, self).__init__(**kwargs)
@@ -59,7 +60,8 @@ class AlgoGen(Base):
         :rtype: list(Individual)
         """
         next_gen1 = self.next_gen_creator(self.__problem.tournament)
-        next_gen2 = self.next_gen_creator(lambda x, y: self.__problem.tournament(*x.cross_with(y)))
+        next_gen2 = self.next_gen_creator(
+            lambda x, y: self.__problem.tournament(*x.cross_with(y, self.__crossover_iter)))
         return next_gen1 + next_gen2
 
     def mutate(self, population):
