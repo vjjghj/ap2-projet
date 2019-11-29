@@ -17,7 +17,7 @@ if __name__ == '__main__':
     if len(sys.argv) != 9:
         raise ValueError('Invalid argument number')
     run = sys.argv[1]
-    if run not in {'t', 'r'}:
+    if run not in {'-t', '-r'}:
         raise ValueError('Invalid instruction')
     population_size = test_arg_validity(sys.argv[2], int, is_even)
     mutation_probability = test_arg_validity(sys.argv[3], float, lambda x: is_in_range(x, 0, 1))
@@ -29,7 +29,7 @@ if __name__ == '__main__':
     # Note: some fields might me impossible to cross.
     # To ensure every field is crossable we could use:
     # nb_monster = test_arg_validity(sys.argv[6], int, is_in_range(1, (width - 1) // 2))
-    if run == 'r':
+    if run == '-r':
         problem = HauntedFieldProblem(height=height, width=width, nb_monsters=nb_monsters,
                                       fields_to_cross=fields_to_cross)
         solver = AlgoGen(problem=problem, population_size=population_size, mutation_probability=mutation_probability)
