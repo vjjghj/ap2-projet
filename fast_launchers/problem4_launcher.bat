@@ -1,3 +1,3 @@
 cd ../problems
-python problem4/problem4_main.py -r 50 0.05 100 1 16 16 4
+python problem4/problem4_main.py -r -e 150 0.05 200 25 16 16 4
 pause

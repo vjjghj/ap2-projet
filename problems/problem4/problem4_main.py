@@ -18,10 +18,10 @@ if __name__ == '__main__':
     if run not in {'-t', '-r'}:
         raise ValueError('Invalid instruction')
     population_size, mutation_probability, iterations, crossover_iterations, export = base_args(sys.argv[1:], 8)
-    fields_to_cross = test_arg_validity(sys.argv[5], int, is_positive)
-    width = test_arg_validity(sys.argv[6], int, lambda x: is_greater(x, 2))
-    height = test_arg_validity(sys.argv[7], int, lambda x: is_greater(x, 2))
-    nb_monsters = test_arg_validity(sys.argv[8], int, lambda x: is_in_range(x, 1, width))
+    fields_to_cross = test_arg_validity(sys.argv[-4], int, is_positive)
+    width = test_arg_validity(sys.argv[-3], int, lambda x: is_greater(x, 2))
+    height = test_arg_validity(sys.argv[-2], int, lambda x: is_greater(x, 2))
+    nb_monsters = test_arg_validity(sys.argv[-1], int, lambda x: is_in_range(x, 1, width))
     # Note: some fields might me impossible to cross.
     # To ensure every field is crossable we could use:
     # nb_monster = test_arg_validity(sys.argv[6], int, is_in_range(1, (width - 1) // 2))
