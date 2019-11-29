@@ -1,4 +1,10 @@
 def base_args(argv, nb_args):
+    """
+    As all mains use a given base number of argument, we could write a function outside mains to make them lighter
+    :param argv: list(str)
+    :param nb_args: int
+    :return: int, float, int, int, boolean
+    """
     export = False
     if argv[1] == '-e':
         export = True
