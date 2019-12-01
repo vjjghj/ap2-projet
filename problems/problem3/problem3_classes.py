@@ -41,7 +41,7 @@ class LabyrinthProblem(Problem):
         adapted_distance = ceil(self.__maze.get_width() / 2) - distance
         score = max(0, adapted_distance) ** 2 + nb_steps
         if distance == 0:
-            score += 1000
+            score = 1000 - nb_steps  # Subtracting the number of steps will allow to aim for the shortest path
         return score
 
     def adapt(self, individual):
