@@ -1,6 +1,7 @@
 from random import shuffle
 from problem_interface import Problem
 from base_class import Base
+import time
 
 
 class AlgoGen(Base):
@@ -25,6 +26,11 @@ class AlgoGen(Base):
         self.__mutation_probability = kwargs['mutation_probability']
         self.__crossover_iter = kwargs['crossover_iterations']
         self.__export = kwargs['export']
+
+        # The three following attributes are used for graph representation of convergence
+        self.__bests = list()
+        self.__averages = list()
+        self.__times = list()
         super(AlgoGen, self).__init__(**kwargs)
         print('Solver initialized')
 
@@ -95,14 +101,6 @@ class AlgoGen(Base):
             current_best = min(self.__population, key=lambda x: x.get_score())
         return current_best, self.__problem.adapt(current_best), current_best.get_score()
 
-    def current_best_str(self):
-        """
-        Returns a string with the best individual and its fitness
-        :rtype: str
-        """
-        current_best = self.get_current_best()
-        return 'value: {}, fitness: {}'.format(*current_best[1:])
-
     @staticmethod
     def display_pop(population):
         """
@@ -130,23 +128,31 @@ class AlgoGen(Base):
         :rtype: Individual, depending on the problem, int or float
         :UC: iterations > 0
         """
+        base_time = time.time()
         for i in range(iterations):
             self.iter_gen()
             average = self.average_fitness()
-            best = self.current_best_str()
-            print('Iterations {}; {}; average {}'.format(i, best, average))
+            best = self.get_current_best()
+            best_str = 'value: {}, fitness: {}'.format(*best[1:])
+            print('Iterations {}; {}; average {}'.format(i, best_str, average))
+            self.__bests.append(best[1])
+            self.__averages.append(average)
+            self.__times.append(time.time() - base_time)
+            base_time = time.time()
         if self.__export:
-            self.export_best()
+            self.export_best(iterations)
         return self.get_current_best()
 
-    def export_best(self):
+    def export_best(self, iterations):
         """
         Exports the best individual in a .txt file
+        :type iterations: int
         :return: none
         """
         problem = self.__problem
         target_file = 'call_examples/' + str(problem.get_init_values()['Class']) + '.txt'
         with open(target_file, 'w') as target:
             target.write(str(self) + '\n')
-            target.write(self.current_best_str())
+            target.write('iterations: ' + str(iterations) + '\n')
+            target.write('value: {}, fitness: {}'.format(*self.get_current_best()[1:]))
         print('Exported')
