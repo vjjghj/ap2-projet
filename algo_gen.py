@@ -156,3 +156,24 @@ class AlgoGen(Base):
             target.write('iterations: ' + str(iterations) + '\n')
             target.write('value: {}, fitness: {}'.format(*self.get_current_best()[1:]))
         print('Exported')
+
+    def get_bests(self):
+        """
+        Returns the list of the fitness of the best individuals through solving
+        :rtype: list(float)
+        """
+        return self.__bests
+
+    def get_averages(self):
+        """
+        Returns the list of the average fitness of individuals through solving
+        :rtype: list(float)
+        """
+        return self.__averages
+
+    def get_times(self):
+        """
+        Returns the list of time per iteration through solving
+        :rtype: list(float)
+        """
+        return self.__times
