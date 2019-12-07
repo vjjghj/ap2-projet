@@ -1,12 +1,11 @@
 from copy import deepcopy
 
 
-class AreaInitialization(object):
+class TspGraph(object):
     def __init__(self, graph_file):
         self.__graph = self.__init_graph(graph_file)
         self.__visited = [0]
         self.__position = 0
-        print(self.__graph)
 
     @staticmethod
     def __init_graph(graph_file):
@@ -17,21 +16,30 @@ class AreaInitialization(object):
                 graph.append(list(map(lambda cell: int(cell.rstrip('\n')), line.split(','))))
         return graph
 
-    def neighbourhood_close4(self, indexville=0):
+    def go_to_closest(self):
         graph = deepcopy(self.__graph)
-        liste = [indexville]
-        while len(graph) != len(liste):
-            i = graph[liste[-1]]
-            c = i.copy()
-            c.remove(0)
-            p = i.index(min(c))
-            print(p)
-            if p not in liste:
-                liste += [p]
-            else:
-                i[i.index(min(c))] = 0
-        return liste
+        position = self.__visited[-1]
+        directions = sorted(graph[position].copy())
+        i = 0
+        while directions[i] in self.__visited:
+            i += 1
+        self.__visited.append(graph[position].index(directions[i]))
+
+    def visit_all(self):
+        while len(self.__visited) != len(self.__graph):
+            self.go_to_closest()
+
+    def get_visited(self):
+        return self.__visited
+
+    def go_to(self, n):
+        self.__visited.append(n)
+
+    def reset(self):
+        self.__visited = [0]
 
 
 if __name__ == '__main__':
-    x = AreaInitialization('problem5/graph_file.txt')
+    x = TspGraph('problem5/graph_file.txt')
+    x.visit_all()
+    print(x.get_visited())
