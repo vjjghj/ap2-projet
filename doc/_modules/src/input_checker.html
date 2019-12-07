@@ -1,0 +1,190 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>src.input_checker &#8212; Algorithme genetique 0 documentation</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Algorithme genetique 0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for src.input_checker</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="base_args"><a class="viewcode-back" href="../../input_checker.html#src.input_checker.base_args">[docs]</a><span></span><span class="k">def</span> <span class="nf">base_args</span><span class="p">(</span><span class="n">argv</span><span class="p">,</span> <span class="n">nb_args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    As all mains use a given base number of argument, we could write a function outside mains to make them lighter</span>
+<span class="sd">    :param argv: list(str)</span>
+<span class="sd">    :param nb_args: int</span>
+<span class="sd">    :return: int, float, int, int, boolean</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">export</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;-e&#39;</span><span class="p">:</span>
+        <span class="n">export</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">argv</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">crossover_iterations</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="n">nb_args</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="n">nb_args</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">crossover_iterations</span> <span class="o">=</span> <span class="n">test_arg_validity</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="nb">int</span><span class="p">,</span> <span class="n">is_positive</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid argument number&#39;</span><span class="p">)</span>
+    <span class="n">population_size</span> <span class="o">=</span> <span class="n">test_arg_validity</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">int</span><span class="p">,</span> <span class="n">is_even</span><span class="p">)</span>
+    <span class="n">mutation_probability</span> <span class="o">=</span> <span class="n">test_arg_validity</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="nb">float</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">is_in_range</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">iterations</span> <span class="o">=</span> <span class="n">test_arg_validity</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="nb">int</span><span class="p">,</span> <span class="n">is_positive</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">population_size</span><span class="p">,</span> <span class="n">mutation_probability</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">crossover_iterations</span><span class="p">,</span> <span class="n">export</span></div>
+
+
+<div class="viewcode-block" id="test_arg_validity"><a class="viewcode-back" href="../../input_checker.html#src.input_checker.test_arg_validity">[docs]</a><span class="k">def</span> <span class="nf">test_arg_validity</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">desired_type</span><span class="p">,</span> <span class="n">condition_test</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Tries to convert given variable to desired_type</span>
+<span class="sd">    Will also check if the variable respects given condition_test function (after conversion)</span>
+<span class="sd">    :type x: any, will be used for str</span>
+<span class="sd">    :type desired_type: type</span>
+<span class="sd">    :type condition_test: function of shape [desired_type] -&gt; None</span>
+<span class="sd">    :rtype: desired_type</span>
+<span class="sd">    :UC: isinstance(desired_type, type)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">desired_type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Given argument </span><span class="si">{}</span><span class="s1"> should be of type </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">desired_type</span><span class="p">))</span>
+    <span class="n">condition_test</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span></div>
+
+
+<div class="viewcode-block" id="is_even"><a class="viewcode-back" href="../../input_checker.html#src.input_checker.is_even">[docs]</a><span class="k">def</span> <span class="nf">is_even</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Tests if x is even</span>
+<span class="sd">    :type x: int</span>
+<span class="sd">    :rtype: boolean</span>
+<span class="sd">    :UC: none</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> should be even&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="is_in_range"><a class="viewcode-back" href="../../input_checker.html#src.input_checker.is_in_range">[docs]</a><span class="k">def</span> <span class="nf">is_in_range</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Tests if x_min &lt;= x &lt;= x_max</span>
+<span class="sd">    :type x: int</span>
+<span class="sd">    :type x_min: int</span>
+<span class="sd">    :type x_max: int</span>
+<span class="sd">    :rtype: boolean</span>
+<span class="sd">    :UC: x_min &lt; x_max</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">x_min</span> <span class="o">&lt;=</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">x_max</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> should be greater than </span><span class="si">{}</span><span class="s1"> and smaller than </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="is_positive"><a class="viewcode-back" href="../../input_checker.html#src.input_checker.is_positive">[docs]</a><span class="k">def</span> <span class="nf">is_positive</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Tests if x is positive</span>
+<span class="sd">    :type x: int or float</span>
+<span class="sd">    :rtype: boolean</span>
+<span class="sd">    :UC: none</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> should be positive&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="is_greater"><a class="viewcode-back" href="../../input_checker.html#src.input_checker.is_greater">[docs]</a><span class="k">def</span> <span class="nf">is_greater</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Tests if x is greater than y</span>
+<span class="sd">    :type x: int</span>
+<span class="sd">    :type y: int</span>
+<span class="sd">    :rtype: boolean</span>
+<span class="sd">    :UC: none</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">y</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> should be greater than </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="is_letters"><a class="viewcode-back" href="../../input_checker.html#src.input_checker.is_letters">[docs]</a><span class="k">def</span> <span class="nf">is_letters</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Tests if all characters in x are letters or space</span>
+<span class="sd">    :type x: str</span>
+<span class="sd">    :rtype: boolean</span>
+<span class="sd">    :UC: none</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">letters</span> <span class="o">=</span> <span class="p">[</span><span class="nb">chr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">),</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;z&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39; &#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">([</span><span class="n">c</span> <span class="ow">in</span> <span class="n">letters</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Message contains invalid characters&#39;</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/UL-FST-informatique-rvb.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Algorithme genetique 0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Descamps Colette, Gréau Pierre, Prause Justine, FIL, FST, Univ. Lille.
+      Last updated on 04/12/2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+    </div>
+  </body>
+</html>

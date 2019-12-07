@@ -1,0 +1,193 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>problem_interface.py &#8212; Algorithme genetique 0 documentation</title>
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="base_class" href="base_class.html" />
+    <link rel="prev" title="individual_interface.py" href="individual_interface.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="base_class.html" title="base_class"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="individual_interface.html" title="individual_interface.py"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Algorithme genetique 0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="problem-interface-py">
+<h1>problem_interface.py<a class="headerlink" href="#problem-interface-py" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="problem-interface">
+<h2>Problem Interface<a class="headerlink" href="#problem-interface" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="src.problem_interface.Problem">
+<em class="property">class </em><code class="descclassname">src.problem_interface.</code><code class="descname">Problem</code><span class="sig-paren">(</span><em>maximize</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/problem_interface.html#Problem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problem_interface.Problem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parent class for the different problems we will have to solve
+Function to create/override:</p>
+<blockquote>
+<div>__init__(self, <a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs)
+create_individual(self)
+evaluate_fitness(self, individual)
+adapt(self, individual)</div></blockquote>
+<dl class="method">
+<dt id="src.problem_interface.Problem.adapt">
+<code class="descname">adapt</code><span class="sig-paren">(</span><em>individual</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/problem_interface.html#Problem.adapt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problem_interface.Problem.adapt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the value of the individual, based on the problem
+:type individual: Individual
+:rtype: depends on the problem
+:UC: none</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.problem_interface.Problem.create_individual">
+<code class="descname">create_individual</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/problem_interface.html#Problem.create_individual"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problem_interface.Problem.create_individual" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a randomly generated individual for this problem
+:rtype: Individual</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.problem_interface.Problem.evaluate_fitness">
+<code class="descname">evaluate_fitness</code><span class="sig-paren">(</span><em>individual</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/problem_interface.html#Problem.evaluate_fitness"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problem_interface.Problem.evaluate_fitness" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the fitness of individual for this problem
+:type individual: Individual
+:rtype: float
+:UC: individual must be a valid individual for the problem</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.problem_interface.Problem.evaluate_fitness_for_all">
+<code class="descname">evaluate_fitness_for_all</code><span class="sig-paren">(</span><em>population</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/problem_interface.html#Problem.evaluate_fitness_for_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problem_interface.Problem.evaluate_fitness_for_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the score value for each individual in population
+:type population: list(Individual)
+:return: none
+:UC: none</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.problem_interface.Problem.get_maximize">
+<code class="descname">get_maximize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/problem_interface.html#Problem.get_maximize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problem_interface.Problem.get_maximize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the value of maximize
+:rtype: boolean</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.problem_interface.Problem.tournament">
+<code class="descname">tournament</code><span class="sig-paren">(</span><em>first</em>, <em>second</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/problem_interface.html#Problem.tournament"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problem_interface.Problem.tournament" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs a tournament between two individuals, returns the most fitted one
+:type first: Individual
+:type second: Individual
+:rtype: Individual
+:UC: none</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/UL-FST-informatique-rvb.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">problem_interface.py</a><ul>
+<li><a class="reference internal" href="#problem-interface">Problem Interface</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="individual_interface.html"
+                        title="previous chapter">individual_interface.py</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="base_class.html"
+                        title="next chapter">base_class</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/problem_interface.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="base_class.html" title="base_class"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="individual_interface.html" title="individual_interface.py"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Algorithme genetique 0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Descamps Colette, Gréau Pierre, Prause Justine, FIL, FST, Univ. Lille.
+      Last updated on 04/12/2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+    </div>
+  </body>
+</html>

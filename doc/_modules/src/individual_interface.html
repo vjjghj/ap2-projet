@@ -1,0 +1,232 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>src.individual_interface &#8212; Algorithme genetique 0 documentation</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Algorithme genetique 0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for src.individual_interface</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">random</span> <span class="k">import</span> <span class="n">randint</span><span class="p">,</span> <span class="n">choices</span><span class="p">,</span> <span class="n">random</span>
+
+
+<div class="viewcode-block" id="Individual"><a class="viewcode-back" href="../../individual_interface.html#src.individual_interface.Individual">[docs]</a><span class="k">class</span> <span class="nc">Individual</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parent class for the different individual we will use to solve problems</span>
+<span class="sd">    Function to create/override:</span>
+<span class="sd">        get_random_gene() &lt;- static method</span>
+<span class="sd">        mutate_once(gene, probability) &lt;- static method</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__size</span> <span class="o">=</span> <span class="n">size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__genome</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__init_value</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__score</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="Individual.copy"><a class="viewcode-back" href="../../individual_interface.html#src.individual_interface.Individual.copy">[docs]</a>    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a copy of self</span>
+<span class="sd">        :rtype: Individual</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">other</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">__size</span><span class="p">)</span>  <span class="c1"># Allows sub class objects to be copied into the same sub class</span>
+        <span class="c1"># other.set_score(self.score)  # Copying score turned out to be unneeded during further development</span>
+        <span class="n">other</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__genome</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">other</span></div>
+    
+<div class="viewcode-block" id="Individual.cross_with"><a class="viewcode-back" href="../../individual_interface.html#src.individual_interface.Individual.cross_with">[docs]</a>    <span class="k">def</span> <span class="nf">cross_with</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Performs a iterations point(s) crossover between self and other, return two new individuals</span>
+<span class="sd">        :type other: Individual</span>
+<span class="sd">        :type iterations: int</span>
+<span class="sd">        :rtype: Individual, Individual</span>
+<span class="sd">        :UC: none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">other</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iterations</span><span class="p">):</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__genome</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">x1</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">x1</span><span class="o">.</span><span class="n">get_value</span><span class="p">()[:</span><span class="n">n</span><span class="p">]</span> <span class="o">+</span> <span class="n">x2</span><span class="o">.</span><span class="n">get_value</span><span class="p">()[</span><span class="n">n</span><span class="p">:])</span>
+            <span class="n">x2</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">x2</span><span class="o">.</span><span class="n">get_value</span><span class="p">()[:</span><span class="n">n</span><span class="p">]</span> <span class="o">+</span> <span class="n">x1</span><span class="o">.</span><span class="n">get_value</span><span class="p">()[</span><span class="n">n</span><span class="p">:])</span>
+        <span class="k">return</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span></div>
+
+<div class="viewcode-block" id="Individual.evaluate"><a class="viewcode-back" href="../../individual_interface.html#src.individual_interface.Individual.evaluate">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">problem</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the fitness score with the fitness computed by problem for self</span>
+<span class="sd">        :type problem: Problem</span>
+<span class="sd">        :return: none</span>
+<span class="sd">        :UC: none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__score</span> <span class="o">=</span> <span class="n">problem</span><span class="o">.</span><span class="n">evaluate_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Individual.get_score"><a class="viewcode-back" href="../../individual_interface.html#src.individual_interface.Individual.get_score">[docs]</a>    <span class="k">def</span> <span class="nf">get_score</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the fitness score for self</span>
+<span class="sd">        :rtype: int or float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__score</span></div>
+
+<div class="viewcode-block" id="Individual.get_size"><a class="viewcode-back" href="../../individual_interface.html#src.individual_interface.Individual.get_size">[docs]</a>    <span class="k">def</span> <span class="nf">get_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the size of self&#39;s genome</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__size</span></div>
+
+<div class="viewcode-block" id="Individual.get_value"><a class="viewcode-back" href="../../individual_interface.html#src.individual_interface.Individual.get_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the genome of self</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__genome</span></div>
+
+<div class="viewcode-block" id="Individual.get_random_gene"><a class="viewcode-back" href="../../individual_interface.html#src.individual_interface.Individual.get_random_gene">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_random_gene</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a random value for a gene, depending on the problem</span>
+<span class="sd">        Will be defined in sub classes, as genes used depend on the problem</span>
+<span class="sd">        :rtype: depends on the problem</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    <span class="k">def</span> <span class="nf">__init_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Randomly initializes self&#39;s genome</span>
+<span class="sd">        :return: none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__genome</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_random_gene</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__size</span><span class="p">)]</span>
+
+<div class="viewcode-block" id="Individual.mutate_once"><a class="viewcode-back" href="../../individual_interface.html#src.individual_interface.Individual.mutate_once">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">mutate_once</span><span class="p">(</span><span class="n">gene</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the given gene, changed accordingly to the problem with a given probability</span>
+<span class="sd">        :type gene: depends on the problem</span>
+<span class="sd">        :rtype: same as gene</span>
+<span class="sd">        :UC: none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="Individual.mutate"><a class="viewcode-back" href="../../individual_interface.html#src.individual_interface.Individual.mutate">[docs]</a>    <span class="k">def</span> <span class="nf">mutate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">probability</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Apply mutation operation to self: each element of the genome sequence is randomly changed with given probability</span>
+<span class="sd">        :type probability: float</span>
+<span class="sd">        :return: none</span>
+<span class="sd">        :UC: 0 &lt;= probability &lt; 1</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">number_of_mutations</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__size</span><span class="p">)</span> <span class="k">if</span> <span class="n">probability</span> <span class="o">&gt;</span> <span class="n">random</span><span class="p">()])</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">choices</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__size</span><span class="p">),</span> <span class="n">k</span><span class="o">=</span><span class="n">number_of_mutations</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__genome</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mutate_once</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__genome</span><span class="p">[</span><span class="n">i</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="Individual.set_score"><a class="viewcode-back" href="../../individual_interface.html#src.individual_interface.Individual.set_score">[docs]</a>    <span class="k">def</span> <span class="nf">set_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_score</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Changes the fitness score of self</span>
+<span class="sd">        :type new_score: int or float</span>
+<span class="sd">        :return: none</span>
+<span class="sd">        :UC: none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__score</span> <span class="o">=</span> <span class="n">new_score</span></div>
+
+<div class="viewcode-block" id="Individual.set_value"><a class="viewcode-back" href="../../individual_interface.html#src.individual_interface.Individual.set_value">[docs]</a>    <span class="k">def</span> <span class="nf">set_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_value</span><span class="p">,</span> <span class="n">problem</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Changes the genome value of self</span>
+<span class="sd">        If a problem is given, will actualize self.score accordingly</span>
+<span class="sd">        :type new_value: list</span>
+<span class="sd">        :type problem: Problem or NoneType</span>
+<span class="sd">        :return: none</span>
+<span class="sd">        :UC: new_value must be a valid genome for the problem</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__genome</span> <span class="o">=</span> <span class="n">new_value</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>  <span class="c1"># Using copy prevents unwanted side effects (happened with mutations)</span>
+        <span class="k">if</span> <span class="n">problem</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">problem</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a str representing self&#39;s genome</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__genome</span><span class="p">))</span></div>
+        <span class="c1"># Most individual sub classes use list(str) as genome</span>
+        <span class="c1"># this will prevent any error in case of new problem adding</span>
+        <span class="c1"># (At the moment, only problem1 and problem2 uses list(int),</span>
+        <span class="c1"># which could be changed into list(str) with few modifications)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/UL-FST-informatique-rvb.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Algorithme genetique 0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Descamps Colette, Gréau Pierre, Prause Justine, FIL, FST, Univ. Lille.
+      Last updated on 04/12/2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+    </div>
+  </body>
+</html>

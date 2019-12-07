@@ -1,0 +1,15 @@
+=================
+haunted_field
+=================
+
+File Haunted field
+=============================
+
+
+.. autoclass:: src.problems.problem4.haunted_field.PlayerState
+	:members:
+
+.. autoclass:: src.problems.problem4.haunted_field.HauntedField
+	:members:
+
+:doc:`Index <index>`

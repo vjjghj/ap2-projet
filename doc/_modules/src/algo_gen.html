@@ -1,0 +1,271 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>src.algo_gen &#8212; Algorithme genetique 0 documentation</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Algorithme genetique 0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for src.algo_gen</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">random</span> <span class="k">import</span> <span class="n">shuffle</span>
+<span class="kn">from</span> <span class="nn">problem_interface</span> <span class="k">import</span> <span class="n">Problem</span>
+<span class="kn">from</span> <span class="nn">base_class</span> <span class="k">import</span> <span class="n">Base</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+
+<div class="viewcode-block" id="AlgoGen"><a class="viewcode-back" href="../../algo_gen.html#src.algo_gen.AlgoGen">[docs]</a><span class="k">class</span> <span class="nc">AlgoGen</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class is used to solve a given problem by using a genetic algorithm</span>
+<span class="sd">    Handles the population, its evolution, and returns the best fitted individual for the given problem</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a AlgoGen object</span>
+<span class="sd">        :param problem: The problem the population is used to solve.</span>
+<span class="sd">        :type problem: Problem</span>
+<span class="sd">        :param population_size: The size of the population we want to create</span>
+<span class="sd">        :type population_size: int</span>
+<span class="sd">        :param mutation_probability: The probability a gene mutates</span>
+<span class="sd">        :type mutation_probability: int or float</span>
+<span class="sd">        :UC: population_size % 2 == 0 and population_size &gt;= 5 and 0 &lt;= mutation_probability &lt; 1</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__problem</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;problem&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__size</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;population_size&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__population</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">__problem</span><span class="o">.</span><span class="n">create_individual</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__size</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__mutation_probability</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;mutation_probability&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__crossover_iter</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;crossover_iterations&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__export</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;export&#39;</span><span class="p">]</span>
+
+        <span class="c1"># The three following attributes are used for graph representation of convergence</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__bests</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__averages</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__times</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AlgoGen</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Solver initialized&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__shuffle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Randomly shuffles the population</span>
+<span class="sd">        :return: none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__population</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__iter_random_pairs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a zip object formed with pairs of individuals from population</span>
+<span class="sd">        Each individual is taken exactly once unless self.size % 2 != 0</span>
+<span class="sd">        :rtype: zip</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__shuffle</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__population</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">__size</span> <span class="o">//</span> <span class="mi">2</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">__population</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">__size</span> <span class="o">//</span> <span class="mi">2</span><span class="p">:])</span>
+
+    <span class="k">def</span> <span class="nf">__next_gen_creator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selection_method</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a list of individuals from self.population using selection_method</span>
+<span class="sd">        :type selection_method: function</span>
+<span class="sd">        :rtype: list(Individual)</span>
+<span class="sd">        :UC: selection_method must a valid function with shape [Individual, Individual] -&gt; Individual</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">selection_method</span><span class="p">(</span><span class="n">i1</span><span class="p">,</span> <span class="n">i2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i1</span><span class="p">,</span> <span class="n">i2</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__iter_random_pairs</span><span class="p">()]</span>
+
+    <span class="k">def</span> <span class="nf">__next_gen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates the next generation basis according to the problem</span>
+<span class="sd">        :rtype: list(Individual)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">next_gen1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__next_gen_creator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__problem</span><span class="o">.</span><span class="n">tournament</span><span class="p">)</span>
+        <span class="n">next_gen2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__next_gen_creator</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__problem</span><span class="o">.</span><span class="n">tournament</span><span class="p">(</span><span class="o">*</span><span class="n">x</span><span class="o">.</span><span class="n">cross_with</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__crossover_iter</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">next_gen1</span> <span class="o">+</span> <span class="n">next_gen2</span>
+
+    <span class="k">def</span> <span class="nf">__mutate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">population</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Make all individuals from population mutate</span>
+<span class="sd">        :type population: list(Individual)</span>
+<span class="sd">        :return: none</span>
+<span class="sd">        :UC: none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">individual</span> <span class="ow">in</span> <span class="n">population</span><span class="p">:</span>
+            <span class="n">individual</span><span class="o">.</span><span class="n">mutate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__mutation_probability</span><span class="p">)</span>
+
+<div class="viewcode-block" id="AlgoGen.iter_gen"><a class="viewcode-back" href="../../algo_gen.html#src.algo_gen.AlgoGen.iter_gen">[docs]</a>    <span class="k">def</span> <span class="nf">iter_gen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Iterates a round of adaptation to self.population</span>
+<span class="sd">        :return: none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">best_five</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__problem</span><span class="o">.</span><span class="n">sort_population</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__population</span><span class="p">)[:</span><span class="mi">5</span><span class="p">]</span>
+        <span class="n">next_gen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__next_gen</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__mutate</span><span class="p">(</span><span class="n">next_gen</span><span class="p">)</span>
+        <span class="n">next_gen_best</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__problem</span><span class="o">.</span><span class="n">sort_population</span><span class="p">(</span><span class="n">next_gen</span><span class="p">)[:</span><span class="o">-</span><span class="mi">5</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__population</span> <span class="o">=</span> <span class="n">best_five</span> <span class="o">+</span> <span class="n">next_gen_best</span></div>
+
+<div class="viewcode-block" id="AlgoGen.get_current_best"><a class="viewcode-back" href="../../algo_gen.html#src.algo_gen.AlgoGen.get_current_best">[docs]</a>    <span class="k">def</span> <span class="nf">get_current_best</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the current best fitted Individual in self.population and its fitness</span>
+<span class="sd">        :rtype: Individual, depending on the problem, int or float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__problem</span><span class="o">.</span><span class="n">get_maximize</span><span class="p">():</span>
+            <span class="n">current_best</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__population</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">get_score</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">current_best</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__population</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">get_score</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">current_best</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__problem</span><span class="o">.</span><span class="n">adapt</span><span class="p">(</span><span class="n">current_best</span><span class="p">),</span> <span class="n">current_best</span><span class="o">.</span><span class="n">get_score</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="AlgoGen.display_pop"><a class="viewcode-back" href="../../algo_gen.html#src.algo_gen.AlgoGen.display_pop">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">display_pop</span><span class="p">(</span><span class="n">population</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Used for debugging purposes,</span>
+<span class="sd">        Prints every individual&#39;s fitness from population</span>
+<span class="sd">        :type population: list(Individual)</span>
+<span class="sd">        :return: none</span>
+<span class="sd">        :UC: none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">individual</span><span class="o">.</span><span class="n">get_score</span><span class="p">())</span> <span class="k">for</span> <span class="n">individual</span> <span class="ow">in</span> <span class="n">population</span><span class="p">]))</span></div>
+
+<div class="viewcode-block" id="AlgoGen.average_fitness"><a class="viewcode-back" href="../../algo_gen.html#src.algo_gen.AlgoGen.average_fitness">[docs]</a>    <span class="k">def</span> <span class="nf">average_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the average fitness score of population for problem</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">([</span><span class="n">individual</span><span class="o">.</span><span class="n">get_score</span><span class="p">()</span> <span class="k">for</span> <span class="n">individual</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__population</span><span class="p">])</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">__size</span></div>
+
+<div class="viewcode-block" id="AlgoGen.solve"><a class="viewcode-back" href="../../algo_gen.html#src.algo_gen.AlgoGen.solve">[docs]</a>    <span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterations</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Runs the genetic algorithm to solve the given problem</span>
+<span class="sd">        On each round, prints the current best element of population</span>
+<span class="sd">        :param iterations: number of iterations to run to optimize the solution</span>
+<span class="sd">        :type iterations: int</span>
+<span class="sd">        :rtype: Individual, depending on the problem, int or float</span>
+<span class="sd">        :UC: iterations &gt; 0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">base_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iterations</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">iter_gen</span><span class="p">()</span>
+            <span class="n">average</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">average_fitness</span><span class="p">()</span>
+            <span class="n">best</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_best</span><span class="p">()</span>
+            <span class="n">best_str</span> <span class="o">=</span> <span class="s1">&#39;value: </span><span class="si">{}</span><span class="s1">, fitness: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">best</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Iterations </span><span class="si">{}</span><span class="s1">; </span><span class="si">{}</span><span class="s1">; average </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">best_str</span><span class="p">,</span> <span class="n">average</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__bests</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">best</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__averages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">average</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">base_time</span><span class="p">)</span>
+            <span class="n">base_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__export</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">export_best</span><span class="p">(</span><span class="n">iterations</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_best</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="AlgoGen.export_best"><a class="viewcode-back" href="../../algo_gen.html#src.algo_gen.AlgoGen.export_best">[docs]</a>    <span class="k">def</span> <span class="nf">export_best</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterations</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Exports the best individual in a .txt file</span>
+<span class="sd">        :type iterations: int</span>
+<span class="sd">        :return: none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">problem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__problem</span>
+        <span class="n">target_file</span> <span class="o">=</span> <span class="s1">&#39;call_examples/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">problem</span><span class="o">.</span><span class="n">get_init_values</span><span class="p">()[</span><span class="s1">&#39;Class&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;.txt&#39;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">target_file</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">target</span><span class="p">:</span>
+            <span class="n">target</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">target</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;iterations: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">iterations</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">target</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;value: </span><span class="si">{}</span><span class="s1">, fitness: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">get_current_best</span><span class="p">()[</span><span class="mi">1</span><span class="p">:]))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Exported&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AlgoGen.get_bests"><a class="viewcode-back" href="../../algo_gen.html#src.algo_gen.AlgoGen.get_bests">[docs]</a>    <span class="k">def</span> <span class="nf">get_bests</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the list of the fitness of the best individuals through solving</span>
+<span class="sd">        :rtype: list(float)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__bests</span></div>
+
+<div class="viewcode-block" id="AlgoGen.get_averages"><a class="viewcode-back" href="../../algo_gen.html#src.algo_gen.AlgoGen.get_averages">[docs]</a>    <span class="k">def</span> <span class="nf">get_averages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the list of the average fitness of individuals through solving</span>
+<span class="sd">        :rtype: list(float)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__averages</span></div>
+
+<div class="viewcode-block" id="AlgoGen.get_times"><a class="viewcode-back" href="../../algo_gen.html#src.algo_gen.AlgoGen.get_times">[docs]</a>    <span class="k">def</span> <span class="nf">get_times</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the list of time per iteration through solving</span>
+<span class="sd">        :rtype: list(float)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__times</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/UL-FST-informatique-rvb.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Algorithme genetique 0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Descamps Colette, Gréau Pierre, Prause Justine, FIL, FST, Univ. Lille.
+      Last updated on 04/12/2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+    </div>
+  </body>
+</html>

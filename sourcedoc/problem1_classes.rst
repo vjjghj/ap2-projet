@@ -1,0 +1,15 @@
+=================
+problem1_classes
+=================
+
+Classes of the problem 1
+=============================
+
+
+.. autoclass:: src.problems.problem1.problem1_classes.MaxFunctionProblem
+	:members:
+
+.. autoclass:: src.problems.problem1.problem1_classes.MaxFunctionIndividual
+	:members:
+
+:doc:`Index <index>`

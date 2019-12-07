@@ -1,4 +1,5 @@
 from random import randint, choices, random
+from copy import deepcopy
 
 
 class Individual(object):
@@ -19,11 +20,11 @@ class Individual(object):
         Returns a copy of self
         :rtype: Individual
         """
-        other = type(self)(self.__size)  # Allows sub class objects to be copied into the same sub class
-        # other.set_score(self.score)  # Copying score turned out to be unneeded during further development
-        other.set_value(self.__genome)
-        return other
-    
+        return deepcopy(self)
+        # other = type(self)(self.__size)  # Allows sub class objects to be copied into the same sub class
+        # other.set_value(self.__genome)
+        # return other
+
     def cross_with(self, other, iterations=1):
         """
         Performs a iterations point(s) crossover between self and other, return two new individuals

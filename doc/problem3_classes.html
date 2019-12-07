@@ -1,0 +1,205 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>problem3_classes &#8212; Algorithme genetique 0 documentation</title>
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="maze" href="maze.html" />
+    <link rel="prev" title="problem2_classes" href="problem2_classes.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="maze.html" title="maze"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="problem2_classes.html" title="problem2_classes"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Algorithme genetique 0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="problem3-classes">
+<h1>problem3_classes<a class="headerlink" href="#problem3-classes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="classes-of-the-problem-3">
+<h2>Classes of the problem 3<a class="headerlink" href="#classes-of-the-problem-3" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="src.problems.problem3.problem3_classes.LabyrinthProblem">
+<em class="property">class </em><code class="descclassname">src.problems.problem3.problem3_classes.</code><code class="descname">LabyrinthProblem</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/problems/problem3/problem3_classes.html#LabyrinthProblem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem3.problem3_classes.LabyrinthProblem" title="Permalink to this definition">¶</a></dt>
+<dd><p>In this problem we want to find the shortest way out of a maze
+Individual’s genome will be a list of directions</p>
+<dl class="method">
+<dt id="src.problems.problem3.problem3_classes.LabyrinthProblem.adapt">
+<code class="descname">adapt</code><span class="sig-paren">(</span><em>individual</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/problems/problem3/problem3_classes.html#LabyrinthProblem.adapt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem3.problem3_classes.LabyrinthProblem.adapt" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Considering we cant print the maze and the path of individual on each iteration,</dt>
+<dd>adapt will only return the genome of individual as a str</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+<tr class="field-even field"><th class="field-name">UC:</th><td class="field-body">none</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.problems.problem3.problem3_classes.LabyrinthProblem.create_individual">
+<code class="descname">create_individual</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/problems/problem3/problem3_classes.html#LabyrinthProblem.create_individual"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem3.problem3_classes.LabyrinthProblem.create_individual" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates individual with genome length equal to max_length
+:rtype: Individual
+:UC: none</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.problems.problem3.problem3_classes.LabyrinthProblem.evaluate_fitness">
+<code class="descname">evaluate_fitness</code><span class="sig-paren">(</span><em>individual</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/problems/problem3/problem3_classes.html#LabyrinthProblem.evaluate_fitness"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem3.problem3_classes.LabyrinthProblem.evaluate_fitness" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the fitting score of the genome of individual in this problem
+Depends on the maze
+:type individual: Individual
+:rtype: int
+:UC: none</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.problems.problem3.problem3_classes.LabyrinthProblem.get_maze">
+<code class="descname">get_maze</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/problems/problem3/problem3_classes.html#LabyrinthProblem.get_maze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem3.problem3_classes.LabyrinthProblem.get_maze" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current maze
+:rtype: Maze
+:UC: none</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="src.problems.problem3.problem3_classes.LabyrinthIndividual">
+<em class="property">class </em><code class="descclassname">src.problems.problem3.problem3_classes.</code><code class="descname">LabyrinthIndividual</code><span class="sig-paren">(</span><em>size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/problems/problem3/problem3_classes.html#LabyrinthIndividual"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem3.problem3_classes.LabyrinthIndividual" title="Permalink to this definition">¶</a></dt>
+<dd><p>Individuals with list of directions as genome</p>
+<dl class="staticmethod">
+<dt id="src.problems.problem3.problem3_classes.LabyrinthIndividual.get_random_gene">
+<em class="property">static </em><code class="descname">get_random_gene</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/problems/problem3/problem3_classes.html#LabyrinthIndividual.get_random_gene"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem3.problem3_classes.LabyrinthIndividual.get_random_gene" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a random direction
+:rtype: str
+:UC: none</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="src.problems.problem3.problem3_classes.LabyrinthIndividual.mutate_once">
+<em class="property">static </em><code class="descname">mutate_once</code><span class="sig-paren">(</span><em>gene</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/problems/problem3/problem3_classes.html#LabyrinthIndividual.mutate_once"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem3.problem3_classes.LabyrinthIndividual.mutate_once" title="Permalink to this definition">¶</a></dt>
+<dd><p>The gene takes the value of a random different valid direction
+:type gene: str
+:rtype: str
+:UC: none</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/UL-FST-informatique-rvb.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">problem3_classes</a><ul>
+<li><a class="reference internal" href="#classes-of-the-problem-3">Classes of the problem 3</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="problem2_classes.html"
+                        title="previous chapter">problem2_classes</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="maze.html"
+                        title="next chapter">maze</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/problem3_classes.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="maze.html" title="maze"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="problem2_classes.html" title="problem2_classes"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Algorithme genetique 0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Descamps Colette, Gréau Pierre, Prause Justine, FIL, FST, Univ. Lille.
+      Last updated on 04/12/2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+    </div>
+  </body>
+</html>

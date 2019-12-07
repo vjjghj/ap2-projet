@@ -1,0 +1,179 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>src.problem_interface &#8212; Algorithme genetique 0 documentation</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Algorithme genetique 0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for src.problem_interface</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">base_class</span> <span class="k">import</span> <span class="n">Base</span>
+
+
+<div class="viewcode-block" id="Problem"><a class="viewcode-back" href="../../problem_interface.html#src.problem_interface.Problem">[docs]</a><span class="k">class</span> <span class="nc">Problem</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parent class for the different problems we will have to solve</span>
+<span class="sd">    Function to create/override:</span>
+<span class="sd">        __init__(self, **kwargs)</span>
+<span class="sd">        create_individual(self)</span>
+<span class="sd">        evaluate_fitness(self, individual)</span>
+<span class="sd">        adapt(self, individual)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">maximize</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a problem, only argument is used to choose whether the fitness score has to be maximized or not</span>
+<span class="sd">        :type maximize: boolean</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__maximize</span> <span class="o">=</span> <span class="n">maximize</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Problem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Problem initialized&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Problem.create_individual"><a class="viewcode-back" href="../../problem_interface.html#src.problem_interface.Problem.create_individual">[docs]</a>    <span class="k">def</span> <span class="nf">create_individual</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a randomly generated individual for this problem</span>
+<span class="sd">        :rtype: Individual</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="Problem.evaluate_fitness"><a class="viewcode-back" href="../../problem_interface.html#src.problem_interface.Problem.evaluate_fitness">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the fitness of individual for this problem</span>
+<span class="sd">        :type individual: Individual</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">        :UC: individual must be a valid individual for the problem</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="Problem.evaluate_fitness_for_all"><a class="viewcode-back" href="../../problem_interface.html#src.problem_interface.Problem.evaluate_fitness_for_all">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate_fitness_for_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">population</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the score value for each individual in population</span>
+<span class="sd">        :type population: list(Individual)</span>
+<span class="sd">        :return: none</span>
+<span class="sd">        :UC: none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">individual</span> <span class="ow">in</span> <span class="n">population</span><span class="p">:</span>
+            <span class="n">individual</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">sort_population</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">population</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">evaluate_fitness_for_all</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sort population from best fitted to worst fitted.</span>
+<span class="sd">        Depending on the problem, it can corresponds to ascending or descending order</span>
+<span class="sd">        :type population: list(Individual)</span>
+<span class="sd">        :rtype: list(Individual)</span>
+<span class="sd">        :UC: none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">get_score</span><span class="p">(),</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__maximize</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Problem.tournament"><a class="viewcode-back" href="../../problem_interface.html#src.problem_interface.Problem.tournament">[docs]</a>    <span class="k">def</span> <span class="nf">tournament</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">second</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Performs a tournament between two individuals, returns the most fitted one</span>
+<span class="sd">        :type first: Individual</span>
+<span class="sd">        :type second: Individual</span>
+<span class="sd">        :rtype: Individual</span>
+<span class="sd">        :UC: none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">evaluate_fitness_for_all</span><span class="p">([</span><span class="n">first</span><span class="p">,</span> <span class="n">second</span><span class="p">])</span>
+        <span class="n">first_is_bigger</span> <span class="o">=</span> <span class="n">first</span><span class="o">.</span><span class="n">get_score</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">second</span><span class="o">.</span><span class="n">get_score</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">first_is_bigger</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__maximize</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__maximize</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">first_is_bigger</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">first</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">second</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Problem.adapt"><a class="viewcode-back" href="../../problem_interface.html#src.problem_interface.Problem.adapt">[docs]</a>    <span class="k">def</span> <span class="nf">adapt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the value of the individual, based on the problem</span>
+<span class="sd">        :type individual: Individual</span>
+<span class="sd">        :rtype: depends on the problem</span>
+<span class="sd">        :UC: none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="Problem.get_maximize"><a class="viewcode-back" href="../../problem_interface.html#src.problem_interface.Problem.get_maximize">[docs]</a>    <span class="k">def</span> <span class="nf">get_maximize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the value of maximize</span>
+<span class="sd">        :rtype: boolean</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__maximize</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/UL-FST-informatique-rvb.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Algorithme genetique 0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Descamps Colette, Gréau Pierre, Prause Justine, FIL, FST, Univ. Lille.
+      Last updated on 04/12/2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+    </div>
+  </body>
+</html>

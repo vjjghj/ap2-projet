@@ -1,0 +1,12 @@
+=================
+maze
+=================
+
+File Maze
+=============================
+
+
+.. autoclass:: src.problems.problem3.problem3_classes.Maze
+	:members:
+
+:doc:`Index <index>`

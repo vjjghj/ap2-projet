@@ -1,0 +1,182 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>src.problems.problem3.problem3_classes &#8212; Algorithme genetique 0 documentation</title>
+    <link rel="stylesheet" href="../../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">Algorithme genetique 0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for src.problems.problem3.problem3_classes</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">problem_interface</span> <span class="k">import</span> <span class="n">Problem</span>
+<span class="kn">from</span> <span class="nn">individual_interface</span> <span class="k">import</span> <span class="n">Individual</span>
+<span class="kn">from</span> <span class="nn">problems.problem3.maze</span> <span class="k">import</span> <span class="n">Maze</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="k">import</span> <span class="n">choice</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">ceil</span>
+
+
+<div class="viewcode-block" id="LabyrinthProblem"><a class="viewcode-back" href="../../../../problem3_classes.html#src.problems.problem3.problem3_classes.LabyrinthProblem">[docs]</a><span class="k">class</span> <span class="nc">LabyrinthProblem</span><span class="p">(</span><span class="n">Problem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    In this problem we want to find the shortest way out of a maze</span>
+<span class="sd">    Individual&#39;s genome will be a list of directions</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a problem where the goal is to find the shortest way out of a maze</span>
+<span class="sd">        Uses individuals with direction genes, with genome length equal to the number of cells in the maze</span>
+<span class="sd">        :type maze_file: str</span>
+<span class="sd">        :UC: maze_file has to be a valid path to a valid maze file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__maze</span> <span class="o">=</span> <span class="n">Maze</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;maze_file&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__max_length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__maze</span><span class="o">.</span><span class="n">get_size</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LabyrinthProblem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">maximize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="LabyrinthProblem.create_individual"><a class="viewcode-back" href="../../../../problem3_classes.html#src.problems.problem3.problem3_classes.LabyrinthProblem.create_individual">[docs]</a>    <span class="k">def</span> <span class="nf">create_individual</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates individual with genome length equal to max_length</span>
+<span class="sd">        :rtype: Individual</span>
+<span class="sd">        :UC: none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">LabyrinthIndividual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__max_length</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LabyrinthProblem.evaluate_fitness"><a class="viewcode-back" href="../../../../problem3_classes.html#src.problems.problem3.problem3_classes.LabyrinthProblem.evaluate_fitness">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the fitting score of the genome of individual in this problem</span>
+<span class="sd">        Depends on the maze</span>
+<span class="sd">        :type individual: Individual</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        :UC: none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">nb_steps</span><span class="p">,</span> <span class="n">distance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__maze</span><span class="o">.</span><span class="n">try_path</span><span class="p">(</span><span class="n">individual</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
+        <span class="n">adapted_distance</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__maze</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">distance</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">adapted_distance</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">nb_steps</span>
+        <span class="k">if</span> <span class="n">distance</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">score</span> <span class="o">=</span> <span class="mi">1000</span> <span class="o">-</span> <span class="n">nb_steps</span>  <span class="c1"># Subtracting the number of steps will allow to aim for the shortest path</span>
+        <span class="k">return</span> <span class="n">score</span></div>
+
+<div class="viewcode-block" id="LabyrinthProblem.adapt"><a class="viewcode-back" href="../../../../problem3_classes.html#src.problems.problem3.problem3_classes.LabyrinthProblem.adapt">[docs]</a>    <span class="k">def</span> <span class="nf">adapt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Considering we cant print the maze and the path of individual on each iteration,</span>
+<span class="sd">            adapt will only return the genome of individual as a str</span>
+<span class="sd">        :type individual: Individual</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        :UC: none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LabyrinthProblem.get_maze"><a class="viewcode-back" href="../../../../problem3_classes.html#src.problems.problem3.problem3_classes.LabyrinthProblem.get_maze">[docs]</a>    <span class="k">def</span> <span class="nf">get_maze</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the current maze</span>
+<span class="sd">        :rtype: Maze</span>
+<span class="sd">        :UC: none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__maze</span></div></div>
+
+
+<div class="viewcode-block" id="LabyrinthIndividual"><a class="viewcode-back" href="../../../../problem3_classes.html#src.problems.problem3.problem3_classes.LabyrinthIndividual">[docs]</a><span class="k">class</span> <span class="nc">LabyrinthIndividual</span><span class="p">(</span><span class="n">Individual</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Individuals with list of directions as genome</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LabyrinthIndividual.get_random_gene"><a class="viewcode-back" href="../../../../problem3_classes.html#src.problems.problem3.problem3_classes.LabyrinthIndividual.get_random_gene">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_random_gene</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a random direction</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        :UC: none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">choice</span><span class="p">(</span><span class="n">Maze</span><span class="o">.</span><span class="n">DIRECTIONS</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LabyrinthIndividual.mutate_once"><a class="viewcode-back" href="../../../../problem3_classes.html#src.problems.problem3.problem3_classes.LabyrinthIndividual.mutate_once">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">mutate_once</span><span class="p">(</span><span class="n">gene</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The gene takes the value of a random different valid direction</span>
+<span class="sd">        :type gene: str</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        :UC: none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_gene</span> <span class="o">=</span> <span class="n">LabyrinthIndividual</span><span class="o">.</span><span class="n">get_random_gene</span><span class="p">()</span>
+        <span class="k">while</span> <span class="n">gene</span> <span class="o">==</span> <span class="n">new_gene</span><span class="p">:</span>
+            <span class="n">new_gene</span> <span class="o">=</span> <span class="n">LabyrinthIndividual</span><span class="o">.</span><span class="n">get_random_gene</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">new_gene</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../../index.html">
+              <img class="logo" src="../../../../_static/UL-FST-informatique-rvb.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">Algorithme genetique 0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Descamps Colette, Gréau Pierre, Prause Justine, FIL, FST, Univ. Lille.
+      Last updated on 04/12/2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+    </div>
+  </body>
+</html>

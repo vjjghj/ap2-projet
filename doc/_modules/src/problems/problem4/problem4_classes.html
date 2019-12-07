@@ -1,0 +1,225 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>src.problems.problem4.problem4_classes &#8212; Algorithme genetique 0 documentation</title>
+    <link rel="stylesheet" href="../../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">Algorithme genetique 0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for src.problems.problem4.problem4_classes</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">problem_interface</span> <span class="k">import</span> <span class="n">Problem</span>
+<span class="kn">from</span> <span class="nn">individual_interface</span> <span class="k">import</span> <span class="n">Individual</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="k">import</span> <span class="n">choice</span>
+<span class="kn">from</span> <span class="nn">problems.problem4.haunted_field</span> <span class="k">import</span> <span class="n">PlayerState</span><span class="p">,</span> <span class="n">HauntedField</span>
+
+
+<div class="viewcode-block" id="HauntedFieldProblem"><a class="viewcode-back" href="../../../../problem4_classes.html#src.problems.problem4.problem4_classes.HauntedFieldProblem">[docs]</a><span class="k">class</span> <span class="nc">HauntedFieldProblem</span><span class="p">(</span><span class="n">Problem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    In this problem we want to find the best behaviour to cross haunted fields</span>
+<span class="sd">    Individual&#39;s genome will be a list of instructions</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a problem where the goal is to find the best behaviour to cross haunted fields</span>
+<span class="sd">        Uses individuals with instruction genes, with genome length equal to the number possibilities</span>
+<span class="sd">        :type maze_file: str</span>
+<span class="sd">        :UC: maze_file has to be a valid path to a valid maze file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">height</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;width&#39;</span><span class="p">]</span>
+        <span class="n">nb_monsters</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;nb_monsters&#39;</span><span class="p">]</span>
+        <span class="n">fields_to_cross</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;fields_to_cross&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="n">HauntedField</span><span class="p">(</span><span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">nb_monsters</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">fields_to_cross</span><span class="p">)]</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">HauntedFieldProblem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="HauntedFieldProblem.create_individual"><a class="viewcode-back" href="../../../../problem4_classes.html#src.problems.problem4.problem4_classes.HauntedFieldProblem.create_individual">[docs]</a>    <span class="k">def</span> <span class="nf">create_individual</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates individual with genome length 3^5 = 243</span>
+<span class="sd">        :rtype: Individual</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">HauntedFieldIndividual</span><span class="p">(</span><span class="mi">243</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HauntedFieldProblem.evaluate_fitness"><a class="viewcode-back" href="../../../../problem4_classes.html#src.problems.problem4.problem4_classes.HauntedFieldProblem.evaluate_fitness">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Evaluates individual&#39;s fitness</span>
+<span class="sd">        :param individual: Individual</span>
+<span class="sd">        :return: none</span>
+<span class="sd">        :UC: none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">:</span>
+            <span class="n">line</span><span class="p">,</span> <span class="n">used</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span>
+            <span class="n">score</span> <span class="o">+=</span> <span class="n">used</span> <span class="o">+</span> <span class="n">line</span> <span class="o">*</span> <span class="n">field</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="n">individual</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="n">PlayerState</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
+                <span class="n">score</span> <span class="o">+=</span> <span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span> <span class="o">*</span> <span class="n">field</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span> <span class="o">-</span> <span class="n">used</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span>
+            <span class="k">elif</span> <span class="n">state</span> <span class="o">==</span> <span class="n">PlayerState</span><span class="o">.</span><span class="n">blocked</span><span class="p">:</span>
+                <span class="n">score</span> <span class="o">+=</span> <span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span> <span class="o">-</span> <span class="n">line</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
+            <span class="k">elif</span> <span class="n">state</span> <span class="o">==</span> <span class="n">PlayerState</span><span class="o">.</span><span class="n">monster</span><span class="p">:</span>
+                <span class="n">score</span> <span class="o">+=</span> <span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span> <span class="o">-</span> <span class="n">line</span><span class="p">)</span> <span class="o">*</span> <span class="mi">20</span>
+        <span class="k">return</span> <span class="n">score</span></div>
+
+<div class="viewcode-block" id="HauntedFieldProblem.adapt"><a class="viewcode-back" href="../../../../problem4_classes.html#src.problems.problem4.problem4_classes.HauntedFieldProblem.adapt">[docs]</a>    <span class="k">def</span> <span class="nf">adapt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Considering we cant print the field and the path of individual based on the commands on each iteration,</span>
+<span class="sd">            adapt will only return the genome of individual as a str</span>
+<span class="sd">        :type individual: Individual</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        :UC: none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="HauntedFieldIndividual"><a class="viewcode-back" href="../../../../problem4_classes.html#src.problems.problem4.problem4_classes.HauntedFieldIndividual">[docs]</a><span class="k">class</span> <span class="nc">HauntedFieldIndividual</span><span class="p">(</span><span class="n">Individual</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Individuals with list of directions as genome</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates an individual to solve the haunted field problem</span>
+<span class="sd">        We use not kwarg but we leave it here in case of later modifications</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__state</span> <span class="o">=</span> <span class="n">PlayerState</span><span class="o">.</span><span class="n">active</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">HauntedFieldIndividual</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="HauntedFieldIndividual.get_random_gene"><a class="viewcode-back" href="../../../../problem4_classes.html#src.problems.problem4.problem4_classes.HauntedFieldIndividual.get_random_gene">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_random_gene</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a random valid direction</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">choice</span><span class="p">([</span><span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;l&#39;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="HauntedFieldIndividual.mutate_once"><a class="viewcode-back" href="../../../../problem4_classes.html#src.problems.problem4.problem4_classes.HauntedFieldIndividual.mutate_once">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">mutate_once</span><span class="p">(</span><span class="n">gene</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The gene takes the value of a random different valid direction</span>
+<span class="sd">        :type gene: str</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        :UC: none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_gene</span> <span class="o">=</span> <span class="n">HauntedFieldIndividual</span><span class="o">.</span><span class="n">get_random_gene</span><span class="p">()</span>
+        <span class="k">while</span> <span class="n">gene</span> <span class="o">==</span> <span class="n">new_gene</span><span class="p">:</span>
+            <span class="n">new_gene</span> <span class="o">=</span> <span class="n">HauntedFieldIndividual</span><span class="o">.</span><span class="n">get_random_gene</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">new_gene</span></div>
+
+    <span class="k">def</span> <span class="nf">get_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__state</span>
+
+    <span class="k">def</span> <span class="nf">active</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__state</span> <span class="o">=</span> <span class="n">PlayerState</span><span class="o">.</span><span class="n">active</span>
+
+    <span class="k">def</span> <span class="nf">success</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__state</span> <span class="o">=</span> <span class="n">PlayerState</span><span class="o">.</span><span class="n">success</span>
+
+    <span class="k">def</span> <span class="nf">monster</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__state</span> <span class="o">=</span> <span class="n">PlayerState</span><span class="o">.</span><span class="n">monster</span>
+
+    <span class="k">def</span> <span class="nf">blocked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__state</span> <span class="o">=</span> <span class="n">PlayerState</span><span class="o">.</span><span class="n">blocked</span>
+
+    <span class="k">def</span> <span class="nf">alive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__state</span> <span class="o">=</span> <span class="n">PlayerState</span><span class="o">.</span><span class="n">alive</span></div>
+
+
+<span class="k">def</span> <span class="nf">tester</span><span class="p">(</span><span class="n">individual</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">nb_monsters</span><span class="p">,</span> <span class="n">fields_to_cross</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Tests the number of fields the given individual can cross when trying fields_to_cross times</span>
+<span class="sd">    :type individual: HauntedFieldIndividual</span>
+<span class="sd">    :type width: int</span>
+<span class="sd">    :type height: int</span>
+<span class="sd">    :type nb_monsters: int</span>
+<span class="sd">    :type fields_to_cross: int</span>
+<span class="sd">    :rtype: int</span>
+<span class="sd">    :UC: nb_monsters &lt; width</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="n">HauntedField</span><span class="p">(</span><span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">nb_monsters</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">fields_to_cross</span><span class="p">)]</span>
+    <span class="n">crossed</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">:</span>
+        <span class="n">field</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">individual</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span> <span class="ow">is</span> <span class="n">PlayerState</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
+            <span class="n">crossed</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">crossed</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../../index.html">
+              <img class="logo" src="../../../../_static/UL-FST-informatique-rvb.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">Algorithme genetique 0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Descamps Colette, Gréau Pierre, Prause Justine, FIL, FST, Univ. Lille.
+      Last updated on 04/12/2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+    </div>
+  </body>
+</html>

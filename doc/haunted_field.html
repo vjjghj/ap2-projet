@@ -1,0 +1,188 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>haunted_field &#8212; Algorithme genetique 0 documentation</title>
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="problem4_classes" href="problem4_classes.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="problem4_classes.html" title="problem4_classes"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Algorithme genetique 0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="haunted-field">
+<h1>haunted_field<a class="headerlink" href="#haunted-field" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="file-haunted-field">
+<h2>File Haunted field<a class="headerlink" href="#file-haunted-field" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="src.problems.problem4.haunted_field.PlayerState">
+<em class="property">class </em><code class="descclassname">src.problems.problem4.haunted_field.</code><code class="descname">PlayerState</code><a class="reference internal" href="_modules/src/problems/problem4/haunted_field.html#PlayerState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem4.haunted_field.PlayerState" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is used to define the possibles states of an individual through the haunted field
+An individual has five types of value:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">active</span></code></li>
+<li><code class="docutils literal"><span class="pre">success</span></code></li>
+<li><code class="docutils literal"><span class="pre">monster</span></code></li>
+<li><code class="docutils literal"><span class="pre">blocked</span></code></li>
+<li><code class="docutils literal"><span class="pre">alive</span></code></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="src.problems.problem4.haunted_field.HauntedField">
+<em class="property">class </em><code class="descclassname">src.problems.problem4.haunted_field.</code><code class="descname">HauntedField</code><span class="sig-paren">(</span><em>height</em>, <em>width</em>, <em>nb_monsters</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/problems/problem4/haunted_field.html#HauntedField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem4.haunted_field.HauntedField" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="src.problems.problem4.haunted_field.HauntedField.backup_field">
+<code class="descname">backup_field</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/problems/problem4/haunted_field.html#HauntedField.backup_field"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem4.haunted_field.HauntedField.backup_field" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store a (deep) copy of self’s field, thus it is possible to apply modifications to self’s field and then
+to go back to initial field state using self.restore_field().</p>
+<p>It can be used to store field before trying to “cross it” in order to restore it after crossing attempt.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.problems.problem4.haunted_field.HauntedField.cross">
+<code class="descname">cross</code><span class="sig-paren">(</span><em>individual</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/problems/problem4/haunted_field.html#HauntedField.cross"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem4.haunted_field.HauntedField.cross" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tries to cross the Field
+:type individual: Individual
+:rtype: int, int
+:UC: none</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.problems.problem4.haunted_field.HauntedField.get_front_view">
+<code class="descname">get_front_view</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/problems/problem4/haunted_field.html#HauntedField.get_front_view"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem4.haunted_field.HauntedField.get_front_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a five letters word representing the view in front of the player
+The word describes the view from the right of the player to his left
+:rtype: list(str)</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="src.problems.problem4.haunted_field.HauntedField.get_view_code">
+<em class="property">static </em><code class="descname">get_view_code</code><span class="sig-paren">(</span><em>view</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/problems/problem4/haunted_field.html#HauntedField.get_view_code"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem4.haunted_field.HauntedField.get_view_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the view in a position in the command list
+:type view: list(str)
+:rtype: int
+:UC: view must be a valid view</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.problems.problem4.haunted_field.HauntedField.init_monsters">
+<code class="descname">init_monsters</code><span class="sig-paren">(</span><em>nb_monsters_per_lines</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/problems/problem4/haunted_field.html#HauntedField.init_monsters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem4.haunted_field.HauntedField.init_monsters" title="Permalink to this definition">¶</a></dt>
+<dd><p>randomly set between 2 and nb_monsters_per_lines monsters in each line, first and last line excepted.
+Must be called to add monster to the field
+:UC: nb_monsters_per_lines &lt; self.__width</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.problems.problem4.haunted_field.HauntedField.restore_field">
+<code class="descname">restore_field</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/problems/problem4/haunted_field.html#HauntedField.restore_field"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem4.haunted_field.HauntedField.restore_field" title="Permalink to this definition">¶</a></dt>
+<dd><p>reset self’s field to last ‘backup field’ (created using self.restore_field()),
+it is None if no backup had been made</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/UL-FST-informatique-rvb.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">haunted_field</a><ul>
+<li><a class="reference internal" href="#file-haunted-field">File Haunted field</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="problem4_classes.html"
+                        title="previous chapter">problem4_classes</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/haunted_field.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="problem4_classes.html" title="problem4_classes"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Algorithme genetique 0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Descamps Colette, Gréau Pierre, Prause Justine, FIL, FST, Univ. Lille.
+      Last updated on 04/12/2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+    </div>
+  </body>
+</html>

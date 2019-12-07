@@ -1,0 +1,182 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>src.problems.problem1.problem1_classes &#8212; Algorithme genetique 0 documentation</title>
+    <link rel="stylesheet" href="../../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">Algorithme genetique 0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for src.problems.problem1.problem1_classes</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">problem_interface</span> <span class="k">import</span> <span class="n">Problem</span>
+<span class="kn">from</span> <span class="nn">individual_interface</span> <span class="k">import</span> <span class="n">Individual</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">sin</span><span class="p">,</span> <span class="n">cos</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="k">import</span> <span class="n">randint</span>
+
+
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is the function we want to find the max</span>
+<span class="sd">    :type x: int or float</span>
+<span class="sd">    :rtype: float</span>
+<span class="sd">    :UC: none</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="MaxFunctionProblem"><a class="viewcode-back" href="../../../../problem1_classes.html#src.problems.problem1.problem1_classes.MaxFunctionProblem">[docs]</a><span class="k">class</span> <span class="nc">MaxFunctionProblem</span><span class="p">(</span><span class="n">Problem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    In this problem we want to find the value maximizing a given function</span>
+<span class="sd">    We work in a given interval</span>
+<span class="sd">    Individual&#39;s genome will be a list of bits, representing a floating value in the interval</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a problem where the goal is to find the maximum of a function in a given interval</span>
+<span class="sd">        Uses individual with bit genes, with bit_length genes</span>
+<span class="sd">        :type x_min: int or float</span>
+<span class="sd">        :type x_max: int or float</span>
+<span class="sd">        :type bit_length: int</span>
+<span class="sd">        :type fx: function</span>
+<span class="sd">        :UC: x_min &lt; x_max and bit_length &gt; 0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__f</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__x_min</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;x_min&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__x_max</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;x_max&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__bit_length</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;bit_length&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__biggest_int_value</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="bp">self</span><span class="o">.</span><span class="n">__bit_length</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MaxFunctionProblem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">maximize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span> <span class="n">kwargs</span><span class="p">)</span>
+        <span class="c1"># By changing True by False we can aim for the minimum of the function</span>
+
+<div class="viewcode-block" id="MaxFunctionProblem.create_individual"><a class="viewcode-back" href="../../../../problem1_classes.html#src.problems.problem1.problem1_classes.MaxFunctionProblem.create_individual">[docs]</a>    <span class="k">def</span> <span class="nf">create_individual</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates an individual with genome length equals to bit_length</span>
+<span class="sd">        :rtype: Individual</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">MaxFunctionIndividual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__bit_length</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MaxFunctionProblem.adapt"><a class="viewcode-back" href="../../../../problem1_classes.html#src.problems.problem1.problem1_classes.MaxFunctionProblem.adapt">[docs]</a>    <span class="k">def</span> <span class="nf">adapt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the value corresponding to the individual genome in the problem</span>
+<span class="sd">        Depends on x_min, x_max and bit_length</span>
+<span class="sd">        :type individual: Individual</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">        :UC: none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">individual</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># reminder: Individual.__str__() returns the genome as a string</span>
+        <span class="n">int_range</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__x_max</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">__x_min</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">__biggest_int_value</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__x_min</span> <span class="o">+</span> <span class="n">n</span> <span class="o">*</span> <span class="n">int_range</span></div>
+
+<div class="viewcode-block" id="MaxFunctionProblem.evaluate_fitness"><a class="viewcode-back" href="../../../../problem1_classes.html#src.problems.problem1.problem1_classes.MaxFunctionProblem.evaluate_fitness">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The fitness of the individual is given by the function we want to maximize</span>
+<span class="sd">        :type individual: Individual</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">        :UC: none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">adapt</span><span class="p">(</span><span class="n">individual</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="MaxFunctionIndividual"><a class="viewcode-back" href="../../../../problem1_classes.html#src.problems.problem1.problem1_classes.MaxFunctionIndividual">[docs]</a><span class="k">class</span> <span class="nc">MaxFunctionIndividual</span><span class="p">(</span><span class="n">Individual</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Individuals with a list of bits as genome</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="MaxFunctionIndividual.get_random_gene"><a class="viewcode-back" href="../../../../problem1_classes.html#src.problems.problem1.problem1_classes.MaxFunctionIndividual.get_random_gene">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_random_gene</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a random bit value</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MaxFunctionIndividual.mutate_once"><a class="viewcode-back" href="../../../../problem1_classes.html#src.problems.problem1.problem1_classes.MaxFunctionIndividual.mutate_once">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">mutate_once</span><span class="p">(</span><span class="n">gene</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Flips the bit value</span>
+<span class="sd">        :type gene: int</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        :UC: gene in {0, 1}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">gene</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../../index.html">
+              <img class="logo" src="../../../../_static/UL-FST-informatique-rvb.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">Algorithme genetique 0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Descamps Colette, Gréau Pierre, Prause Justine, FIL, FST, Univ. Lille.
+      Last updated on 04/12/2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+    </div>
+  </body>
+</html>

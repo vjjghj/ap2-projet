@@ -1,0 +1,270 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>problems.problem3.maze &#8212; Algorithme genetique 0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">Algorithme genetique 0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for problems.problem3.maze</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="Maze"><a class="viewcode-back" href="../../../maze.html#src.problems.problem3.problem3_classes.Maze">[docs]</a><span></span><span class="k">class</span> <span class="nc">Maze</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="n">DIRECTIONS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;W&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        each cell of a maze receives a number from 0 to the number of cells -1, cells by cells, line by line</span>
+<span class="sd">        maze is represented by a dictionary whose keys are the cell numbers and values the list of possible DIRECTIONS</span>
+<span class="sd">            from this cell</span>
+<span class="sd">        start cell is number 0 (top, left) and exit cell is the last one (bottom, right)</span>
+
+<span class="sd">        :param filename:  the name file containing the maze description</span>
+<span class="sd">        :type filename: string</span>
+<span class="sd">        :UC: filename must contain a valid Maze file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__cells</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__file</span> <span class="o">=</span> <span class="n">filename</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__width</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__height</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_cells</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__start</span> <span class="o">=</span> <span class="mi">0</span>                     <span class="c1"># index of starting cell</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__exit</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__cells</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># index of exit cell</span>
+
+<div class="viewcode-block" id="Maze.init_cells"><a class="viewcode-back" href="../../../maze.html#src.problems.problem3.problem3_classes.Maze.init_cells">[docs]</a>    <span class="k">def</span> <span class="nf">init_cells</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        read a text file describing the maze from a &quot;picture&quot; made of | + - and spaces</span>
+<span class="sd">        cells are stored in a dictionary, the key is the cell number (built line by line)</span>
+<span class="sd">        the value is the string made of N,S,E,W corresponding to available directions for leave the cell</span>
+
+<span class="sd">        :param filename: the name of the file containing the aze description</span>
+<span class="sd">        :type filename: string</span>
+<span class="sd">        :return: the dictionary corresponding to the maze description</span>
+<span class="sd">        :rtype: dictionary (int : list(DIRECTIONS))</span>
+<span class="sd">        :UC: filename must contain a valid Maze file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">read_content</span><span class="p">(</span><span class="n">input_stream</span><span class="p">):</span>
+            <span class="n">hole</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span>  <span class="c1"># a hole means a path</span>
+
+            <span class="k">def</span> <span class="nf">handle_horizontal_path</span><span class="p">(</span><span class="n">chain</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__width</span><span class="p">):</span>
+                    <span class="n">car</span> <span class="o">=</span> <span class="n">chain</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">col</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">car</span> <span class="o">==</span> <span class="n">hole</span><span class="p">:</span>
+                        <span class="n">cells</span><span class="p">[</span><span class="n">line</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">__width</span> <span class="o">+</span> <span class="n">col</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="s1">&#39;E&#39;</span>
+                        <span class="n">cells</span><span class="p">[</span><span class="n">line</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">__width</span> <span class="o">+</span> <span class="n">col</span><span class="p">]</span> <span class="o">+=</span> <span class="s1">&#39;W&#39;</span>
+
+            <span class="k">def</span> <span class="nf">handle_vertical_path</span><span class="p">(</span><span class="n">chain</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__width</span><span class="p">):</span>
+                    <span class="n">car</span> <span class="o">=</span> <span class="n">chain</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">col</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">car</span> <span class="o">==</span> <span class="n">hole</span><span class="p">:</span>
+                        <span class="n">cells</span><span class="p">[</span><span class="n">line</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">__width</span> <span class="o">+</span> <span class="n">col</span><span class="p">]</span> <span class="o">+=</span> <span class="s1">&#39;S&#39;</span>
+                        <span class="n">cells</span><span class="p">[(</span><span class="n">line</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">__width</span> <span class="o">+</span> <span class="n">col</span><span class="p">]</span> <span class="o">+=</span> <span class="s1">&#39;N&#39;</span>
+            <span class="c1"># read_content body</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">input_stream</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">)</span>  <span class="c1"># first line of file</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__height</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>      <span class="c1"># define __width and __height fields</span>
+            <span class="n">cells</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__width</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">__height</span><span class="p">))</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="n">input_stream</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>                              <span class="c1"># all other lines</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__height</span><span class="p">):</span>
+                <span class="n">handle_horizontal_path</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">line</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>  <span class="c1"># odd lines =&gt; horizontal path</span>
+                <span class="n">handle_vertical_path</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">line</span> <span class="o">+</span> <span class="mi">2</span><span class="p">])</span>    <span class="c1"># even lines =&gt; vertical path</span>
+            <span class="k">return</span> <span class="n">cells</span>
+
+        <span class="c1"># init_cells body</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">input_s</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__cells</span> <span class="o">=</span> <span class="n">read_content</span><span class="p">(</span><span class="n">input_s</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s1">&#39;Unknown file&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Maze.get_size"><a class="viewcode-back" href="../../../maze.html#src.problems.problem3.problem3_classes.Maze.get_size">[docs]</a>    <span class="k">def</span> <span class="nf">get_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: the number of cells of this maze</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__width</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">__height</span></div>
+
+<div class="viewcode-block" id="Maze.try_path"><a class="viewcode-back" href="../../../maze.html#src.problems.problem3.problem3_classes.Maze.try_path">[docs]</a>    <span class="k">def</span> <span class="nf">try_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">get_visited</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Path is tried from entry point, step by step.</span>
+<span class="sd">        Course stops either as soon as a wall is met, or it returns to an already visited cell, or reaches the exit.</span>
+<span class="sd">        Successful steps are steps until stop.</span>
+
+<span class="sd">        :param path: a sequence of DIRECTIONS corresponding to moves.</span>
+<span class="sd">        :type path: an sequence (actually a string but could be list) of DIRECTIONS</span>
+<span class="sd">        :return: a tuple containing number of successful steps using path and manhattan</span>
+<span class="sd">                 distance between reached cell and exit</span>
+<span class="sd">        :param get_visited: if True, returns</span>
+<span class="sd">        :type get_visited: boolean</span>
+<span class="sd">        :rtype: (int, int)</span>
+<span class="sd">        :UC: none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">visited</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">nb_steps</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">current_cell</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__start</span>
+        <span class="k">while</span> <span class="n">current_cell</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__exit</span> <span class="ow">and</span> \
+                <span class="n">nb_steps</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="ow">and</span> \
+                <span class="n">current_cell</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">visited</span> <span class="ow">and</span> \
+                <span class="n">path</span><span class="p">[</span><span class="n">nb_steps</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__cells</span><span class="p">[</span><span class="n">current_cell</span><span class="p">]:</span>
+            <span class="n">visited</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_cell</span><span class="p">)</span>
+            <span class="n">current_cell</span> <span class="o">=</span> <span class="n">current_cell</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="p">(</span><span class="n">path</span><span class="p">[</span><span class="n">nb_steps</span><span class="p">])</span>
+            <span class="n">nb_steps</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">current_cell</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">__exit</span><span class="p">:</span>
+            <span class="n">visited</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__exit</span><span class="p">)</span>  <span class="c1"># Used when drawing path through maze</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">nb_steps</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">manhattan_distance</span><span class="p">(</span><span class="n">current_cell</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__exit</span><span class="p">))</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">get_visited</span> <span class="k">else</span> <span class="n">visited</span></div>
+
+<div class="viewcode-block" id="Maze.offset"><a class="viewcode-back" href="../../../maze.html#src.problems.problem3.problem3_classes.Maze.offset">[docs]</a>    <span class="k">def</span> <span class="nf">offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">direction</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        consider a move towards DIRECTION,</span>
+<span class="sd">        and compute the offset to apply to the current cell number to obtain the destination cell number</span>
+
+<span class="sd">        :param direction: the direction to convert</span>
+<span class="sd">        :type direction: an element of DIRECTIONS</span>
+<span class="sd">        :return: the offset corresponding to direction</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;E&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;N&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">__width</span>
+        <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;W&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;S&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">__width</span></div>
+
+<div class="viewcode-block" id="Maze.manhattan_distance"><a class="viewcode-back" href="../../../maze.html#src.problems.problem3.problem3_classes.Maze.manhattan_distance">[docs]</a>    <span class="k">def</span> <span class="nf">manhattan_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">second</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param first: coordinate of first cell</span>
+<span class="sd">        :type first: int</span>
+<span class="sd">        :param second: coordinate of second cell</span>
+<span class="sd">        :type second: int</span>
+<span class="sd">        :return: the manhattan distance between coordinates first and second</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        :UC: none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">col_first</span><span class="p">,</span> <span class="n">line_first</span> <span class="o">=</span> <span class="n">first</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">__width</span><span class="p">,</span> <span class="n">first</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">__width</span>
+        <span class="n">col_second</span><span class="p">,</span> <span class="n">line_second</span> <span class="o">=</span> <span class="n">second</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">__width</span><span class="p">,</span> <span class="n">second</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">__width</span>
+        <span class="k">return</span> <span class="nb">abs</span><span class="p">(</span><span class="n">col_first</span> <span class="o">-</span> <span class="n">col_second</span><span class="p">)</span> <span class="o">+</span> <span class="nb">abs</span><span class="p">(</span><span class="n">line_first</span> <span class="o">-</span> <span class="n">line_second</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Maze.get_width"><a class="viewcode-back" href="../../../maze.html#src.problems.problem3.problem3_classes.Maze.get_width">[docs]</a>    <span class="k">def</span> <span class="nf">get_width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the width of the maze</span>
+<span class="sd">        This function was added because the maze width is needed in the naive fitness evaluation</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        :UC: none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__width</span></div>
+
+<div class="viewcode-block" id="Maze.path_str"><a class="viewcode-back" href="../../../maze.html#src.problems.problem3.problem3_classes.Maze.path_str">[docs]</a>    <span class="k">def</span> <span class="nf">path_str</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Draws the maze and the path of individual within it</span>
+<span class="sd">        :type individual: Individual</span>
+<span class="sd">        :return: none</span>
+<span class="sd">        :UC: none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">try_path</span><span class="p">(</span><span class="n">individual</span><span class="o">.</span><span class="n">get_value</span><span class="p">(),</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>  <span class="c1"># Get rid of the maze size</span>
+            <span class="n">maze</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+        <span class="n">cell_index</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">maze</span><span class="p">),</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="n">is_cell</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">new_line</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">maze</span><span class="p">[</span><span class="n">i</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="n">is_cell</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">is_cell</span>
+                <span class="k">if</span> <span class="n">is_cell</span><span class="p">:</span>
+                    <span class="n">cell_index</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">cell_index</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">path</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">is_cell</span><span class="p">:</span>
+                    <span class="n">new_line</span> <span class="o">+=</span> <span class="n">c</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">new_line</span> <span class="o">+=</span> <span class="s1">&#39;*&#39;</span>
+            <span class="n">maze</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_line</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">maze</span><span class="p">)</span></div></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">Maze</span><span class="p">(</span><span class="s1">&#39;maze2.txt&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">try_path</span><span class="p">(</span><span class="s1">&#39;EEESWWSESWSEESENEESENENNNS&#39;</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">try_path</span><span class="p">(</span><span class="s1">&#39;EEESWWSESWSEESENEES&#39;</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">try_path</span><span class="p">(</span><span class="s1">&#39;SSENEESENNEESWSSE&#39;</span><span class="p">))</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/UL-FST-informatique-rvb.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">Algorithme genetique 0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Descamps Colette, Gréau Pierre, Prause Justine, FIL, FST, Univ. Lille.
+      Last updated on 04/12/2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+    </div>
+  </body>
+</html>

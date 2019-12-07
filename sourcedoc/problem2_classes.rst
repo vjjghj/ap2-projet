@@ -1,0 +1,15 @@
+=================
+problem2_classes
+=================
+
+Classes of the problem 2
+=============================
+
+
+.. autoclass:: src.problems.problem2.problem2_classes.SecretMessageProblem
+	:members:
+
+.. autoclass:: src.problems.problem2.problem2_classes.SecretMessageIndividual
+	:members:
+
+:doc:`Index <index>`

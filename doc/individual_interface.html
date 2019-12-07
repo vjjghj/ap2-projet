@@ -1,0 +1,233 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>individual_interface.py &#8212; Algorithme genetique 0 documentation</title>
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="problem_interface.py" href="problem_interface.html" />
+    <link rel="prev" title="input_checker.py" href="input_checker.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="problem_interface.html" title="problem_interface.py"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="input_checker.html" title="input_checker.py"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Algorithme genetique 0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="individual-interface-py">
+<h1>individual_interface.py<a class="headerlink" href="#individual-interface-py" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="individual-interface">
+<h2>Individual Interface<a class="headerlink" href="#individual-interface" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="src.individual_interface.Individual">
+<em class="property">class </em><code class="descclassname">src.individual_interface.</code><code class="descname">Individual</code><span class="sig-paren">(</span><em>size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/individual_interface.html#Individual"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.individual_interface.Individual" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parent class for the different individual we will use to solve problems
+Function to create/override:</p>
+<blockquote>
+<div>get_random_gene() &lt;- static method
+mutate_once(gene, probability) &lt;- static method</div></blockquote>
+<dl class="method">
+<dt id="src.individual_interface.Individual.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/individual_interface.html#Individual.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.individual_interface.Individual.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a copy of self
+:rtype: Individual</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.individual_interface.Individual.cross_with">
+<code class="descname">cross_with</code><span class="sig-paren">(</span><em>other</em>, <em>iterations=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/individual_interface.html#Individual.cross_with"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.individual_interface.Individual.cross_with" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs a iterations point(s) crossover between self and other, return two new individuals
+:type other: Individual
+:type iterations: int
+:rtype: Individual, Individual
+:UC: none</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.individual_interface.Individual.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>problem</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/individual_interface.html#Individual.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.individual_interface.Individual.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the fitness score with the fitness computed by problem for self
+:type problem: Problem
+:return: none
+:UC: none</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="src.individual_interface.Individual.get_random_gene">
+<em class="property">static </em><code class="descname">get_random_gene</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/individual_interface.html#Individual.get_random_gene"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.individual_interface.Individual.get_random_gene" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a random value for a gene, depending on the problem
+Will be defined in sub classes, as genes used depend on the problem
+:rtype: depends on the problem</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.individual_interface.Individual.get_score">
+<code class="descname">get_score</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/individual_interface.html#Individual.get_score"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.individual_interface.Individual.get_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the fitness score for self
+:rtype: int or float</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.individual_interface.Individual.get_size">
+<code class="descname">get_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/individual_interface.html#Individual.get_size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.individual_interface.Individual.get_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the size of self’s genome
+:rtype: int</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.individual_interface.Individual.get_value">
+<code class="descname">get_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/individual_interface.html#Individual.get_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.individual_interface.Individual.get_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the genome of self
+:rtype: list</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.individual_interface.Individual.mutate">
+<code class="descname">mutate</code><span class="sig-paren">(</span><em>probability</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/individual_interface.html#Individual.mutate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.individual_interface.Individual.mutate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply mutation operation to self: each element of the genome sequence is randomly changed with given probability
+:type probability: float
+:return: none
+:UC: 0 &lt;= probability &lt; 1</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="src.individual_interface.Individual.mutate_once">
+<em class="property">static </em><code class="descname">mutate_once</code><span class="sig-paren">(</span><em>gene</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/individual_interface.html#Individual.mutate_once"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.individual_interface.Individual.mutate_once" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the given gene, changed accordingly to the problem with a given probability
+:type gene: depends on the problem
+:rtype: same as gene
+:UC: none</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.individual_interface.Individual.set_score">
+<code class="descname">set_score</code><span class="sig-paren">(</span><em>new_score</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/individual_interface.html#Individual.set_score"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.individual_interface.Individual.set_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the fitness score of self
+:type new_score: int or float
+:return: none
+:UC: none</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.individual_interface.Individual.set_value">
+<code class="descname">set_value</code><span class="sig-paren">(</span><em>new_value</em>, <em>problem=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/individual_interface.html#Individual.set_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.individual_interface.Individual.set_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the genome value of self
+If a problem is given, will actualize self.score accordingly
+:type new_value: list
+:type problem: Problem or NoneType
+:return: none
+:UC: new_value must be a valid genome for the problem</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/UL-FST-informatique-rvb.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">individual_interface.py</a><ul>
+<li><a class="reference internal" href="#individual-interface">Individual Interface</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="input_checker.html"
+                        title="previous chapter">input_checker.py</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="problem_interface.html"
+                        title="next chapter">problem_interface.py</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/individual_interface.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="problem_interface.html" title="problem_interface.py"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="input_checker.html" title="input_checker.py"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Algorithme genetique 0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Descamps Colette, Gréau Pierre, Prause Justine, FIL, FST, Univ. Lille.
+      Last updated on 04/12/2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,265 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>maze &#8212; Algorithme genetique 0 documentation</title>
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="problem4_classes" href="problem4_classes.html" />
+    <link rel="prev" title="problem3_classes" href="problem3_classes.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="problem4_classes.html" title="problem4_classes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="problem3_classes.html" title="problem3_classes"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Algorithme genetique 0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="maze">
+<h1>maze<a class="headerlink" href="#maze" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="file-maze">
+<h2>File Maze<a class="headerlink" href="#file-maze" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="src.problems.problem3.problem3_classes.Maze">
+<em class="property">class </em><code class="descclassname">src.problems.problem3.problem3_classes.</code><code class="descname">Maze</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/problems/problem3/maze.html#Maze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem3.problem3_classes.Maze" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="src.problems.problem3.problem3_classes.Maze.get_size">
+<code class="descname">get_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/problems/problem3/maze.html#Maze.get_size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem3.problem3_classes.Maze.get_size" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the number of cells of this maze</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.problems.problem3.problem3_classes.Maze.get_width">
+<code class="descname">get_width</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/problems/problem3/maze.html#Maze.get_width"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem3.problem3_classes.Maze.get_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the width of the maze
+This function was added because the maze width is needed in the naive fitness evaluation
+:rtype: int
+:UC: none</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.problems.problem3.problem3_classes.Maze.init_cells">
+<code class="descname">init_cells</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/problems/problem3/maze.html#Maze.init_cells"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem3.problem3_classes.Maze.init_cells" title="Permalink to this definition">¶</a></dt>
+<dd><p>read a text file describing the maze from a “picture” made of | + - and spaces
+cells are stored in a dictionary, the key is the cell number (built line by line)
+the value is the string made of N,S,E,W corresponding to available directions for leave the cell</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<em>string</em>) – the name of the file containing the aze description</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the dictionary corresponding to the maze description</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dictionary (int : list(DIRECTIONS))</td>
+</tr>
+<tr class="field-even field"><th class="field-name">UC:</th><td class="field-body">filename must contain a valid Maze file</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.problems.problem3.problem3_classes.Maze.manhattan_distance">
+<code class="descname">manhattan_distance</code><span class="sig-paren">(</span><em>first</em>, <em>second</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/problems/problem3/maze.html#Maze.manhattan_distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem3.problem3_classes.Maze.manhattan_distance" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>first</strong> (<em>int</em>) – coordinate of first cell</li>
+<li><strong>second</strong> (<em>int</em>) – coordinate of second cell</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the manhattan distance between coordinates first and second</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">int</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">UC:</th><td class="field-body"><p class="first last">none</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.problems.problem3.problem3_classes.Maze.offset">
+<code class="descname">offset</code><span class="sig-paren">(</span><em>direction</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/problems/problem3/maze.html#Maze.offset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem3.problem3_classes.Maze.offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>consider a move towards DIRECTION,
+and compute the offset to apply to the current cell number to obtain the destination cell number</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>direction</strong> (<em>an element of DIRECTIONS</em>) – the direction to convert</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the offset corresponding to direction</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.problems.problem3.problem3_classes.Maze.path_str">
+<code class="descname">path_str</code><span class="sig-paren">(</span><em>individual</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/problems/problem3/maze.html#Maze.path_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem3.problem3_classes.Maze.path_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws the maze and the path of individual within it
+:type individual: Individual
+:return: none
+:UC: none</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.problems.problem3.problem3_classes.Maze.try_path">
+<code class="descname">try_path</code><span class="sig-paren">(</span><em>path</em>, <em>get_visited=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/problems/problem3/maze.html#Maze.try_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem3.problem3_classes.Maze.try_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Path is tried from entry point, step by step.
+Course stops either as soon as a wall is met, or it returns to an already visited cell, or reaches the exit.
+Successful steps are steps until stop.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>path</strong> (<em>an sequence</em><em> (</em><em>actually a string but could be list</em><em>) </em><em>of DIRECTIONS</em>) – a sequence of DIRECTIONS corresponding to moves.</li>
+<li><strong>get_visited</strong> (<em>boolean</em>) – if True, returns</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a tuple containing number of successful steps using path and manhattan
+distance between reached cell and exit</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">(int, int)</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">UC:</th><td class="field-body"><p class="first last">none</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/UL-FST-informatique-rvb.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">maze</a><ul>
+<li><a class="reference internal" href="#file-maze">File Maze</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="problem3_classes.html"
+                        title="previous chapter">problem3_classes</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="problem4_classes.html"
+                        title="next chapter">problem4_classes</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/maze.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="problem4_classes.html" title="problem4_classes"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="problem3_classes.html" title="problem3_classes"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Algorithme genetique 0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Descamps Colette, Gréau Pierre, Prause Justine, FIL, FST, Univ. Lille.
+      Last updated on 04/12/2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+    </div>
+  </body>
+</html>

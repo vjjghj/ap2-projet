@@ -1,0 +1,186 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>problem1_classes &#8212; Algorithme genetique 0 documentation</title>
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="problem2_classes" href="problem2_classes.html" />
+    <link rel="prev" title="base_class" href="base_class.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="problem2_classes.html" title="problem2_classes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="base_class.html" title="base_class"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Algorithme genetique 0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="problem1-classes">
+<h1>problem1_classes<a class="headerlink" href="#problem1-classes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="classes-of-the-problem-1">
+<h2>Classes of the problem 1<a class="headerlink" href="#classes-of-the-problem-1" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="src.problems.problem1.problem1_classes.MaxFunctionProblem">
+<em class="property">class </em><code class="descclassname">src.problems.problem1.problem1_classes.</code><code class="descname">MaxFunctionProblem</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/problems/problem1/problem1_classes.html#MaxFunctionProblem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem1.problem1_classes.MaxFunctionProblem" title="Permalink to this definition">¶</a></dt>
+<dd><p>In this problem we want to find the value maximizing a given function
+We work in a given interval
+Individual’s genome will be a list of bits, representing a floating value in the interval</p>
+<dl class="method">
+<dt id="src.problems.problem1.problem1_classes.MaxFunctionProblem.adapt">
+<code class="descname">adapt</code><span class="sig-paren">(</span><em>individual</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/problems/problem1/problem1_classes.html#MaxFunctionProblem.adapt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem1.problem1_classes.MaxFunctionProblem.adapt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the value corresponding to the individual genome in the problem
+Depends on x_min, x_max and bit_length
+:type individual: Individual
+:rtype: float
+:UC: none</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.problems.problem1.problem1_classes.MaxFunctionProblem.create_individual">
+<code class="descname">create_individual</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/problems/problem1/problem1_classes.html#MaxFunctionProblem.create_individual"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem1.problem1_classes.MaxFunctionProblem.create_individual" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an individual with genome length equals to bit_length
+:rtype: Individual</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.problems.problem1.problem1_classes.MaxFunctionProblem.evaluate_fitness">
+<code class="descname">evaluate_fitness</code><span class="sig-paren">(</span><em>individual</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/problems/problem1/problem1_classes.html#MaxFunctionProblem.evaluate_fitness"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem1.problem1_classes.MaxFunctionProblem.evaluate_fitness" title="Permalink to this definition">¶</a></dt>
+<dd><p>The fitness of the individual is given by the function we want to maximize
+:type individual: Individual
+:rtype: float
+:UC: none</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="src.problems.problem1.problem1_classes.MaxFunctionIndividual">
+<em class="property">class </em><code class="descclassname">src.problems.problem1.problem1_classes.</code><code class="descname">MaxFunctionIndividual</code><span class="sig-paren">(</span><em>size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/problems/problem1/problem1_classes.html#MaxFunctionIndividual"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem1.problem1_classes.MaxFunctionIndividual" title="Permalink to this definition">¶</a></dt>
+<dd><p>Individuals with a list of bits as genome</p>
+<dl class="staticmethod">
+<dt id="src.problems.problem1.problem1_classes.MaxFunctionIndividual.get_random_gene">
+<em class="property">static </em><code class="descname">get_random_gene</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/problems/problem1/problem1_classes.html#MaxFunctionIndividual.get_random_gene"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem1.problem1_classes.MaxFunctionIndividual.get_random_gene" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a random bit value
+:rtype: int</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="src.problems.problem1.problem1_classes.MaxFunctionIndividual.mutate_once">
+<em class="property">static </em><code class="descname">mutate_once</code><span class="sig-paren">(</span><em>gene</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/problems/problem1/problem1_classes.html#MaxFunctionIndividual.mutate_once"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.problems.problem1.problem1_classes.MaxFunctionIndividual.mutate_once" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flips the bit value
+:type gene: int
+:rtype: int
+:UC: gene in {0, 1}</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/UL-FST-informatique-rvb.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">problem1_classes</a><ul>
+<li><a class="reference internal" href="#classes-of-the-problem-1">Classes of the problem 1</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="base_class.html"
+                        title="previous chapter">base_class</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="problem2_classes.html"
+                        title="next chapter">problem2_classes</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/problem1_classes.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="problem2_classes.html" title="problem2_classes"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="base_class.html" title="base_class"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Algorithme genetique 0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Descamps Colette, Gréau Pierre, Prause Justine, FIL, FST, Univ. Lille.
+      Last updated on 04/12/2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+    </div>
+  </body>
+</html>
