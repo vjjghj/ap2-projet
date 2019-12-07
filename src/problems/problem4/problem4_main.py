@@ -33,10 +33,10 @@ if __name__ == '__main__':
         best = solver.solve(iterations)
     else:
         individual = HauntedFieldIndividual(243)
-        with open(parentdir + '/problems/call_examples/HauntedFieldProblem.txt', 'r') as call_file:
+        with open(parentdir + '/problems/call_examples/HauntedFieldProblem/final_best_individual.txt', 'r') as file:
             for _ in range(3):
-                call_file.readline()  # First two lines contains unneeded problem information
-            individual.set_value(list(call_file.readline().split(' ')[1][:-1]))
+                file.readline()  # First two lines contains unneeded problem information
+            individual.set_value(list(file.readline().split(' ')[1][:-1]))
         print('Successfully imported')
         print(str(individual))
         crossed = tester(individual, height, width, nb_monsters, fields_to_cross)

@@ -1,3 +1,0 @@
-population_size: 150 | mutation_probability: 0.05 | crossover_iterations: 1 | Class: AlgoGen
-maze_file: D:\python\AP2\projet\problems\problem3\mazes\maze1.txt | Class: LabyrinthProblem
-value: SSENEESSENNNEESSSSSWSEEEWWWWEWNSSENSNEEESNNENSSNW, fitness: 1038

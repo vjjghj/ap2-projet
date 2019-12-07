@@ -2,6 +2,7 @@ from random import shuffle
 from problem_interface import Problem
 from base_class import Base
 import time
+import matplotlib.pyplot as plt
 
 
 class AlgoGen(Base):
@@ -135,26 +136,28 @@ class AlgoGen(Base):
             best = self.get_current_best()
             best_str = 'value: {}, fitness: {}'.format(*best[1:])
             print('Iterations {}; {}; average {}'.format(i, best_str, average))
-            self.__bests.append(best[1])
+            self.__bests.append(best[2])
             self.__averages.append(average)
             self.__times.append(time.time() - base_time)
-            base_time = time.time()
         if self.__export:
-            self.export_best(iterations)
+            self.export_best(iterations, time.time() - base_time)
         return self.get_current_best()
 
-    def export_best(self, iterations):
+    def export_best(self, iterations, total_time):
         """
         Exports the best individual in a .txt file
         :type iterations: int
+        :type total_time: float
         :return: none
         """
         problem = self.__problem
-        target_file = 'call_examples/' + str(problem.get_init_values()['Class']) + '.txt'
-        with open(target_file, 'w') as target:
+        target_file = 'call_examples/' + str(problem.get_init_values()['Class']) + '/'
+        with open(target_file + 'final_best_individual.txt', 'w') as target:
             target.write(str(self) + '\n')
-            target.write('iterations: ' + str(iterations) + '\n')
+            target.write('iterations: ' + str(iterations) + ' | ' + 'time: ' + str(total_time) +
+                         ' | ' + 'time per iteration: ' + str(total_time / iterations) + '\n')
             target.write('value: {}, fitness: {}'.format(*self.get_current_best()[1:]))
+        self.plot(target_file)
         print('Exported')
 
     def get_bests(self):
@@ -177,3 +180,25 @@ class AlgoGen(Base):
         :rtype: list(float)
         """
         return self.__times
+
+    def plot(self, target_file):
+        x1 = self.__bests
+        x2 = self.__averages
+        y = list(range(len(self.__averages)))
+        y_times = self.__times
+
+        # Generating plot based on iterations
+        plt.plot(y, x1, label="best depending on the number of iterations", linewidth=0.5, color="r")
+        plt.plot(y, x2, label="average depending on the number of iterations", linewidth=0.5, color="b")
+        plt.title("Bests & Averages depending on the number of iterations")
+        plt.legend()
+        plt.savefig(target_file + 'value_over_iterations.png')
+        plt.close()
+
+        # Generating plot based on time
+        plt.plot(y_times, x1, label="best depending on the time", linewidth=0.5, color="r")
+        plt.plot(y_times, x2, label="average depending on the time", linewidth=0.5, color="b")
+        plt.title(" Bests & Averages depending on the time ")
+        plt.legend()
+        plt.savefig(target_file + 'value_over_time.png')
+        plt.close()
