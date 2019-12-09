@@ -5,14 +5,13 @@ class TspGraph(object):
     def __init__(self, graph_file):
         self.__graph = self.__init_graph(graph_file)
         self.__visited = [0]
-        print(self.__graph)
 
     @staticmethod
     def __init_graph(graph_file):
         with open(graph_file, 'r') as graph_file:
             mat = graph_file.readlines()
             graph = list()
-            for line in mat:
+            for line in mat[:-1]:
                 graph.append([int(n) for n in line.split(',')])
         return graph
 
@@ -50,8 +49,11 @@ class TspGraph(object):
                 break
         return len(self.__visited) == len(self.__graph), length
 
+    def get_length(self):
+        return len(self.__graph)
+
 
 if __name__ == '__main__':
-    x = TspGraph('problem5/graph_file.txt')
+    x = TspGraph('graphs/graph_file_2.txt')
     x.visit_all()
     print(x.get_visited())

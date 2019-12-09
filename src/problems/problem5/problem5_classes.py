@@ -14,6 +14,7 @@ class TravellingSalesmanProblem(Problem):
         :type message_to_find: str
         :UC: all([x in LETTERS for x in message_to_find])
         """
+        self.__graph = TspGraph(kwargs['graph_file'])
         super(TravellingSalesmanProblem, self).__init__(maximize=False, **kwargs)
 
     def create_individual(self):
@@ -21,7 +22,8 @@ class TravellingSalesmanProblem(Problem):
         Creates individual with genome equal to the length of the secret message
         :rtype: Individual
         """
-        pass
+        n = self.__graph.get_length() - 1
+        return TravellingSalesmanIndividual(n, n)
 
     def evaluate_fitness(self, individual):
         """
@@ -30,7 +32,8 @@ class TravellingSalesmanProblem(Problem):
         :rtype: int
         :UC: none
         """
-        pass
+        result = self.__graph.cross(individual.get_value())
+        return result[1] + 1000 * (1 - result[0])
 
     def adapt(self, individual):
         """
@@ -39,15 +42,18 @@ class TravellingSalesmanProblem(Problem):
         :rtype: str
         :UC: none
         """
-        pass
+        return '0' + str(individual)
 
 
 class TravellingSalesmanIndividual(Individual):
     """
     Individual with a list of letters as genome
     """
-    @staticmethod
-    def get_random_gene():
+    def __init__(self, max_value, *args):
+        self.__max_value = max_value
+        super(TravellingSalesmanIndividual, self).__init__(*args)
+
+    def get_random_gene(self):
         """
         Returns a random letter from valid choices
         As we need to find an individual's score more often than printing the corresponding message,
@@ -55,14 +61,10 @@ class TravellingSalesmanIndividual(Individual):
         :rtype: str
         :UC: none
         """
-        pass
+        return randint(1, self.__max_value)
 
-    @staticmethod
-    def mutate_once(gene):
-        """
-        The gene takes the value of a random different valid letter
-        :type gene: str
-        :rtype: str
-        :UC: none
-        """
-        pass
+    def mutate_once(self, gene):
+        new = self.get_random_gene()
+        while new == gene:
+            new = self.get_random_gene()
+        return new

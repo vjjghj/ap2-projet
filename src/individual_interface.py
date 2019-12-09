@@ -9,10 +9,10 @@ class Individual(object):
         get_random_gene() <- static method
         mutate_once(gene, probability) <- static method
     """
-    def __init__(self, size):
+    def __init__(self, size, condition=None):
         self.__size = size
         self.__genome = list()
-        self.__init_value()
+        self.__init_value(condition)
         self.__score = 0
 
     def copy(self):
@@ -71,7 +71,7 @@ class Individual(object):
         return self.__genome
 
     @staticmethod
-    def get_random_gene():
+    def get_random_gene(condition=None):
         """
         Returns a random value for a gene, depending on the problem
         Will be defined in sub classes, as genes used depend on the problem
@@ -79,12 +79,15 @@ class Individual(object):
         """
         pass
 
-    def __init_value(self):
+    def __init_value(self, condition):
         """
         Randomly initializes self's genome
         :return: none
         """
-        self.__genome = [self.get_random_gene() for _ in range(self.__size)]
+        if condition:
+            self.__genome = [self.get_random_gene(condition) for _ in range(self.__size)]
+        else:
+            self.__genome = [self.get_random_gene() for _ in range(self.__size)]
 
     @staticmethod
     def mutate_once(gene):
