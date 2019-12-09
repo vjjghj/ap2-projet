@@ -1,4 +1,4 @@
 population_size: 40 | mutation_probability: 0.01 | crossover_iterations: 1 | export: True | Class: AlgoGen
 x_min: 13.0 | x_max: 18.0 | bit_length: 12 | Class: MaxFunctionProblem
-iterations: 50 | time: 0.3617086410522461 | time per iteration: 0.007234172821044922
-value: 16.523809523809526, fitness: 136.26509059865774
+iterations: 50 | time: 0.35935497283935547 | time per iteration: 0.00718709945678711
+value: 16.515262515262513, fitness: 136.24614044480333

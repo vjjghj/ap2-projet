@@ -182,22 +182,22 @@ class AlgoGen(Base):
         return self.__times
 
     def plot(self, target_file):
-        x1 = self.__bests
-        x2 = self.__averages
-        y = list(range(len(self.__averages)))
-        y_times = self.__times
+        x = list(range(len(self.__averages)))
+        x_times = self.__times
+        y1 = self.__bests
+        y2 = self.__averages
 
         # Generating plot based on iterations
-        plt.plot(y, x1, label="best depending on the number of iterations", linewidth=0.5, color="r")
-        plt.plot(y, x2, label="average depending on the number of iterations", linewidth=0.5, color="b")
+        plt.plot(x, y1, label="best depending on the number of iterations", linewidth=0.5, color="r")
+        plt.plot(x, y2, label="average depending on the number of iterations", linewidth=0.5, color="b")
         plt.title("Bests & Averages depending on the number of iterations")
         plt.legend()
         plt.savefig(target_file + 'value_over_iterations.png')
         plt.close()
 
         # Generating plot based on time
-        plt.plot(y_times, x1, label="best depending on the time", linewidth=0.5, color="r")
-        plt.plot(y_times, x2, label="average depending on the time", linewidth=0.5, color="b")
+        plt.plot(x_times, y1, label="best depending on the time", linewidth=0.5, color="r")
+        plt.plot(x_times, y2, label="average depending on the time", linewidth=0.5, color="b")
         plt.title(" Bests & Averages depending on the time ")
         plt.legend()
         plt.savefig(target_file + 'value_over_time.png')

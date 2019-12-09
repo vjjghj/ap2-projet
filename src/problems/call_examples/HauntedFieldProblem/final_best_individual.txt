@@ -1,4 +1,4 @@
 population_size: 50 | mutation_probability: 0.05 | crossover_iterations: 1 | export: True | Class: AlgoGen
 height: 16 | width: 16 | nb_monsters: 4 | fields_to_cross: 1 | Class: HauntedFieldProblem
-iterations: 100 | time: 30.851541757583618 | time per iteration: 0.30851541757583617
-value: dddrdlluulrlldrdurruddrldrlduddldlurlrrdddrduudurdlduururrrrlruruuurdddrddlrrlrudddlddrrrdlrdlruullurlldurrrrdlludddddurrlruluuurludrrulrudduurullruurudlulluurrrurlrdluuuulrrrlrldrldduuuullruddldudrrrdrddldluurudduuruduurdlrudrdrluuulldduddrld, fitness: 2432
+iterations: 100 | time: 24.450910806655884 | time per iteration: 0.24450910806655884
+value: ddrddrdrdrlluuudllrlruludluluddrlrrddulrdrlllrlulrluuluuruuldrullrulldrururdluurdrduduuddllrrrlrrrururruuldduuddlulrllrdruldruruulrrdldurduuuurudlldddlluuurdlddldudurrulllrrrldrdulrlrdrdldddduuudrldudlldlruddrlrurdlrdrrrudruduruudllrdlrllrdudl, fitness: 2423

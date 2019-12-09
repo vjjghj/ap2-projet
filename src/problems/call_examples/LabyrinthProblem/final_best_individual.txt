@@ -1,4 +1,4 @@
 population_size: 150 | mutation_probability: 0.05 | crossover_iterations: 1 | export: True | Class: AlgoGen
 maze_file: D:\python\AP2\projet\src\problems\problem3\mazes\maze1.txt | Class: LabyrinthProblem
-iterations: 200 | time: 13.037708282470703 | time per iteration: 0.06518854141235352
-value: ESEESSENNNEESSSSSWSEWEESWENWWSENWWWSSSEENSWNWENSN, fitness: 980
+iterations: 200 | time: 11.65440058708191 | time per iteration: 0.058272002935409545
+value: ESEESSENNNEESSSSSWSESENSEWWSSNWWSENNNESEENNSNNNWW, fitness: 980

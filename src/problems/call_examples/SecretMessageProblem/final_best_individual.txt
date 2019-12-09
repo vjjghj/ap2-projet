@@ -1,4 +1,4 @@
 population_size: 50 | mutation_probability: 0.01 | crossover_iterations: 1 | export: True | Class: AlgoGen
 message_to_find: ceci est un secret a retrouver | Class: SecretMessageProblem
-iterations: 400 | time: 5.018867492675781 | time per iteration: 0.012547168731689453
-value: ceci est un secret a retrouves, fitness: 1
+iterations: 400 | time: 5.948996305465698 | time per iteration: 0.014872490763664245
+value: ceci est un secret a retrouver, fitness: 0

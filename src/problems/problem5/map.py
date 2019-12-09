@@ -5,7 +5,7 @@ class TspGraph(object):
     def __init__(self, graph_file):
         self.__graph = self.__init_graph(graph_file)
         self.__visited = [0]
-        self.__position = 0
+        print(self.__graph)
 
     @staticmethod
     def __init_graph(graph_file):
@@ -13,7 +13,7 @@ class TspGraph(object):
             mat = graph_file.readlines()
             graph = list()
             for line in mat:
-                graph.append(list(map(lambda cell: int(cell.rstrip('\n')), line.split(','))))
+                graph.append([int(n) for n in line.split(',')])
         return graph
 
     def go_to_closest(self):
@@ -26,6 +26,7 @@ class TspGraph(object):
         self.__visited.append(graph[position].index(directions[i]))
 
     def visit_all(self):
+        self.reset()
         while len(self.__visited) != len(self.__graph):
             self.go_to_closest()
 
@@ -37,6 +38,17 @@ class TspGraph(object):
 
     def reset(self):
         self.__visited = [0]
+
+    def cross(self, path):
+        self.reset()
+        length = 0
+        for direction in path:
+            if direction not in self.__visited:
+                self.__visited.append(direction)
+                length += self.__graph[self.__visited[-1]][self.__visited[-2]]
+            else:
+                break
+        return len(self.__visited) == len(self.__graph), length
 
 
 if __name__ == '__main__':
