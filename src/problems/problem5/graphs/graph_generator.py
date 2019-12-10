@@ -3,6 +3,10 @@ from random import randint
 
 
 def file_number():
+    """
+    Returns the number of the first none existing file
+    :rtype: int
+    """
     n = 0
     while True:
         try:
@@ -13,6 +17,12 @@ def file_number():
 
 
 def generate_graph(size, max_value):
+    """
+    Generates a random symmetric matrix of shae size * size
+    :type size: int
+    :type max_value: int
+    :rtype: list(list(int))
+    """
     graph = list()
     for i in range(size):
         row = list()

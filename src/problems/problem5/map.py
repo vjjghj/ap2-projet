@@ -1,13 +1,21 @@
-from copy import deepcopy
-
-
 class TspGraph(object):
+    """
+    Used to represent a complete using a matrix
+    We will use this as the graph to solve in a Travelling Salesman Problem
+    As the matrix is symmetric we could only store half of the values, be we keep them all for convenience
+    This change could be further added to the project to gain efficiency
+    """
     def __init__(self, graph_file):
         self.__graph = self.__init_graph(graph_file)
         self.__visited = [0]
 
     @staticmethod
     def __init_graph(graph_file):
+        """
+        Imports the graph from a text file
+        :type graph_file: str
+        :rtype: list(list(int))
+        """
         with open(graph_file, 'r') as graph_file:
             mat = graph_file.readlines()
             graph = list()
@@ -15,30 +23,26 @@ class TspGraph(object):
                 graph.append([int(n) for n in line.split(',')])
         return graph
 
-    def go_to_closest(self):
-        graph = deepcopy(self.__graph)
-        position = self.__visited[-1]
-        directions = sorted(graph[position].copy())
-        i = 0
-        while graph[position].index(directions[i]) in self.__visited:
-            i += 1
-        self.__visited.append(graph[position].index(directions[i]))
-
-    def visit_all(self):
-        self.reset()
-        while len(self.__visited) != len(self.__graph):
-            self.go_to_closest()
-
     def get_visited(self):
+        """
+        Returns the list of visited towns
+        :rtype: list(int)
+        """
         return self.__visited
 
-    def go_to(self, n):
-        self.__visited.append(n)
-
     def reset(self):
+        """
+        Resets the visited towns to [0]
+        :return: none
+        """
         self.__visited = [0]
 
     def cross(self, path):
+        """
+        Attempts to cross
+        :type path: list(int)
+        :rtype: int
+        """
         self.reset()
         length = 0
         for direction in path:
@@ -47,16 +51,11 @@ class TspGraph(object):
                 length += self.__graph[self.__visited[-1]][self.__visited[-2]]
             else:
                 break
-        return len(self.__visited) == len(self.__graph), length
+        return length
 
     def get_length(self):
+        """
+        Returns the number of towns to visit
+        :rtype: int
+        """
         return len(self.__graph)
-
-
-if __name__ == '__main__':
-    import sys
-    graph_number = sys.argv[1]
-    x = TspGraph('graphs/graph_file_{}.txt'.format(graph_number))
-    x.visit_all()
-    print(x.get_visited())
-    print(x.cross(x.get_visited()[1:])[1])

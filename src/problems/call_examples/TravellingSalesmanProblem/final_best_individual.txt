@@ -1,4 +1,4 @@
 population_size: 150 | mutation_probability: 0.05 | crossover_iterations: 1 | export: True | Class: AlgoGen
-graph_file: D:\python\AP2\projet\src\problems\problem5\graphs\graph_file_0.txt | Class: TravellingSalesmanProblem
-iterations: 200 | time: 4.2294535636901855 | time per iteration: 0.02114726781845093
-value: 0123, fitness: 10
+graph_file: D:\python\AP2\projet\src\problems\problem5\graphs\graph_file_1.txt | Class: TravellingSalesmanProblem
+iterations: 200 | time: 22.639905214309692 | time per iteration: 0.11319952607154846
+value: 064620421311373302123312622439714734483614412515321222449451917952918434433284016838271035, fitness: 147
