@@ -17,6 +17,6 @@ if __name__ == '__main__':
     problem = TravellingSalesmanProblem(graph_file=parentdir +
                                                    '\problems\problem5\graphs\graph_file_{}.txt'.format(graph_number))
     solver = AlgoGen(problem=problem, population_size=population_size, mutation_probability=mutation_probability,
-                     crossover_iterations=crossover_iterations, export=export)
+                     crossover_iterations=0, export=export)  # We disable crossovers to keep all individuals solutions
     best = solver.solve(iterations)
     print('Best path found: {}, value: {}'.format(*best[1:]))

@@ -31,7 +31,8 @@ class TravellingSalesmanProblem(Problem):
         :rtype: int
         :UC: none
         """
-        return self.__graph.cross(individual.get_value())
+        result = self.__graph.cross(individual.get_value())
+        return result[1] + 1000 * (1 - result[0])
 
     def adapt(self, individual):
         """

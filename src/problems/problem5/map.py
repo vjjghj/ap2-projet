@@ -51,7 +51,7 @@ class TspGraph(object):
                 length += self.__graph[self.__visited[-1]][self.__visited[-2]]
             else:
                 break
-        return length
+        return len(self.__visited) == len(self.__graph), length
 
     def get_length(self):
         """
