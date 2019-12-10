@@ -20,7 +20,7 @@ class TspGraph(object):
         position = self.__visited[-1]
         directions = sorted(graph[position].copy())
         i = 0
-        while directions[i] in self.__visited:
+        while graph[position].index(directions[i]) in self.__visited:
             i += 1
         self.__visited.append(graph[position].index(directions[i]))
 
@@ -58,4 +58,5 @@ if __name__ == '__main__':
     graph_number = sys.argv[1]
     x = TspGraph('graphs/graph_file_{}.txt'.format(graph_number))
     x.visit_all()
+    print(x.get_visited())
     print(x.cross(x.get_visited()[1:])[1])
