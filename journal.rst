@@ -71,18 +71,26 @@ Semaine du 04 décembre :
 
 - Nos objectifs :
 	Finir le projet : 
-		il faut que les 4 problèmes fonctionnent parfaitement
+		il faut que les 4 problèmes fonctionnent parfaitement et que le 5ème fonctionne convenablement
 		il faut que la documentation soit finie et completée
+		il faut faire des graphiques représentant la convergence des solutions en fonction du temps et des itérations
 
 
 - Durant la séance de TP :
+	Progression dans la réalisation du problème 5 : création de la fonction qui convertit le fichier txt en matrice pour qu'il soit utilisable par la suite
 
 
 - Le reste de la semaine :
+
+	Réalisation des graphiques grace à matplotlib
+	Ajout de la possibilité de dessiner le chemin dans le labyrinthe
+	Finition du problème 5
+	Mise à jour de la documentation car de nouveaux fichiers ont été ajoutés (notamment dans le problème 5)
 
 
 Semaine du 11 décembre :
 ------------------------
 
-- Présentation du projet
+- Présentation du projet le 11 décembre à 13h00
 	Faire le diaporama
+	Réflexion sur notre progression personnelle
