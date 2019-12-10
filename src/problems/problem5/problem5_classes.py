@@ -1,7 +1,7 @@
 from problem_interface import Problem
 from individual_interface import Individual
 from problems.problem5.map import TspGraph
-from random import randint
+from random import shuffle, choices, random
 
 
 class TravellingSalesmanProblem(Problem):
@@ -53,18 +53,17 @@ class TravellingSalesmanIndividual(Individual):
         self.__max_value = max_value
         super(TravellingSalesmanIndividual, self).__init__(*args)
 
-    def get_random_gene(self):
-        """
-        Returns a random letter from valid choices
-        As we need to find an individual's score more often than printing the corresponding message,
-        Using the letters' index as genes will gain us computations
-        :rtype: str
-        :UC: none
-        """
-        return randint(1, self.__max_value)
+    def init_value(self):
+        x = list(range(1, self.__max_value + 1))
+        shuffle(x)
+        return x
 
-    def mutate_once(self, gene):
-        new = self.get_random_gene()
-        while new == gene:
-            new = self.get_random_gene()
-        return new
+    def mutate(self, probability):
+        genome = self.get_value()
+        number_of_mutations = sum([1 for _ in range(self.get_size()) if probability > random()])
+        indexes = choices(range(self.get_size()), k=number_of_mutations)
+        values = [genome[i] for i in indexes]
+        shuffle(indexes)
+        for i in indexes:
+            genome[i] = values.pop()
+        self.set_value(genome)

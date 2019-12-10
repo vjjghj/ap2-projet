@@ -11,7 +11,7 @@ class TspGraph(object):
         with open(graph_file, 'r') as graph_file:
             mat = graph_file.readlines()
             graph = list()
-            for line in mat[:-1]:
+            for line in mat:
                 graph.append([int(n) for n in line.split(',')])
         return graph
 
@@ -54,6 +54,8 @@ class TspGraph(object):
 
 
 if __name__ == '__main__':
-    x = TspGraph('graphs/graph_file_2.txt')
+    import sys
+    graph_number = sys.argv[1]
+    x = TspGraph('graphs/graph_file_{}.txt'.format(graph_number))
     x.visit_all()
-    print(x.get_visited())
+    print(x.cross(x.get_visited()[1:])[1])
